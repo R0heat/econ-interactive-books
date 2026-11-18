@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Money and Banking — An Interactive Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f2ea;--paper:#fffdf8;--ink:#1d2126;--muted:#5f6872;--line:#e2d9cb;--accent:#0f6e6e;--accent-ink:#fff;--soft:#e5f1ee;--warn:#fff4e0;
+--c1:#2563eb;--c2:#e8590c;--c3:#15924a;--c4:#8b3fd9;--c5:#d42a2a;--c6:#b98307;--ink2:#9aa1a9;
+--serif:"Source Serif 4",Georgia,serif;--sans:"IBM Plex Sans",system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#131518;--paper:#1b1e22;--ink:#e9e6e1;--muted:#9da6b0;--line:#2f343a;--accent:#4cc3b8;--accent-ink:#0b1515;--soft:#1b3331;--warn:#33291a;
+--c1:#6aa8ff;--c2:#ff9750;--c3:#4fd98a;--c4:#c48dff;--c5:#ff7070;--c6:#f3c94a;--ink2:#5d646c}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 var(--serif);-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+header.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;padding:10px 16px;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);font-family:var(--sans)}
+header.top .brand{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none;color:var(--ink)}
+header.top .bar{flex:1;max-width:220px;height:6px;border-radius:9px;background:var(--line);overflow:hidden;margin-left:auto}
+header.top .bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .4s}
+header.top .pct{font-size:13px;color:var(--muted);min-width:34px;text-align:right}
+.menu-btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:6px 10px;font:500 14px var(--sans);cursor:pointer}
+.layout{display:flex;max-width:1280px;margin:0 auto}
+nav.toc{width:280px;flex:none;position:sticky;top:53px;height:calc(100vh - 53px);overflow:auto;padding:22px 14px 40px;font-family:var(--sans);border-right:1px solid var(--line)}
+nav.toc h4{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:18px 10px 6px}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;text-decoration:none;color:var(--ink);font-size:14.5px;line-height:1.35}
+nav.toc a:hover{background:var(--soft)}
+nav.toc a.active{background:var(--accent);color:var(--accent-ink)}
+nav.toc a .n{font-size:12px;opacity:.65;min-width:18px}
+nav.toc a .ck{margin-left:auto;font-size:12px;color:var(--c3)}
+nav.toc a.active .ck{color:var(--accent-ink)}
+main{flex:1;min-width:0;padding:28px 22px 80px}
+.view{max-width:760px;margin:0 auto}
+.eyebrow{font:600 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(30px,5vw,42px);line-height:1.12;margin:.2em 0 .5em;letter-spacing:-.01em}
+h2{font-size:25px;line-height:1.25;margin:1.8em 0 .5em}
+h3{font:600 17px var(--sans);margin:1.4em 0 .4em}
+p{margin:0 0 1em}
+.lead{font-size:19.5px;color:var(--muted)}
+.box{border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:16px 20px;margin:1.4em 0}
+.box.obj{background:var(--soft);border-color:transparent}
+.box.obj h3,.box.take h3{margin-top:0}
+.box.obj ul,.box.take ul{margin:0;padding-left:1.2em}
+.box.take{border-left:4px solid var(--accent)}
+.box.ex{background:var(--warn);border-color:transparent}
+.formula{font:500 16px/1.5 var(--sans);background:var(--paper);border:1px dashed var(--line);border-radius:10px;padding:12px 16px;margin:1em 0;text-align:center;overflow-x:auto}
+.formula small{display:block;color:var(--muted);font-weight:400;font-size:13px;margin-top:4px}
+.term{font-weight:700;color:var(--accent)}
+table.t{width:100%;border-collapse:collapse;font:14.5px/1.45 var(--sans);margin:1em 0}
+table.t th,table.t td{border-bottom:1px solid var(--line);padding:8px 8px;text-align:left;vertical-align:top}
+table.t th{font-weight:600;color:var(--muted);font-size:13px}
+.tscroll{overflow-x:auto}
+/* labs */
+.lab{border:1px solid var(--line);background:var(--paper);border-radius:16px;margin:1.8em 0;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.03),0 8px 24px -16px rgba(0,0,0,.18)}
+.lab .lh{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--line);font:600 14px var(--sans)}
+.lab .lh .tag{font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:var(--accent);color:var(--accent-ink);padding:3px 8px;border-radius:99px}
+.lab .lb{padding:14px 18px 18px}
+.lab .hint{font:13.5px/1.5 var(--sans);color:var(--muted);margin:0 0 10px}
+.ctrls{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 18px;font:14px var(--sans);margin-bottom:8px}
+.ctrls label{display:flex;flex-direction:column;gap:4px}
+.ctrls label span{display:flex;justify-content:space-between;color:var(--muted)}
+.ctrls output{font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.ctrls label.chk{flex-direction:row;align-items:center;gap:8px;color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--accent);height:26px}
+input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;font:500 14px var(--sans);margin-bottom:10px;flex-wrap:wrap}
+.seg label{padding:7px 12px;cursor:pointer;border-right:1px solid var(--line)}
+.seg label:last-child{border-right:0}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label:has(input:checked){background:var(--accent);color:var(--accent-ink)}
+.plots{display:grid;grid-template-columns:1fr;gap:6px}
+.plots.two{grid-template-columns:1fr 1fr}
+@media (max-width:640px){.plots.two{grid-template-columns:1fr}}
+svg.chart{width:100%;height:auto;display:block;font-family:var(--sans)}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .axis{stroke:var(--muted);stroke-width:1.4}
+svg .tick{fill:var(--muted);font-size:12px}
+svg .atitle{fill:var(--muted);font-size:13px;font-weight:500}
+svg .guide{fill:none;stroke:var(--muted);stroke-width:1.2;stroke-dasharray:4 4}
+svg .lbl{font-size:13.5px;font-weight:600}
+.readout{font:14.5px/1.55 var(--sans);background:var(--bg);border-radius:10px;padding:10px 14px;margin-top:8px}
+.readout b{font-variant-numeric:tabular-nums}
+.stack{display:flex;height:26px;border-radius:7px;overflow:hidden;margin:8px 0 4px;background:var(--line)}
+.stack div{transition:width .25s;display:flex;align-items:center;justify-content:center;font:600 11px var(--sans);color:#fff;white-space:nowrap;overflow:hidden}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font:13px var(--sans);color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.btn{font:500 14px var(--sans);border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:9px;padding:8px 14px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:disabled{opacity:.45;cursor:default}
+.calc{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font:14px var(--sans)}
+@media (max-width:520px){.calc{grid-template-columns:repeat(2,1fr)}}
+.calc label{display:flex;flex-direction:column;gap:3px;color:var(--muted)}
+.calc input,.mx input{font:500 15px var(--sans);padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%}
+/* matrix */
+.mx{width:100%;border-collapse:separate;border-spacing:6px;font:14px var(--sans)}
+.mx th{font-weight:600;color:var(--muted);font-size:13px}
+.mx td.cell{background:var(--bg);border-radius:10px;padding:8px;border:2px solid transparent;text-align:center}
+.mx td.cell.ne{border-color:var(--c3);background:color-mix(in srgb,var(--c3) 12%,var(--bg))}
+.mx td.cell .pr{display:flex;gap:6px;justify-content:center}
+.mx td.cell input{width:56px;text-align:center;padding:5px}
+.mx td.cell input.br{outline:2px solid var(--c6);outline-offset:-2px;font-weight:700}
+.mx .rowp{color:var(--c1)} .mx .colp{color:var(--c2)}
+.hist{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.hist span{font:600 12px var(--sans);padding:4px 8px;border-radius:7px;background:var(--bg)}
+/* quiz */
+.quiz{margin:2.2em 0 1em;border-top:2px solid var(--ink);padding-top:12px}
+.quiz h2{margin-top:.3em}
+.q{border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:14px 16px;margin:12px 0}
+.q .qt{font-weight:600;margin-bottom:10px}
+.q .opts{display:grid;gap:7px}
+.q button.o{all:unset;box-sizing:border-box;cursor:pointer;font:15px/1.45 var(--sans);padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.q button.o:hover{border-color:var(--accent)}
+.q button.o.right{border-color:var(--c3);background:color-mix(in srgb,var(--c3) 14%,var(--bg))}
+.q button.o.wrong{border-color:var(--c5);background:color-mix(in srgb,var(--c5) 12%,var(--bg))}
+.q .ex{font:14px/1.55 var(--sans);color:var(--muted);margin-top:10px;display:none}
+.q.done .ex{display:block}
+.q.done button.o{cursor:default}
+.score{font:600 15px var(--sans)}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:40px;font-family:var(--sans)}
+.pager a{flex:1;border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink);font-size:14px}
+.pager a small{display:block;color:var(--muted);font-size:12px}
+.pager a.nx{text-align:right}
+/* home */
+.cover{padding:40px 0 10px}
+.cover h1{font-size:clamp(36px,7vw,58px)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:20px 0}
+.card{display:block;border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:14px 16px;text-decoration:none;color:var(--ink);font-family:var(--sans);position:relative}
+.card:hover{border-color:var(--accent)}
+.card .cn{font-size:12px;color:var(--accent);font-weight:600;letter-spacing:.08em}
+.card .ct{font:600 18px/1.25 var(--serif);margin:4px 0}
+.card .cd{font-size:13px;color:var(--muted);line-height:1.45}
+.card .ck{position:absolute;top:12px;right:14px;color:var(--c3);font-size:13px;font-weight:600}
+.gl input{width:100%;font:16px var(--sans);padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);margin:6px 0 14px}
+.gl dl{margin:0}
+.gl dt{font:600 16px var(--sans);margin-top:14px}
+.gl dd{margin:2px 0 0;color:var(--muted)}
+.gl dd a{font-size:13px;font-family:var(--sans)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;font:14px/1.45 var(--sans)}
+.grid2 div{background:var(--bg);border-radius:10px;padding:10px 12px}
+.grid2 b{display:block}
+.scrim{display:none}
+@media (max-width:900px){
+ nav.toc{position:fixed;top:53px;left:0;bottom:0;height:auto;z-index:40;background:var(--paper);transform:translateX(-100%);transition:transform .25s;box-shadow:0 0 40px rgba(0,0,0,.25)}
+ body.open nav.toc{transform:none}
+ body.open .scrim{display:block;position:fixed;inset:53px 0 0 0;background:rgba(0,0,0,.3);z-index:35}
+ main{padding:20px 16px 70px}
+}
+@media (min-width:901px){.menu-btn{display:none}}
+
+.calcres{white-space:pre-wrap}
+.lab .calc{margin-bottom:8px}
+.attr{font:14px/1.6 var(--sans)}
+.attr li{margin:4px 0}
+.mod-sub{font:500 13px var(--sans);color:var(--muted);margin:-.6em 0 1em}
+
+.mx td.cell input{width:64px}
+</style>
+</head>
+<body>
+<header class="top">
+ <button class="menu-btn" id="menuBtn" aria-label="Contents">☰ Contents</button>
+ <a class="brand" href="#home">Money and Banking · Interactive Edition</a>
+ <div class="bar" title="Quiz progress"><i id="progBar"></i></div><span class="pct" id="progPct">0%</span>
+</header>
+<div class="scrim" id="scrim"></div>
+<div class="layout">
+<nav class="toc" id="toc"></nav>
+<main id="main">
+<!-- ============ HOME ============ -->
+<section class="view" id="v-home">
+ <div class="cover">
+  <div class="eyebrow">An interactive textbook</div>
+  <h1>Money and Banking</h1>
+  <p style="font:500 16px var(--sans);margin:-.3em 0 1em">By <b>Rohit Pandit</b> · <span style="color:var(--muted)">Delaware</span></p>
+  <p class="lead">Twelve modules on money, interest rates, banks, financial crises and central banking, built on the ideas of Nobel laureates and Ivy League scholars, with live graphs, calculators and self-check quizzes.</p>
+  <p style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn pri" href="#m1" id="startBtn">Start reading →</a><a class="btn" href="#glossary">Glossary</a><a class="btn" href="#about">Sources &amp; scholars</a></p>
+  <p style="font:13px/1.5 var(--sans);color:var(--muted)">Policy facts are current as of November 18, 2026.</p>
+ </div>
+ <h2>Modules</h2>
+ <div class="cards" id="cards"></div>
+ <div class="box">
+  <h3 style="margin-top:0">How to use this book</h3>
+  <p style="margin:0;font-family:var(--sans);font-size:15px">Read the modules in order, since later ones build on earlier ideas. In each <b>Lab</b>, move the sliders and watch the graph and numbers change. <b>Calculators</b> take your own numbers. Each module ends with sources for further reading and a short quiz; finishing the quiz marks the module complete, and your progress is saved in this browser.</p>
+ </div>
+ <p style="font:13px var(--sans);color:var(--muted)"><button class="btn" id="resetBtn">Reset my progress</button></p>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="view" id="v-about" hidden>
+ <div class="eyebrow">About this book</div>
+ <h1>Sources &amp; scholars</h1>
+ <div class="attr">
+ <p><b>Money and Banking: An Interactive Edition</b>, by Rohit Pandit (Delaware).</p>
+ <p>The text was written for this edition. It explains standard ideas in money and banking and draws on the openly available lectures, papers and publications of the scholars below. It does not reproduce their copyrighted books, and none of these scholars or institutions has reviewed or endorsed it.</p>
+ <h3>Nobel laureates whose ideas appear here</h3>
+ <ul>
+  <li><b>Ben Bernanke</b> (Princeton; Fed chair 2006–14; Nobel 2022): bank failures and the Great Depression; the credit channel; the 2012 <a href="https://www.federalreserve.gov/newsevents/lectures/about.htm">Federal Reserve lecture series</a>. Modules 8, 9, 11.</li>
+  <li><b>Douglas Diamond</b> and <b>Philip Dybvig</b> (Yale PhDs; Nobel 2022): bank runs, deposit insurance, delegated monitoring. Modules 2, 8.</li>
+  <li><b>Robert Shiller</b> (Yale; Nobel 2013): excess volatility, behavioral finance, bubbles; <a href="https://oyc.yale.edu/economics/econ-252-11">ECON 252 Financial Markets</a>, Open Yale Courses. Modules 3, 5, 6.</li>
+  <li><b>Eugene Fama</b> (Chicago; Nobel 2013): efficient markets. Module 6.</li>
+  <li><b>Milton Friedman</b> (Nobel 1976): the island of stone money; <i>A Monetary History of the United States</i> (with Anna Schwartz). Modules 1, 4, 10, 12.</li>
+  <li><b>Joseph Stiglitz</b> (Columbia; Nobel 2001) and <b>George Akerlof</b> (Nobel 2001): credit rationing and the market for lemons. Module 2.</li>
+  <li><b>Thomas Sargent</b> (NYU and Princeton; Nobel 2011): the ends of four big inflations. Module 12.</li>
+  <li><b>Robert Mundell</b> (Columbia; Nobel 1999): the open-economy trilemma. Module 12.</li>
+ </ul>
+ <h3>Other scholars and sources</h3>
+ <ul>
+  <li><b>Irving Fisher</b> (Yale): real vs nominal interest. <b>Perry Mehrling</b> (Barnard College, Columbia; later Boston University): the hierarchy of money and the "money view." <b>Gary Gorton</b> (Yale): the panic of 2007 as a run on repo. <b>Frederic Mishkin</b> (Columbia): the standard textbook framework for interest rates and the yield curve. <b>John Taylor</b> (Stanford): the Taylor rule.</li>
+  <li>Nobel Prize Outreach, <a href="https://www.nobelprize.org/prizes/economic-sciences/2022/popular-information/">popular science background, Prize in Economic Sciences 2022</a>.</li>
+  <li>Board of Governors of the Federal Reserve System: <a href="https://www.federalreserve.gov/monetarypolicy/fomcminutes20260916.htm">FOMC minutes and policy directive (September 2026)</a> and FOMC statements.</li>
+ </ul>
+ <h3>Data and currency</h3>
+ <p>Policy settings in Modules 9 and 11 reflect the FOMC's September 16, 2026 decision and its October 28, 2026 meeting. Numbers in the labs are simplified illustrations unless stated otherwise. For current figures, check federalreserve.gov.</p>
+ </div>
+</section>
+
+<!-- ============ GLOSSARY ============ -->
+<section class="view gl" id="v-glossary" hidden>
+ <div class="eyebrow">Reference</div>
+ <h1>Glossary</h1>
+ <input type="search" id="glq" placeholder="Search terms…" aria-label="Search glossary">
+ <dl id="gll"></dl>
+</section>
+
+<!-- ============ MODULE 1 ============ -->
+<section class="view" id="v-m1" hidden>
+ <div class="eyebrow">Module 1</div>
+ <h1>What Is Money?</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Name the three functions of money</li><li>Trace money from commodities to fiat currency and bank deposits</li><li>Explain why money rests on trust, using the island of Yap</li><li>Describe the "hierarchy of money" and the measures M1 and M2</li></ul></div>
+ <p class="lead">Money is whatever people generally accept in payment. That simple definition hides a surprising amount of economics.</p>
+ <h2>Three jobs money does</h2>
+ <div class="grid2">
+  <div><b>Medium of exchange</b>It lets us skip barter, which needs a "double coincidence of wants": the baker must want exactly what the shoemaker has.</div>
+  <div><b>Unit of account</b>It's the common measuring stick for prices. With 1,000 goods and no money you'd need 499,500 relative prices; with money, 1,000.</div>
+  <div><b>Store of value</b>It carries purchasing power into the future, though inflation erodes it, and other assets (bonds, houses) store value too.</div>
+  <div><b>Liquidity</b>Money is the most <span class="term">liquid</span> asset: it can be spent immediately at full value. Other assets must first be converted.</div>
+ </div>
+ <p style="margin-top:1em">Economists use "money" more narrowly than everyday speech. <b>Income</b> is a flow (dollars per year); <b>wealth</b> is a stock of all assets; <b>money</b> is the part of wealth used for payments.</p>
+ <h2>From shells to screens</h2>
+ <p>Societies have used cattle, salt, shells, tobacco and, above all, gold and silver as <span class="term">commodity money</span>, which has value in itself. Paper notes began as claims on metal held in vaults. Today's dollars, euros and yen are <span class="term">fiat money</span>: not convertible into anything, accepted because the government declares them legal tender and, more importantly, because everyone expects everyone else to accept them. Most money now isn't paper at all but <b>bank deposits</b> moved by checks, cards and electronic transfers, and new forms keep appearing, from mobile wallets to stablecoins.</p>
+ <h2>The island of stone money</h2>
+ <p>Milton Friedman (Nobel 1976) liked to tell the story of Yap, a Pacific island where large carved stone wheels, some twelve feet across, served as money. Owners rarely moved them; ownership simply changed by common agreement. One huge stone was said to have sunk during a storm while being shipped, yet it stayed part of a family's wealth because everyone agreed it existed. Friedman's point, in his 1991 essay "The Island of Stone Money," was that modern systems work the same way: in 1932, when the Federal Reserve Bank of New York "transferred" gold to the Bank of France merely by earmarking it within its own vaults, markets treated it as a real shift in wealth. <b>Money is a social agreement backed by trust.</b></p>
+ <h2>The hierarchy of money</h2>
+ <p>Perry Mehrling, who taught money and banking at Barnard College, Columbia, for three decades, stresses that monetary systems are <b>hierarchical</b>. Your bank deposit is a promise by your bank to pay you central-bank money. Your bank's reserves are a deposit at the central bank. Across borders, dollars and gold sit at the top. Each layer is a promise to pay something higher up. In calm times the layers trade at par and look identical; in a crisis people scramble up the hierarchy toward safer money, which is why "liquidity" becomes the central issue in every financial panic.</p>
+ <div class="tscroll"><table class="t"><tr><th>Level</th><th>Whose promise?</th><th>Settles in…</th></tr>
+ <tr><td>Gold / world reserve currency</td><td>No one's (or the U.S.)</td><td>— (top of the hierarchy)</td></tr>
+ <tr><td>Central-bank money (currency and reserves)</td><td>The central bank</td><td>International reserves</td></tr>
+ <tr><td>Bank deposits</td><td>A commercial bank</td><td>Central-bank reserves</td></tr>
+ <tr><td>Securities, IOUs, trade credit</td><td>Firms, governments, households</td><td>Bank deposits</td></tr></table></div>
+ <h2>Measuring money</h2>
+ <p>The Federal Reserve publishes two main aggregates. <b>M1</b> is the most liquid: currency held by the public, demand deposits, and (since 2020, when the Fed reclassified them) savings deposits. <b>M2</b> adds small time deposits and retail money-market fund shares. The <span class="term">monetary base</span> (currency plus bank reserves) is the central bank's own liability, the foundation the rest is built on (Module 10).</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Money is a medium of exchange, unit of account and store of value.</li><li>Modern money is fiat money and bank deposits, and it rests on trust.</li><li>Money is hierarchical: lower layers are promises to pay in higher, safer ones.</li></ul></div>
+ <div class="box"><h3 style="margin-top:0">Sources &amp; further reading</h3><ul class="attr"><li>Milton Friedman, <a href="https://miltonfriedman.hoover.org/friedman_images/Collections/2016c21/Stanford_02_01_1991.pdf">"The Island of Stone Money"</a> (Hoover Institution working paper, 1991)</li><li>Perry Mehrling, "The Inherent Hierarchy of Money" (2012), and his Coursera course <i>Economics of Money and Banking</i></li></ul></div>
+ <div class="quiz" data-ch="1"></div>
+</section>
+
+<!-- ============ MODULE 2 ============ -->
+<section class="view" id="v-m2" hidden>
+ <div class="eyebrow">Module 2</div>
+ <h1>The Financial System</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Distinguish direct from indirect finance</li><li>Classify financial markets and intermediaries</li><li>Explain adverse selection, moral hazard and credit rationing</li><li>Explain why banks exist, following Diamond's theory of delegated monitoring</li></ul></div>
+ <p class="lead">The financial system moves funds from people who have saved to people with productive uses for them, and moves risk to those best able to bear it.</p>
+ <h2>Direct and indirect finance</h2>
+ <p>In <b>direct finance</b>, borrowers sell securities (stocks and bonds) straight to savers in financial markets. In <b>indirect finance</b>, a <span class="term">financial intermediary</span> such as a bank, insurer, pension fund or mutual fund stands in between: it takes in savers' funds and lends or invests them. Indirect finance is far larger, especially for households and small firms.</p>
+ <div class="tscroll"><table class="t"><tr><th>Market</th><th>What trades</th></tr>
+ <tr><td>Debt vs equity</td><td>Fixed promises to pay (bonds, loans) vs ownership claims (stocks)</td></tr>
+ <tr><td>Primary vs secondary</td><td>New issues sold by the borrower vs resale of existing securities</td></tr>
+ <tr><td>Money vs capital market</td><td>Short-term debt (under a year: T-bills, commercial paper, repo) vs long-term debt and equity</td></tr>
+ <tr><td>Exchanges vs over-the-counter</td><td>Central trading venue vs dealer networks (most bonds trade OTC)</td></tr></table></div>
+ <h2>Why intermediaries?</h2>
+ <p><b>Transaction costs:</b> pooling many small savings and making many loans is far cheaper per dollar. <b>Risk sharing:</b> intermediaries hold diversified portfolios and transform risky assets into safer ones for savers. <b>Liquidity:</b> a deposit can be withdrawn on demand even though it funds a 30-year mortgage (Module 8). And above all, <b>information</b>.</p>
+ <h2>Asymmetric information</h2>
+ <p>Borrowers know more about their own projects than lenders do. George Akerlof (Nobel 2001) showed in "The Market for Lemons" (1970) how this can unravel a market: if buyers can't tell good used cars from bad, they pay only an average price, so owners of good cars withdraw them, and the average gets worse. In finance this is <span class="term">adverse selection</span>: the borrowers most eager for a loan are often the riskiest. After the loan is made comes <span class="term">moral hazard</span>: the borrower may take risks the lender wouldn't approve of.</p>
+ <p>Joseph Stiglitz (Columbia, Nobel 2001) and Andrew Weiss showed in 1981 that lenders may respond with <span class="term">credit rationing</span>. Rather than raising interest rates, which would drive away safe borrowers and attract gamblers, they limit loans even to borrowers willing to pay more. Remedies include collateral, net worth (borrowers with more to lose behave better), covenants, credit scores, and specialized lenders who build up knowledge.</p>
+ <h2>Why banks exist: delegated monitoring</h2>
+ <p>Douglas Diamond (Nobel 2022, PhD Yale) explained why banks are a natural solution. Checking on borrowers is costly. If thousands of small savers each monitored each borrower, effort would be wasted. A bank can monitor on everyone's behalf, which reduces bankruptcies and costs to society. And depositors don't need to monitor the bank itself, because a bank that neglects monitoring faces losses that would leave it unable to repay them. By lending to many borrowers, the bank also diversifies, keeping losses small and predictable.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Finance is direct (markets) or indirect (intermediaries); indirect is larger.</li><li>Adverse selection and moral hazard can shut down lending; credit rationing is one response.</li><li>Banks economize on monitoring, diversify risk, and create liquidity.</li></ul></div>
+ <div class="box"><h3 style="margin-top:0">Sources &amp; further reading</h3><ul class="attr"><li>Nobel Prize Outreach, <a href="https://www.nobelprize.org/prizes/economic-sciences/2022/popular-information/">"The laureates explained the central role of banks in financial crises"</a> (2022)</li><li>G. Akerlof, "The Market for 'Lemons'," <i>QJE</i> (1970); J. Stiglitz &amp; A. Weiss, "Credit Rationing in Markets with Imperfect Information," <i>AER</i> (1981); D. Diamond, "Financial Intermediation and Delegated Monitoring," <i>REStud</i> (1984)</li></ul></div>
+ <div class="quiz" data-ch="2"></div>
+</section>
+
+<!-- ============ MODULE 3 ============ -->
+<section class="view" id="v-m3" hidden>
+ <div class="eyebrow">Module 3</div>
+ <h1>Interest Rates and Present Value</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Compute present and future values</li><li>Price a coupon bond and find its yield to maturity</li><li>Explain why bond prices and yields move in opposite directions</li><li>Separate nominal from real interest rates (the Fisher equation)</li></ul></div>
+ <p class="lead">A dollar today is worth more than a dollar next year. Present value is the tool that makes money at different dates comparable.</p>
+ <h2>Present value</h2>
+ <p>At interest rate <i>i</i>, $100 today grows to $100(1 + <i>i</i>)ⁿ in <i>n</i> years. Turn it around: a payment <i>CF</i> received in <i>n</i> years is worth today</p>
+ <div class="formula">PV = CF ÷ (1 + i)ⁿ<small>$1,000 due in 10 years is worth $1,000 ÷ 1.05¹⁰ ≈ $614 today at 5%.</small></div>
+ <div class="lab" data-calc="tvm"></div>
+ <h2>Four kinds of debt</h2>
+ <ul><li><b>Simple loan:</b> borrow now, repay principal plus interest at maturity.</li><li><b>Fixed-payment loan:</b> equal payments covering interest and principal (mortgages, car loans).</li><li><b>Coupon bond:</b> fixed coupon payments each year, then the face value at maturity.</li><li><b>Discount bond:</b> bought below face value, pays face value at maturity, no coupons (Treasury bills).</li></ul>
+ <h2>Bond prices and yields</h2>
+ <p>A bond's price is the present value of its payments. The <span class="term">yield to maturity</span> is the single interest rate that makes that present value equal the price. It follows that <b>bond prices and yields move in opposite directions</b>: when market rates rise, existing bonds paying old, lower coupons become less valuable. A bond priced at face value has a yield equal to its coupon rate. Longer bonds swing more in price for the same change in rates: this is <span class="term">interest-rate risk</span>.</p>
+ <div class="lab" id="lab-bond">
+  <div class="lh"><span class="tag">Lab 3.1</span>Bond prices and yields</div>
+  <div class="lb">
+   <p class="hint">A bond with a $1,000 face value. Change its coupon, its maturity and the market yield. The curve shows the price at every yield.</p>
+   <div class="ctrls">
+    <label><span>Coupon rate<output></output></span><input type="range" name="c" min="0" max="10" step="1" value="5" data-suf="%"></label>
+    <label><span>Years to maturity<output></output></span><input type="range" name="n" min="0" max="4" step="1" value="2" data-labels="1|5|10|20|30"></label>
+    <label><span>Market yield<output></output></span><input type="range" name="y" min="1" max="12" step="0.5" value="5" data-suf="%"></label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <div class="lab" data-calc="ytm"></div>
+ <h3>Yield is not the same as return</h3>
+ <p>Your <b>return</b> over a year is the coupon plus any capital gain or loss, divided by what you paid. If rates jump while you hold a long bond, its price falls and your return can be negative even though its yield to maturity was positive. Only when the holding period equals the time to maturity is the return locked in. This is exactly what hurt Silicon Valley Bank in 2022–23 (Module 8).</p>
+ <h2>Real and nominal rates</h2>
+ <p>Irving Fisher, the great Yale economist, separated the <span class="term">nominal interest rate</span> (what's quoted) from the <span class="term">real interest rate</span> (what you earn in purchasing power):</p>
+ <div class="formula">real rate ≈ nominal rate − expected inflation<small>The Fisher equation. A 5% loan with 3% expected inflation has a real rate of about 2%.</small></div>
+ <p>Real rates are what matter for decisions to save, borrow and invest. When they are negative, as they were for much of 2021–22, savers lose purchasing power. Treasury Inflation-Protected Securities (TIPS) pay a real yield directly, so comparing them with ordinary Treasuries reveals the market's expected inflation.</p>
+ <div class="lab" data-calc="fisher"></div>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>PV = CF ÷ (1 + i)ⁿ; the yield to maturity sets the PV of a bond's payments equal to its price.</li><li>Prices and yields move inversely; long bonds carry more interest-rate risk.</li><li>Real rate ≈ nominal rate − expected inflation.</li></ul></div>
+ <div class="box"><h3 style="margin-top:0">Sources &amp; further reading</h3><ul class="attr"><li>Robert Shiller, <a href="https://oyc.yale.edu/economics/econ-252-11">ECON 252: Financial Markets</a>, Open Yale Courses (2011)</li><li>Irving Fisher, <i>The Theory of Interest</i> (1930)</li></ul></div>
+ <div class="quiz" data-ch="3"></div>
+</section>
+
+<!-- ============ MODULE 4 ============ -->
+<section class="view" id="v-m4" hidden>
+ <div class="eyebrow">Module 4</div>
+ <h1>The Behavior of Interest Rates</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>List what determines how much of an asset people want to hold</li><li>Use the market for loanable funds to explain interest-rate movements</li><li>Explain the Fisher effect</li><li>Use Keynes's liquidity preference framework and its limits</li></ul></div>
+ <p class="lead">Interest rates are prices, so supply and demand explain them. The trick is to identify what's being supplied and demanded.</p>
+ <h2>What makes an asset attractive</h2>
+ <p>How much of an asset people want to hold depends on: <b>wealth</b> (more wealth, more of most assets), <b>expected return</b> relative to other assets, <b>risk</b> (people are generally risk-averse), and <b>liquidity</b> (easy-to-sell assets are prized). This is the theory of portfolio choice.</p>
+ <h2>The market for loanable funds</h2>
+ <p>Think of bonds as loans. People who buy bonds <em>supply</em> loanable funds; firms and governments that issue bonds <em>demand</em> them. The interest rate settles where the two balance.</p>
+ <div class="tscroll"><table class="t"><tr><th>Event</th><th>Shifts</th><th>Interest rate</th></tr>
+ <tr><td>Higher expected inflation</td><td>Lenders demand more; borrowers will pay more</td><td>↑ about one-for-one (the <span class="term">Fisher effect</span>)</td></tr>
+ <tr><td>Business boom</td><td>More profitable investment → more borrowing</td><td>↑</td></tr>
+ <tr><td>More wealth / saving</td><td>More funds supplied</td><td>↓</td></tr>
+ <tr><td>Bonds become riskier or less liquid</td><td>Fewer funds supplied to bonds</td><td>↑</td></tr>
+ <tr><td>Larger government deficits</td><td>More bonds issued</td><td>↑</td></tr></table></div>
+ <div class="lab" id="lab-lf">
+  <div class="lh"><span class="tag">Lab 4.1</span>The market for loanable funds</div>
+  <div class="lb">
+   <p class="hint">Change expected inflation, the business outlook, or savers' wealth, and watch the interest rate. Dashed lines show the starting curves.</p>
+   <div class="ctrls">
+    <label><span>Expected inflation<output></output></span><input type="range" name="pe" min="0" max="6" step="2" value="2" data-suf="%"></label>
+    <label><span>Business outlook<output></output></span><input type="range" name="c" min="-1" max="1" step="1" value="0" data-labels="recession|normal|boom"></label>
+    <label><span>Savers' wealth<output></output></span><input type="range" name="w" min="-1" max="1" step="1" value="0" data-labels="lower|normal|higher"></label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>Liquidity preference</h2>
+ <p>John Maynard Keynes looked at the same question from the money side. People hold money for transactions and safety, but money pays little or no interest, so the interest rate is the opportunity cost of holding it. Money demand slopes down against the interest rate and rises with income and the price level. When the central bank changes the supply of money, the interest rate moves: more money, lower rates (the <b>liquidity effect</b>).</p>
+ <div class="lab" id="lab-lp">
+  <div class="lh"><span class="tag">Lab 4.2</span>Liquidity preference</div>
+  <div class="lb">
+   <p class="hint">The central bank sets the money supply (the vertical line). Income shifts money demand.</p>
+   <div class="ctrls">
+    <label><span>Money supply ($ billions)<output></output></span><input type="range" name="m" min="300" max="700" step="100" value="500"></label>
+    <label><span>Income<output></output></span><input type="range" name="y" min="-1" max="1" step="1" value="0" data-labels="lower|normal|higher"></label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <p>But Milton Friedman warned that the liquidity effect is only the first round. Faster money growth raises income, then prices, then <em>expected inflation</em>. Each raises interest rates. If expectations adjust quickly, easier money can end up with <b>higher</b> interest rates. That's why countries with high money growth have high interest rates, not low ones.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Interest rates are set by the supply of and demand for loanable funds (bonds).</li><li>Higher expected inflation raises nominal rates (the Fisher effect).</li><li>More money lowers rates at first, but income, price and expectation effects can reverse that.</li></ul></div>
+ <div class="box"><h3 style="margin-top:0">Sources &amp; further reading</h3><ul class="attr"><li>J. M. Keynes, <i>The General Theory</i> (1936), ch. 13–15</li><li>M. Friedman, "The Role of Monetary Policy," <i>AER</i> (1968)</li><li>F. Mishkin (Columbia), <i>The Economics of Money, Banking and Financial Markets</i>, the standard text for this framework</li></ul></div>
+ <div class="quiz" data-ch="4"></div>
+</section>
+
+<!-- ============ MODULE 5 ============ -->
+<section class="view" id="v-m5" hidden>
+ <div class="eyebrow">Module 5</div>
+ <h1>Risk and the Term Structure of Interest Rates</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Explain default-risk, liquidity and tax spreads</li><li>Read a yield curve</li><li>Compare the expectations, segmented-markets and liquidity-premium theories</li><li>Explain why an inverted yield curve signals recession</li></ul></div>
+ <p class="lead">Why do different bonds pay different rates? Two reasons: who owes the money, and for how long.</p>
+ <h2>The risk structure</h2>
+ <p><span class="term">Default risk</span>: investors require a <b>risk premium</b> to hold bonds that might not pay. U.S. Treasuries are the benchmark "risk-free" asset; corporate bonds pay more, and credit-rating agencies (Moody's, S&amp;P, Fitch) grade them. Bonds rated BBB or above are <b>investment grade</b>; below that they're <b>high-yield</b> ("junk"). Spreads widen sharply in crises, in a "flight to quality." <b>Liquidity</b> matters too: harder-to-sell bonds pay more. And <b>taxes</b>: interest on U.S. municipal bonds is exempt from federal tax, so "munis" can pay less than Treasuries.</p>
+ <h2>The term structure</h2>
+ <p>A <span class="term">yield curve</span> plots yields on bonds with the same risk but different maturities. Usually it slopes <b>upward</b>. Sometimes it's flat, and occasionally <b>inverted</b> (short rates above long rates). Three facts need explaining: (1) rates on different maturities move together; (2) when short rates are low, the curve tends to slope up, and when they're high, it tends to invert; (3) it usually slopes up.</p>
+ <ul>
+  <li><b>Expectations theory:</b> a long rate is the average of expected future short rates. It explains facts 1 and 2 but predicts a flat curve on average, contradicting fact 3.</li>
+  <li><b>Segmented markets theory:</b> each maturity is its own market. It explains fact 3 but not facts 1 and 2.</li>
+  <li><b>Liquidity premium theory:</b> a long rate equals the average expected short rate <em>plus a term premium</em> that grows with maturity, because long bonds carry more interest-rate risk. This explains all three.</li>
+ </ul>
+ <div class="lab" id="lab-yc">
+  <div class="lh"><span class="tag">Lab 5.1</span>Build a yield curve</div>
+  <div class="lb">
+   <p class="hint">Choose today's 1-year rate, how short rates are expected to change each year, and the term premium. The dashed curve is pure expectations.</p>
+   <div class="ctrls">
+    <label><span>Today's 1-year rate<output></output></span><input type="range" name="r1" min="1" max="7" step="1" value="4" data-suf="%"></label>
+    <label><span>Expected change in short rates per year<output></output></span><input type="range" name="g" min="-1" max="1" step="0.5" value="0" data-suf=" pts"></label>
+    <label><span>Term premium per extra year<output></output></span><input type="range" name="tp" min="0" max="0.25" step="0.05" value="0.1" data-suf=" pts"></label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h3>The yield curve as a forecaster</h3>
+ <p>Because long rates embed expectations, an <b>inverted</b> curve signals that markets expect short rates to fall, usually because the central bank will need to cut in a downturn. Inversions have preceded most U.S. recessions since the 1960s. They aren't foolproof: the curve inverted deeply in 2022–23, yet no recession followed immediately, a reminder that term premiums and central-bank bond buying also move long rates.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Spreads reflect default risk, liquidity and taxes.</li><li>The liquidity premium theory, with expected short rates plus a term premium, best explains yield curves.</li><li>Inverted curves signal expected rate cuts and often recessions.</li></ul></div>
+ <div class="box"><h3 style="margin-top:0">Sources &amp; further reading</h3><ul class="attr"><li>Robert Shiller, <a href="https://oyc.yale.edu/economics/econ-252-11">ECON 252</a>, lectures on debt markets and the term structure</li><li>A. Estrella &amp; F. Mishkin, "The Yield Curve as a Predictor of U.S. Recessions," <i>Current Issues in Economics and Finance</i> (FRBNY, 1996)</li></ul></div>
+ <div class="quiz" data-ch="5"></div>
+</section>
+
+<!-- ============ MODULE 6 ============ -->
+<section class="view" id="v-m6" hidden>
+ <div class="eyebrow">Module 6</div>
+ <h1>The Stock Market and Efficient Markets</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Value a stock with the dividend discount (Gordon growth) model</li><li>State the efficient markets hypothesis and its implications</li><li>Explain Shiller's excess volatility evidence and behavioral finance</li><li>Discuss bubbles</li></ul></div>
+ <p class="lead">A stock is a claim on a company's future profits. Its price is a bet on a future no one can see.</p>
+ <h2>Valuing a stock</h2>
+ <p>A share's value is the present value of all its future dividends. If dividends grow at a steady rate <i>g</i> and investors require a return <i>k</i>, this collapses to the <b>Gordon growth model</b>:</p>
+ <div class="formula">P₀ = D₁ ÷ (k − g)<small>Next year's dividend divided by (required return − growth). Valid only when k &gt; g.</small></div>
+ <p>Notice how sensitive this is. With D₁ = $2, k = 8% and g = 3%, the price is $40. If investors start expecting 4% growth, it's $50: a 25% jump from a one-point change in expectations. Small shifts in sentiment about growth or risk can move prices a lot.</p>
+ <div class="lab" id="lab-gordon">
+  <div class="lh"><span class="tag">Lab 6.1</span>The Gordon growth model</div>
+  <div class="lb">
+   <p class="hint">Next year's dividend is $2. Change the expected growth rate and the return investors require.</p>
+   <div class="ctrls">
+    <label><span>Expected dividend growth g<output></output></span><input type="range" name="g" min="0" max="5" step="1" value="3" data-suf="%"></label>
+    <label><span>Required return k<output></output></span><input type="range" name="k" min="6" max="12" step="1" value="8" data-suf="%"></label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>Efficient markets</h2>
+ <p>The <span class="term">efficient markets hypothesis</span>, associated with Eugene Fama (Chicago, Nobel 2013), holds that prices fully reflect all available information. If they didn't, someone could profit by trading on that information, and in doing so would push the price to where it should be. Implications: past prices can't predict future returns; a stock tip that's already public is worthless; most active fund managers fail to beat low-cost index funds after fees. The evidence on that last point is strong.</p>
+ <h2>Excess volatility and behavioral finance</h2>
+ <p>Robert Shiller (Yale, Nobel 2013, shared with Fama and Lars Hansen) showed in 1981 that stock prices swing far more than the dividends they're supposed to forecast: <b>excess volatility</b>. He argued that psychology (overconfidence, extrapolating recent trends, herd behavior, stories that spread like epidemics) drives prices away from fundamentals for long stretches. His book <i>Irrational Exuberance</i> warned of the dot-com bubble in 2000 and, in its second edition, the housing bubble. Over a few days, prices are hard to predict, consistent with Fama; over years, valuations do predict returns, consistent with Shiller. That is why the Nobel committee could honor both.</p>
+ <h2>Bubbles</h2>
+ <p>A <b>bubble</b> is a price rise driven by expectations of further rises rather than fundamentals. Bubbles financed by credit are the most dangerous: when they burst, borrowers default and lenders' capital vanishes. That is what turned the 2006 housing decline into the 2008 crisis (Module 8), whereas the dot-com crash, financed mostly by equity, caused a milder recession.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Stock price = PV of expected dividends; P = D₁/(k − g) is very sensitive to growth and required return.</li><li>Markets are hard to beat in the short run (Fama), but prices can stray from fundamentals for long periods (Shiller).</li><li>Credit-fueled bubbles are the most dangerous.</li></ul></div>
+ <div class="box"><h3 style="margin-top:0">Sources &amp; further reading</h3><ul class="attr"><li>Robert Shiller, <a href="https://oyc.yale.edu/economics/econ-252-11">ECON 252</a>, lectures on efficient markets vs excess volatility and behavioral finance; <i>Irrational Exuberance</i> (2000, 3rd ed. 2015)</li><li>R. Shiller, "Do Stock Prices Move Too Much to Be Justified by Subsequent Changes in Dividends?" <i>AER</i> (1981); E. Fama, "Efficient Capital Markets," <i>Journal of Finance</i> (1970)</li></ul></div>
+ <div class="quiz" data-ch="6"></div>
+</section>
+
+<!-- ============ MODULE 7 ============ -->
+<section class="view" id="v-m7" hidden>
+ <div class="eyebrow">Module 7</div>
+ <h1>Banks: Balance Sheets and Management</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Read a bank balance sheet and use T-accounts</li><li>Explain liquidity management and capital adequacy</li><li>Compute leverage, return on assets and return on equity</li><li>See how losses and withdrawals threaten a bank</li></ul></div>
+ <p class="lead">A bank borrows short (deposits) and lends long (loans). Everything about bank management follows from that mismatch.</p>
+ <h2>The bank balance sheet</h2>
+ <div class="tscroll"><table class="t"><tr><th>Assets (uses of funds)</th><th>Liabilities + capital (sources of funds)</th></tr>
+ <tr><td><b>Reserves</b>: cash and deposits at the Fed</td><td><b>Deposits</b>: checking, savings, time deposits</td></tr>
+ <tr><td><b>Securities</b>: Treasuries, agency mortgage-backed securities, municipal bonds</td><td><b>Borrowings</b>: fed funds, repo, Federal Home Loan Bank advances, bonds</td></tr>
+ <tr><td><b>Loans</b>: business, real estate, consumer (the main earning asset)</td><td><b>Bank capital (equity)</b>: assets minus liabilities, the cushion against losses</td></tr></table></div>
+ <p>Banks profit from the <b>spread</b> between what they earn on assets and what they pay on liabilities, plus fees. A <b>T-account</b> tracks changes: when you deposit a $100 check, the bank's deposits rise by $100 and, once the check clears, its reserves rise by $100.</p>
+ <h2>Four management problems</h2>
+ <ol><li><b>Liquidity management:</b> keep enough liquid assets to meet withdrawals without fire-selling loans.</li>
+ <li><b>Asset management:</b> screen borrowers, diversify, and balance yield against risk.</li>
+ <li><b>Liability management:</b> raise funds cheaply and stably. Uninsured, flighty funding is risky.</li>
+ <li><b>Capital adequacy:</b> hold enough equity to absorb losses and meet regulatory minimums.</li></ol>
+ <h2>Capital, leverage and returns</h2>
+ <div class="formula">ROA = net income ÷ assets &nbsp;·&nbsp; ROE = net income ÷ equity &nbsp;·&nbsp; ROE = ROA × (assets ÷ equity)</div>
+ <p>The ratio assets ÷ equity is <span class="term">leverage</span> (the equity multiplier). With 10% capital, leverage is 10: a 1% ROA becomes a 10% ROE. Owners like leverage because it boosts returns; regulators limit it because it magnifies losses. With 5% capital, a 5% fall in asset values wipes the bank out. After 2008 the Basel III rules raised minimum capital and added liquidity requirements.</p>
+ <div class="lab" id="lab-bank">
+  <div class="lh"><span class="tag">Lab 7.1</span>Stress-test a bank</div>
+  <div class="lb">
+   <p class="hint">The bank starts with $100 of assets: $10 reserves, $20 securities, $70 loans, funded by $90 of deposits and $10 of capital. Add loan losses, a fall in bond prices and a deposit outflow.</p>
+   <div class="ctrls">
+    <label><span>Loan losses ($)<output></output></span><input type="range" name="ll" min="0" max="12" step="2" value="0"></label>
+    <label><span>Deposit withdrawals ($)<output></output></span><input type="range" name="out" min="0" max="45" step="15" value="0"></label>
+    <label class="chk"><input type="checkbox" name="rate"> Interest rates jump: securities lose 15%</label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="legend"><span><i style="background:var(--c3)"></i>Reserves</span><span><i style="background:var(--c1)"></i>Securities</span><span><i style="background:var(--c4)"></i>Loans</span><span><i style="background:var(--c2)"></i>Deposits</span><span><i style="background:var(--c6)"></i>Capital</span><span><i style="background:var(--c5)"></i>Shortfall</span></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Banks borrow short and lend long, profiting from the spread.</li><li>They must manage liquidity, credit risk, funding and capital.</li><li>ROE = ROA × leverage; leverage boosts profits and magnifies losses.</li></ul></div>
+ <div class="box"><h3 style="margin-top:0">Sources &amp; further reading</h3><ul class="attr"><li>Federal Reserve Board, <i>The Fed Explained: What the Central Bank Does</i> (2021)</li><li>Basel Committee on Banking Supervision, Basel III framework</li></ul></div>
+ <div class="quiz" data-ch="7"></div>
+</section>
+
+<!-- ============ MODULE 8 ============ -->
+<section class="view" id="v-m8" hidden>
+ <div class="eyebrow">Module 8</div>
+ <h1>Bank Runs, Regulation and Financial Crises</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Explain the Diamond–Dybvig model of bank runs</li><li>Describe deposit insurance and the lender of last resort, and their moral hazard</li><li>Summarize Bernanke's account of the Great Depression</li><li>Analyze the 2008 crisis and the 2023 run on Silicon Valley Bank</li></ul></div>
+ <p class="lead">The same feature that makes banks useful, turning long-term loans into deposits you can withdraw any time, makes them fragile.</p>
+ <h2>The Diamond–Dybvig model</h2>
+ <p>In 1983 Douglas Diamond and Philip Dybvig (both Yale PhDs, Nobel 2022) built the classic model. Households don't know when they'll need cash. Long-term projects pay well only if they run to completion; cutting them short gives poor returns. Banks resolve this by taking deposits, lending long, and letting depositors withdraw on demand: <span class="term">maturity transformation</span>, which creates liquidity. But because deposits are short and loans are long, a bank can't pay everyone at once. If depositors fear others will withdraw, each one's best move is to withdraw first. A rumor alone can trigger a <span class="term">bank run</span> that forces fire sales and destroys a sound bank. The run is a <b>self-fulfilling prophecy</b>.</p>
+ <div class="lab" id="lab-run">
+  <div class="lh"><span class="tag">Lab 8.1</span>A Diamond–Dybvig bank run</div>
+  <div class="lb">
+   <p class="hint">100 depositors each put in $1. A quarter genuinely need cash early. The bank promises $1.10 on demand. Its long-term loans pay $1.50 per dollar if held to maturity but only $0.80 if liquidated early. What if some patient depositors panic?</p>
+   <div class="ctrls">
+    <label><span>Patient depositors who panic and withdraw<output></output></span><input type="range" name="p" min="0" max="100" step="10" value="0" data-suf="%"></label>
+    <label class="chk"><input type="checkbox" name="ins"> Government deposit insurance</label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>Stopping runs</h2>
+ <p><b>Deposit insurance</b> removes the reason to run: if your money is guaranteed, you don't care what others do, so the insurance rarely needs to be paid out. The FDIC (created in 1933) insures deposits up to $250,000 per depositor per bank. A <b>lender of last resort</b>, the central bank lending freely to solvent banks against good collateral at a penalty rate, as Walter Bagehot advised in 1873, stops liquidity panics. The cost is <b>moral hazard</b>: protected banks and depositors take more risk, and banks seen as "too big to fail" expect rescue. Hence <b>regulation</b>: capital requirements, liquidity rules, supervision and stress tests.</p>
+ <h2>Bernanke and the Great Depression</h2>
+ <p>Between 1930 and 1933, U.S. industrial production fell 46% and unemployment reached 25%. Waves of runs cut the number of U.S. banks roughly in half in three years. Ben Bernanke (then a young Stanford professor, later at Princeton and Fed chair, Nobel 2022) showed in 1983 that bank failures were not just a symptom. When banks failed, their knowledge of borrowers and lending relationships vanished, so credit stopped flowing to sound households and firms, and rebuilding that took years. This "credit channel" explains why the Depression was so deep and long.</p>
+ <h2>The 2007–09 crisis</h2>
+ <p>A credit-fueled housing bubble burst in 2006. Losses on subprime mortgages, packaged into complex securities, spread through a <b>shadow banking</b> system of investment banks, money-market funds and repo lenders that funded long-term assets with short-term borrowing but had no deposit insurance. Yale's Gary Gorton described the panic as a run on repo: lenders demanded more collateral or stopped lending, forcing fire sales. Lehman Brothers failed in September 2008. As Fed chair, Bernanke applied his research: the Fed lent massively as lender of last resort, extended lending to non-banks, cut rates to near zero and began buying bonds. The Dodd–Frank Act (2010) followed.</p>
+ <h2>Silicon Valley Bank, 2023</h2>
+ <p>SVB had grown rapidly on deposits from tech firms and invested much of them in long-term bonds when rates were low. As rates rose in 2022, those bonds lost value (Module 3). When SVB announced a loss on bond sales and a plan to raise capital, depositors withdrew <b>$42 billion in a single day</b>, March 9, 2023, and the bank failed the next day. About 86% of its roughly $175 billion of deposits were uninsured, so depositors had every Diamond–Dybvig reason to run, and social media spread the panic in hours. Regulators then guaranteed all SVB deposits to prevent contagion.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Maturity transformation creates liquidity but invites self-fulfilling runs.</li><li>Deposit insurance and a lender of last resort stop runs, at the cost of moral hazard, so regulation is needed.</li><li>Bank failures deepen downturns by cutting off credit (Bernanke); 2008 and 2023 were modern runs.</li></ul></div>
+ <div class="box"><h3 style="margin-top:0">Sources &amp; further reading</h3><ul class="attr"><li>Nobel Prize Outreach, <a href="https://www.nobelprize.org/prizes/economic-sciences/2022/popular-information/">popular science background, Prize in Economic Sciences 2022</a></li><li>D. Diamond &amp; P. Dybvig, "Bank Runs, Deposit Insurance, and Liquidity," <i>JPE</i> (1983); B. Bernanke, "Nonmonetary Effects of the Financial Crisis in the Propagation of the Great Depression," <i>AER</i> (1983)</li><li>G. Gorton (Yale), <i>Slapped by the Invisible Hand: The Panic of 2007</i> (2010)</li><li>Ben Bernanke, <a href="https://www.federalreserve.gov/newsevents/lectures/about.htm">The Federal Reserve and the Financial Crisis</a> (four lectures, 2012)</li><li>Federal Reserve, Review of the Federal Reserve's Supervision and Regulation of Silicon Valley Bank (April 2023)</li></ul></div>
+ <div class="quiz" data-ch="8"></div>
+</section>
+
+<!-- ============ MODULE 9 ============ -->
+<section class="view" id="v-m9" hidden>
+ <div class="eyebrow">Module 9</div>
+ <h1>Central Banks and the Federal Reserve</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Explain why central banks exist</li><li>Describe the Fed's history and structure</li><li>Explain the case for central-bank independence</li><li>Compare the Fed with other central banks</li></ul></div>
+ <p class="lead">A central bank is the bank for banks and the government, and the manager of the nation's money.</p>
+ <h2>Why central banks?</h2>
+ <p>In his 2012 lectures, Ben Bernanke described two core missions: <b>macroeconomic stability</b> (stable prices and full employment) and <b>financial stability</b> (preventing and managing panics, including acting as lender of last resort). The U.S. tried life without a central bank for most of the 1800s and suffered repeated panics. After the Panic of 1907, which J. P. Morgan personally helped contain, Congress created the <b>Federal Reserve</b> in 1913.</p>
+ <h2>How the Fed is organized</h2>
+ <div class="tscroll"><table class="t"><tr><th>Part</th><th>Role</th></tr>
+ <tr><td><b>Board of Governors</b> (Washington)</td><td>Seven governors appointed by the President and confirmed by the Senate for 14-year terms. The Chair serves a 4-year term.</td></tr>
+ <tr><td><b>12 regional Federal Reserve Banks</b></td><td>Supervise banks, run payments, research their districts. The New York Fed conducts market operations.</td></tr>
+ <tr><td><b>Federal Open Market Committee (FOMC)</b></td><td>The 7 governors plus the New York Fed president and 4 rotating Reserve Bank presidents: 12 votes. It sets monetary policy at eight scheduled meetings a year.</td></tr></table></div>
+ <p>Congress gave the Fed a <b>dual mandate</b>: maximum employment and stable prices, interpreted since 2012 as 2% inflation measured by the PCE price index.</p>
+ <h2>Independence</h2>
+ <p>Politicians face elections and are tempted to stimulate the economy before votes, or to have the central bank finance deficits, both recipes for inflation. Studies across countries find that more independent central banks deliver lower inflation without lower growth. Independence comes with accountability: testimony to Congress, published statements, minutes, projections, and a chair's press conference after each meeting. The Fed is independent <em>within</em> government, not of it: Congress can change its powers.</p>
+ <h2>The Fed today</h2>
+ <p>Kevin Warsh chairs the Fed. In September 2026 the FOMC raised its target range for the federal funds rate by a quarter point, to 3.75%–4.00%, its first increase since 2023, and on October 28, 2026 it held the rate there by a 10–2 vote. Warsh has said one 2027 meeting will focus entirely on policy strategy, with no rate vote expected. Inflation was still above target: the Fed's staff estimated PCE inflation at 3.8% over the year to August 2026, and unemployment was 4.1%.</p>
+ <h2>Other central banks</h2>
+ <p>The <b>European Central Bank</b> (1998) sets policy for the euro area with a primary mandate of price stability. The <b>Bank of England</b> (1694) gained operational independence in 1997 with an inflation target. The <b>Bank of Japan</b> pioneered quantitative easing in the 2000s. Many central banks use <b>inflation targeting</b>: an announced numerical goal plus transparent communication.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Central banks pursue price stability, employment and financial stability.</li><li>The Fed is a federal structure: a Board, 12 Reserve Banks, and the FOMC that sets policy.</li><li>Independence plus accountability delivers lower inflation.</li></ul></div>
+ <div class="box"><h3 style="margin-top:0">Sources &amp; further reading</h3><ul class="attr"><li>Ben Bernanke, Lecture 1: <a href="https://www.federalreserve.gov/newsevents/lectures/about.htm">Origins and Mission of the Federal Reserve</a> (2012)</li><li>Federal Reserve, <a href="https://www.federalreserve.gov/monetarypolicy/fomcminutes20260916.htm">FOMC minutes, September 15–16, 2026</a></li><li>A. Alesina &amp; L. Summers (Harvard), "Central Bank Independence and Macroeconomic Performance," <i>JMCB</i> (1993)</li></ul></div>
+ <div class="quiz" data-ch="9"></div>
+</section>
+
+<!-- ============ MODULE 10 ============ -->
+<section class="view" id="v-m10" hidden>
+ <div class="eyebrow">Module 10</div>
+ <h1>The Money Supply Process</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Read the Fed's balance sheet and define the monetary base</li><li>Show how banks create deposits by lending</li><li>Derive the money multiplier and what changes it</li><li>Explain why the multiplier stopped describing reality after 2008</li></ul></div>
+ <p class="lead">Most money is created not by the central bank but by commercial banks when they make loans.</p>
+ <h2>The Fed's balance sheet</h2>
+ <div class="tscroll"><table class="t"><tr><th>Fed assets</th><th>Fed liabilities</th></tr>
+ <tr><td>Treasury securities</td><td>Currency in circulation</td></tr>
+ <tr><td>Agency mortgage-backed securities</td><td>Bank reserves (deposits banks hold at the Fed)</td></tr>
+ <tr><td>Loans to banks (discount window)</td><td>Treasury's account, reverse repos</td></tr></table></div>
+ <p>The <span class="term">monetary base</span> = currency + reserves. When the Fed buys a bond from a bank (an <b>open market purchase</b>), it pays by crediting the bank's reserve account: the base rises. Sales do the reverse.</p>
+ <h2>How banks create money</h2>
+ <p>When a bank makes a loan, it credits the borrower's account with a new deposit, and deposits are money. As the borrower spends, the deposit moves to other banks, which can lend again. In the textbook model, with a required reserve ratio <i>rr</i>, a currency ratio <i>c</i> (currency held per dollar of deposits) and an excess reserve ratio <i>e</i>:</p>
+ <div class="formula">Money supply M = m × MB, where m = (1 + c) ÷ (rr + e + c)<small>With rr = 10%, e = 0 and c = 0, $1 of new reserves supports $10 of deposits.</small></div>
+ <div class="lab" id="lab-mult">
+  <div class="lh"><span class="tag">Lab 10.1</span>The money multiplier</div>
+  <div class="lb">
+   <p class="hint">The monetary base is $1 trillion. Change the required reserve ratio, how much cash the public holds, and how many extra reserves banks keep.</p>
+   <div class="ctrls">
+    <label><span>Required reserve ratio rr<output></output></span><input type="range" name="rr" min="0" max="3" step="1" value="2" data-labels="0%|3%|10%|20%"></label>
+    <label><span>Currency ratio c<output></output></span><input type="range" name="c" min="0" max="2" step="1" value="1" data-labels="0.10|0.25|0.50"></label>
+    <label><span>Excess reserve ratio e<output></output></span><input type="range" name="e" min="0" max="5" step="1" value="0" data-labels="0|0.05|0.2|0.5|1.0|2.0"></label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>Why the multiplier broke</h2>
+ <p>The multiplier treats banks as lending out every spare dollar of reserves. After 2008, the Fed's bond purchases (quantitative easing) multiplied the monetary base several times over, yet broad money grew far less, because banks simply held the new reserves. <i>e</i> soared and the multiplier collapsed. Since 2008 the Fed has paid <b>interest on reserves</b>, making them an attractive asset, and in March 2020 it cut reserve requirements to <b>zero</b>. Today banks' lending is limited by profitable opportunities, capital rules and demand for loans, not by reserves. As the Bank of England put it in a well-known 2014 explainer, loans create deposits, not the other way round. The multiplier is still a useful accounting identity, but not a causal machine.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Monetary base = currency + reserves; open market operations change it.</li><li>Bank lending creates deposits; the multiplier m = (1 + c)/(rr + e + c) summarizes the link.</li><li>With ample reserves paying interest and zero reserve requirements, the multiplier no longer constrains money creation.</li></ul></div>
+ <div class="box"><h3 style="margin-top:0">Sources &amp; further reading</h3><ul class="attr"><li>M. McLeay, A. Radia &amp; R. Thomas, "Money Creation in the Modern Economy," Bank of England <i>Quarterly Bulletin</i> (2014)</li><li>M. Friedman &amp; A. Schwartz, <i>A Monetary History of the United States, 1867–1960</i> (1963)</li><li>Perry Mehrling, <i>Economics of Money and Banking</i> (Coursera), on balance sheets and the "money view"</li></ul></div>
+ <div class="quiz" data-ch="10"></div>
+</section>
+
+<!-- ============ MODULE 11 ============ -->
+<section class="view" id="v-m11" hidden>
+ <div class="eyebrow">Module 11</div>
+ <h1>Monetary Policy: Tools and Strategy</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Explain how the Fed sets interest rates with ample reserves</li><li>Describe quantitative easing and tightening, and forward guidance</li><li>Use the Taylor rule</li><li>Trace how policy reaches the economy</li></ul></div>
+ <p class="lead">The Fed doesn't decree the interest rate. It sets the terms on which banks can lend to it and borrow from it, and markets follow.</p>
+ <h2>Setting rates with ample reserves</h2>
+ <p>The FOMC targets the <b>federal funds rate</b>, the overnight rate at which banks lend reserves to each other, within a range a quarter point wide. Before 2008, reserves were scarce and the New York Fed nudged the rate by adding or draining small amounts. Now the system has <b>ample reserves</b> and the Fed steers the rate with <b>administered rates</b>:</p>
+ <div class="tscroll"><table class="t"><tr><th>Tool</th><th>How it works</th><th>Setting after Sept 2026</th></tr>
+ <tr><td><b>Interest on reserve balances (IORB)</b></td><td>No bank lends reserves for much less than it earns by leaving them at the Fed</td><td>3.90%</td></tr>
+ <tr><td><b>Overnight reverse repo (ON RRP)</b></td><td>Money funds and others can park cash at the Fed, setting a floor under market rates</td><td>3.75%</td></tr>
+ <tr><td><b>Discount rate</b> (primary credit) and <b>standing repo facility</b></td><td>Banks can always borrow from the Fed at this rate, putting a ceiling on market rates</td><td>4.00%</td></tr></table></div>
+ <p>When the FOMC raises its target, it raises all three together. The quantity of reserves barely matters, as long as it stays "ample."</p>
+ <div class="lab" id="lab-res">
+  <div class="lh"><span class="tag">Lab 11.1</span>The market for reserves</div>
+  <div class="lb">
+   <p class="hint">Banks' demand for reserves slopes down and flattens near IORB. Change the Fed's target range and the quantity of reserves. (The curve shape is illustrative.)</p>
+   <div class="ctrls">
+    <label><span>Top of target range<output></output></span><input type="range" name="t" min="1" max="5" step="1" value="4" data-suf="%"></label>
+    <label><span>Reserves supplied ($ trillions)<output></output></span><input type="range" name="s" min="0" max="5" step="1" value="4" data-labels="0.5|1.0|1.5|2.0|3.0|4.0"></label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>Balance-sheet policy and guidance</h2>
+ <p>When the policy rate hits zero, central banks use <b>quantitative easing (QE)</b>: large-scale purchases of long-term bonds to push down long-term rates. The Fed did this after 2008 and in 2020. <b>Quantitative tightening (QT)</b> shrinks holdings by letting bonds mature without replacement. As of late 2026 the Fed is rolling over maturing Treasuries and buying Treasury bills as needed to keep reserves ample. <b>Forward guidance</b> (signaling the future path of rates) works through expectations, since long rates reflect expected short rates (Module 5).</p>
+ <h2>The Taylor rule</h2>
+ <p>John Taylor (Stanford) proposed in 1993 that policy follows a simple rule:</p>
+ <div class="formula">i = r* + π + 0.5 (π − 2) + 0.5 × (output gap)<small>r* is the neutral real rate and π is inflation. Raising the rate more than one-for-one with inflation (the "Taylor principle") lifts the real rate when inflation rises.</small></div>
+ <div class="lab" id="lab-taylor">
+  <div class="lh"><span class="tag">Lab 11.2</span>The Taylor rule</div>
+  <div class="lb">
+   <p class="hint">Set inflation and the output gap. The rule's prescribed rate is compared with the actual Fed funds target (3.75–4.00% as of November 2026).</p>
+   <div class="ctrls">
+    <label><span>Inflation π<output></output></span><input type="range" name="pi" min="0" max="7" step="1" value="4" data-labels="0%|1%|2%|3%|4%|5%|6%|8%"></label>
+    <label><span>Output gap<output></output></span><input type="range" name="gap" min="0" max="3" step="1" value="2" data-labels="−4%|−2%|0%|+2%"></label>
+    <label><span>Neutral real rate r*<output></output></span><input type="range" name="rs" min="0.5" max="2" step="0.5" value="1" data-suf="%"></label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>Transmission</h2>
+ <p>Policy reaches the economy through several channels: <b>interest rates</b> (borrowing costs for homes, cars and investment), <b>asset prices</b> (stocks and houses, and therefore wealth), the <b>exchange rate</b> (higher rates strengthen the dollar and reduce net exports), <b>credit</b> (bank lending and borrowers' balance sheets, Bernanke's credit channel), and <b>expectations</b>. Effects arrive with "long and variable lags," as Friedman warned, so policy must look ahead.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>With ample reserves, IORB, ON RRP and the discount rate steer the fed funds rate.</li><li>QE, QT and forward guidance work on long rates and expectations.</li><li>The Taylor rule links the policy rate to inflation and the output gap.</li></ul></div>
+ <div class="box"><h3 style="margin-top:0">Sources &amp; further reading</h3><ul class="attr"><li>Federal Reserve, <a href="https://www.federalreserve.gov/monetarypolicy/fomcminutes20260916.htm">FOMC minutes and policy directive, September 2026</a></li><li>J. Taylor, "Discretion versus Policy Rules in Practice," <i>Carnegie-Rochester Conference Series</i> (1993)</li><li>B. Bernanke &amp; M. Gertler, "Inside the Black Box: The Credit Channel of Monetary Policy Transmission," <i>JEP</i> (1995)</li></ul></div>
+ <div class="quiz" data-ch="11"></div>
+</section>
+
+<!-- ============ MODULE 12 ============ -->
+<section class="view" id="v-m12" hidden>
+ <div class="eyebrow">Module 12</div>
+ <h1>Money, Inflation and the International System</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Use the quantity theory of money</li><li>Explain why big inflations are monetary, and how they end</li><li>Apply interest parity to exchange rates</li><li>Explain the international monetary trilemma</li></ul></div>
+ <p class="lead">"Inflation is always and everywhere a monetary phenomenon." Friedman's line is right about the long run. Understanding why is the last piece of the puzzle.</p>
+ <h2>The quantity theory</h2>
+ <div class="formula">M × V = P × Y<small>Money × velocity = price level × real output. In growth rates: inflation ≈ money growth + velocity growth − real output growth.</small></div>
+ <p>If velocity is stable and output grows at its own pace, faster money growth shows up mostly as inflation. Friedman and Anna Schwartz's <i>A Monetary History of the United States</i> (1963) documented this over a century, and argued that the Fed's failure to stop the money supply from collapsing turned the 1929 downturn into the Great Depression. In the short run velocity is unstable (it plunged in 2020), so the link is loose year to year but strong over decades and across countries.</p>
+ <div class="lab" id="lab-qtm">
+  <div class="lh"><span class="tag">Lab 12.1</span>The quantity theory in growth rates</div>
+  <div class="lb">
+   <p class="hint">Choose money growth, velocity growth and real output growth. Inflation is what's left over.</p>
+   <div class="ctrls">
+    <label><span>Money growth<output></output></span><input type="range" name="mu" min="0" max="5" step="1" value="2" data-labels="0%|2%|5%|8%|12%|20%"></label>
+    <label><span>Velocity growth<output></output></span><input type="range" name="v" min="-2" max="2" step="2" value="0" data-suf="%"></label>
+    <label><span>Real output growth<output></output></span><input type="range" name="g" min="0" max="4" step="2" value="2" data-suf="%"></label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h3>How big inflations end</h3>
+ <p>Thomas Sargent (Princeton/NYU, Nobel 2011) studied four post-WWI hyperinflations in Austria, Hungary, Germany and Poland. Each ended abruptly, not through slow money tightening, but when a credible change of <b>regime</b> stopped deficits being financed by printing money: an independent central bank and a balanced budget. Expectations turned on a dime. The lesson: credibility and the fiscal backdrop matter as much as the money supply.</p>
+ <h2>Exchange rates and interest parity</h2>
+ <p>Capital moves to where expected returns are highest. With free capital flows, <b>interest parity</b> holds: the gap between two countries' interest rates equals the expected change in their exchange rate. If dollar rates are 2 points above euro rates, investors must expect the dollar to depreciate about 2% a year; otherwise everyone would pile into dollars. A central bank that raises rates relative to the rest of the world tends to strengthen its currency today.</p>
+ <div class="lab" data-calc="uip"></div>
+ <h2>The trilemma</h2>
+ <p>Robert Mundell (Columbia, Nobel 1999) and Marcus Fleming showed that a country cannot have all three at once: <b>a fixed exchange rate</b>, <b>free capital movement</b>, and <b>an independent monetary policy</b>. It must pick two.</p>
+ <div class="grid2">
+  <div><b>Fixed rate + free capital</b>Gives up monetary independence: Hong Kong's dollar peg, euro-area members.</div>
+  <div><b>Free capital + independent policy</b>Must let the currency float: the U.S., U.K. and Japan.</div>
+  <div><b>Fixed rate + independent policy</b>Requires capital controls: the Bretton Woods system (1944–71), China for many years.</div>
+  <div><b>History</b>The gold standard chose fixed rates and free capital; Bretton Woods used controls; since 1973 major economies float.</div>
+ </div>
+ <p style="margin-top:1em">At the top of today's monetary hierarchy (Module 1) sits the U.S. dollar. During global crises the Fed lends dollars to other central banks through <b>swap lines</b>, acting as a lender of last resort to the world, as it did in 2008 and 2020.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Inflation ≈ money growth + velocity growth − output growth; over long periods, money growth drives inflation.</li><li>Ending high inflation takes a credible regime change.</li><li>Interest parity links rates and exchange rates; the trilemma forces a choice of two out of three.</li></ul></div>
+ <div class="box"><h3 style="margin-top:0">Sources &amp; further reading</h3><ul class="attr"><li>M. Friedman &amp; A. Schwartz, <i>A Monetary History of the United States</i> (1963); M. Friedman, <i>Money Mischief</i> (1992)</li><li>T. Sargent, "The Ends of Four Big Inflations," in R. Hall (ed.), <i>Inflation: Causes and Effects</i> (1982)</li><li>R. Mundell, "Capital Mobility and Stabilization Policy under Fixed and Flexible Exchange Rates" (1963)</li></ul></div>
+ <div class="quiz" data-ch="12"></div>
+ <div class="box" style="text-align:center"><h3 style="margin-top:0">You've reached the end 🎓</h3><p style="font-family:var(--sans);font-size:15px;margin:0">Head back to the <a href="#home">contents</a> to see which quizzes are left, or browse the <a href="#glossary">glossary</a> to review.</p></div>
+</section>
+
+</main>
+</div>
+<script>
+(function(){
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const store={get(k,d){try{const v=localStorage.getItem('mbank_'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('mbank_'+k,JSON.stringify(v))}catch(e){}}};
+const f0=n=>Math.round(n).toLocaleString('en-US'), f1=n=>(Math.round(n*10)/10).toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1}), f2=n=>n.toFixed(2), d2=n=>'$'+n.toFixed(2);
+
+const MODS=[
+ {t:'What Is Money?',d:'Functions, fiat money, the island of Yap and the hierarchy of money'},
+ {t:'The Financial System',d:'Markets, intermediaries and asymmetric information'},
+ {t:'Interest Rates and Present Value',d:'Discounting, bond prices, yields and real rates'},
+ {t:'The Behavior of Interest Rates',d:'Loanable funds, the Fisher effect and liquidity preference'},
+ {t:'Risk and the Term Structure',d:'Credit spreads and the yield curve'},
+ {t:'The Stock Market and Efficient Markets',d:'Gordon growth, Fama vs Shiller, bubbles'},
+ {t:'Banks: Balance Sheets and Management',d:'T-accounts, liquidity, capital and leverage'},
+ {t:'Bank Runs, Regulation and Crises',d:'Diamond–Dybvig, Bernanke, 2008 and SVB'},
+ {t:'Central Banks and the Federal Reserve',d:'History, structure, independence, the Fed today'},
+ {t:'The Money Supply Process',d:'The monetary base, deposit creation and the multiplier'},
+ {t:'Monetary Policy: Tools and Strategy',d:'Ample reserves, QE, the Taylor rule and transmission'},
+ {t:'Money, Inflation and the International System',d:'Quantity theory, interest parity and the trilemma'}];
+
+const CALCS={
+ tvm:{title:'Present and future value',tag:'Calculator 3.1',hint:'Enter an amount, an annual interest rate and a number of years.',inputs:[['Amount ($)','1000'],['Interest rate (%)','5'],['Years','10']],
+  fn:'var A=v[0],r=v[1]/100,n=v[2];if(isNaN(A)||isNaN(r)||isNaN(n)||r<=-1)return "Enter an amount, a rate and a number of years.";var FV=A*Math.pow(1+r,n),PV=A/Math.pow(1+r,n);return "Future value of $"+A.toFixed(2)+" invested today: $"+FV.toFixed(2)+"\\nPresent value of $"+A.toFixed(2)+" received in "+n+" years: $"+PV.toFixed(2)+(r>0?"\\nRule of 72: money doubles in about "+(72/(r*100)).toFixed(1)+" years":"");'},
+ ytm:{title:'Yield-to-maturity calculator',tag:'Calculator 3.2',hint:'Annual coupons. Enter the price you pay, the face value, the coupon rate and the years left.',inputs:[['Price ($)','950'],['Face value ($)','1000'],['Coupon rate (%)','5'],['Years to maturity','10']],
+  fn:'var P=v[0],F=v[1],c=v[2]/100,n=Math.round(v[3]);if(isNaN(P)||isNaN(F)||isNaN(c)||isNaN(n)||P<=0||F<=0||n<1)return "Enter a positive price, face value and whole number of years.";function pr(y){var s=0;for(var t=1;t<=n;t++)s+=c*F/Math.pow(1+y,t);return s+F/Math.pow(1+y,n);}var lo=-0.9,hi=2;for(var k=0;k<200;k++){var mid=(lo+hi)/2;if(pr(mid)>P)lo=mid;else hi=mid;}var y=(lo+hi)/2;return "Yield to maturity: "+(y*100).toFixed(3)+"%\\nCurrent yield (coupon / price): "+(c*F/P*100).toFixed(3)+"%\\nThe bond trades at a "+(P>F+0.005?"premium: YTM is below the coupon rate":(P<F-0.005?"discount: YTM is above the coupon rate":"par: YTM equals the coupon rate"));'},
+ fisher:{title:'Real interest rate (Fisher equation)',tag:'Calculator 3.3',hint:'Enter a nominal interest rate and expected inflation.',inputs:[['Nominal rate (%)','4'],['Expected inflation (%)','3']],
+  fn:'var i=v[0],p=v[1];if(isNaN(i)||isNaN(p)||p<=-100)return "Enter two numbers.";var ex=((1+i/100)/(1+p/100)-1)*100;return "Approximate real rate: "+i+" - "+p+" = "+(i-p).toFixed(2)+"%\\nExact real rate: (1 + i)/(1 + pi) - 1 = "+ex.toFixed(2)+"%\\n"+(ex<0?"Negative real rate: savers lose purchasing power.":"Savers gain purchasing power at this rate.");'},
+ uip:{title:'Interest parity',tag:'Calculator 12.2',hint:'Compare one-year interest rates in the U.S. and the euro area. The spot rate is in dollars per euro.',inputs:[['U.S. interest rate (%)','4'],['Euro-area interest rate (%)','2'],['Spot rate ($ per €)','1.10']],
+  fn:'var a=v[0]/100,b=v[1]/100,s=v[2];if(isNaN(a)||isNaN(b)||isNaN(s)||s<=0)return "Enter two rates and a positive spot rate.";var f=s*(1+a)/(1+b),ch=(f/s-1)*100;return "Parity rate one year ahead: $"+f.toFixed(4)+" per euro\\nThe euro is expected to "+(ch>=0?"appreciate":"depreciate")+" "+Math.abs(ch).toFixed(2)+"% against the dollar\\nThe interest gap ("+((a-b)*100).toFixed(2)+" points) is offset by the expected currency move, so neither country\'s bonds offer a free lunch.";'}};
+
+const QZ={
+1:[["Which function of money removes the need for a \"double coincidence of wants\"?",["Unit of account","Store of value","Medium of exchange","Standard of deferred payment"],2,"Barter requires each side to want exactly what the other has; money breaks that link."],
+ ["Friedman's island of Yap story shows that…",["Money must be made of precious metal","Money's value rests on shared belief and acceptance","Large coins are impractical","Central banks are unnecessary"],1,"A stone at the bottom of the sea still counted as wealth because everyone agreed it did."],
+ ["In Mehrling's hierarchy of money, a bank deposit is…",["The top of the hierarchy","A promise to pay central-bank money","Commodity money","Not money at all"],1,"Each layer is a promise to pay something higher up; deposits settle in central-bank reserves."]],
+2:[["Borrowers with the riskiest projects being most eager for loans is…",["Moral hazard","Adverse selection","Credit rationing","Maturity transformation"],1,"Adverse selection happens before the loan; moral hazard happens after it."],
+ ["Stiglitz and Weiss explain credit rationing because raising interest rates…",["Always increases bank profits","Can drive away safe borrowers and attract risky ones","Is illegal","Reduces deposits"],1,"Higher rates worsen the pool of applicants, so lenders limit quantity instead."],
+ ["Diamond's theory says banks exist partly because they…",["Print money","Monitor borrowers on behalf of many savers","Avoid all risk","Never lend long-term"],1,"Delegated monitoring avoids wasteful duplication and banks have their own incentive to monitor well."]],
+3:[["Market interest rates rise. What happens to the price of an existing fixed-coupon bond?",["It rises","It falls","It is unchanged","It equals face value"],1,"Prices and yields move inversely: old coupons look worse at higher market rates."],
+ ["$1,000 due in 10 years at a 5% discount rate is worth about…",["$1,000","$614","$500","$1,629"],1,"1,000 ÷ 1.05¹⁰ ≈ 614."],
+ ["A loan at 6% with 4% expected inflation has a real rate of about…",["10%","6%","2%","−2%"],2,"Real ≈ nominal − expected inflation."]],
+4:[["Under the Fisher effect, a 2-point rise in expected inflation raises nominal interest rates by about…",["0 points","1 point","2 points","4 points"],2,"Lenders demand compensation and borrowers will pay it, so nominal rates rise one-for-one."],
+ ["In liquidity preference, an increase in the money supply initially…",["Raises interest rates","Lowers interest rates","Has no effect","Raises the price level only"],1,"This is the liquidity effect; income, price and expectation effects may reverse it later."],
+ ["Which would lower interest rates in the loanable funds model?",["A business boom","Higher expected inflation","An increase in savers' wealth","Bigger government deficits"],2,"More wealth increases the supply of loanable funds."]],
+5:[["Interest on U.S. municipal bonds is exempt from federal tax, so munis…",["Pay more than Treasuries","Can pay less than Treasuries","Have no default risk","Are not traded"],1,"Investors accept a lower pre-tax yield in exchange for the tax break."],
+ ["Which theory explains why yield curves usually slope upward?",["Pure expectations","Segmented markets only","Liquidity premium","Quantity theory"],2,"Expected short rates plus a term premium that rises with maturity."],
+ ["An inverted yield curve usually signals that markets expect…",["Short rates to rise","Short rates to fall, often in a downturn","Higher inflation","Stocks to boom"],1,"Long rates below short rates imply expected cuts."]],
+6:[["With D₁ = $2, k = 8% and g = 3%, the Gordon model price is…",["$25","$40","$66.67","$200"],1,"2 ÷ (0.08 − 0.03) = 40."],
+ ["The efficient markets hypothesis implies that…",["Prices never change","Publicly available tips can't produce reliable excess returns","Bubbles are common","Insiders can't profit"],1,"Prices already reflect public information."],
+ ["Shiller's \"excess volatility\" finding is that…",["Dividends are more volatile than prices","Stock prices move far more than later dividends justify","Bonds are riskier than stocks","Markets are perfectly efficient"],1,"Prices swing more than rational forecasts of dividends would allow."]],
+7:[["A bank has $100 of assets and $10 of capital. Its leverage (assets ÷ equity) is…",["1","10","90","0.1"],1,"100 ÷ 10 = 10."],
+ ["If ROA is 1% and leverage is 12, ROE is…",["1%","12%","13%","0.08%"],1,"ROE = ROA × leverage = 12%."],
+ ["Which is a bank liability?",["Loans","Reserves","Deposits","Treasury securities"],2,"Deposits are owed to customers; the others are assets."]],
+8:[["In the Diamond–Dybvig model, bank runs can happen because…",["Banks are always insolvent","Deposits are short-term while loans are long-term, so fear can be self-fulfilling","Depositors are irrational","Interest rates are too low"],1,"Maturity transformation leaves the bank unable to pay everyone at once."],
+ ["Deposit insurance prevents runs because…",["It pays out constantly","Depositors no longer need to fear others' withdrawals","It bans withdrawals","It raises interest rates"],1,"With a guarantee, waiting is safe, so the run never starts and the insurance is rarely paid."],
+ ["About how much was withdrawn from Silicon Valley Bank on March 9, 2023?",["$4.2 million","$420 million","$42 billion","$420 billion"],2,"$42 billion in one day; most of its deposits were uninsured."]],
+9:[["How many voting members does the FOMC have?",["7","9","12","19"],2,"7 governors + the New York Fed president + 4 rotating Reserve Bank presidents."],
+ ["The Fed's dual mandate is…",["Low taxes and growth","Maximum employment and stable prices","A strong dollar and low deficits","Bank profits and stock prices"],1,"Price stability is defined as 2% PCE inflation."],
+ ["What did the FOMC do in September 2026?",["Cut rates to zero","Raised the target range to 3.75–4.00%","Held at 5.25–5.50%","Ended interest on reserves"],1,"Its first increase since 2023, after which it held in October."]],
+10:[["The monetary base equals…",["M2","Currency plus bank reserves","Deposits plus loans","Treasury securities"],1,"It is the central bank's monetary liability."],
+ ["With rr = 10%, c = 0 and e = 0, the simple money multiplier is…",["1","5","10","100"],2,"m = 1 / 0.10 = 10."],
+ ["Why did the multiplier collapse after 2008?",["Reserve requirements rose","Banks held the new reserves (e soared) as the Fed paid interest on them","Currency vanished","The Fed stopped buying bonds"],1,"Excess reserves exploded, so broad money grew far less than the base."]],
+11:[["In today's ample-reserves system, the Fed mainly moves the fed funds rate by…",["Fine-tuning the quantity of reserves daily","Changing administered rates such as IORB and ON RRP","Changing reserve requirements","Printing currency"],1,"Banks won't lend reserves far below what the Fed pays them."],
+ ["With r* = 1, inflation 4% and output gap 0, the Taylor rule prescribes…",["4%","5%","6%","3%"],2,"1 + 4 + 0.5×2 + 0 = 6%."],
+ ["Quantitative easing works mainly by…",["Raising short-term rates","Buying long-term bonds to lower long-term yields","Cutting taxes","Raising reserve requirements"],1,"It's used when short rates are at zero."]],
+12:[["With money growth 8%, velocity steady and real growth 2%, inflation is about…",["10%","8%","6%","2%"],2,"π ≈ μ + v − g = 8 + 0 − 2."],
+ ["Sargent found that the four big post-WWI inflations ended…",["Slowly over decades","Abruptly, after credible fiscal and monetary regime changes","Only after wars","When gold was discovered"],1,"Credibility changed expectations almost overnight."],
+ ["The trilemma says a country cannot simultaneously have…",["Low inflation, growth and jobs","A fixed exchange rate, free capital flows and independent monetary policy","Exports, imports and tariffs","Banks, markets and a central bank"],1,"It can choose any two."]]};
+
+const GL=[["Adverse selection",2,"Before a deal, the riskiest parties are the most eager to participate."],["Ample reserves",11,"A regime with so many reserves that the fed funds rate is set by administered rates, not reserve scarcity."],["Bank capital",7,"Assets minus liabilities; the cushion that absorbs losses."],["Bank run",8,"Many depositors withdrawing at once out of fear the bank will fail."],["Bubble",6,"A price rise driven by expected further rises rather than fundamentals."],["Commodity money",1,"Money with intrinsic value, such as gold coins."],["Coupon bond",3,"A bond that pays fixed interest each year and its face value at maturity."],["Credit channel",8,"Monetary or financial shocks affecting the economy by changing banks' ability and willingness to lend."],["Credit rationing",2,"Lenders limit loans rather than raise rates, because higher rates worsen the borrower pool."],["Default risk",5,"The chance a borrower won't pay interest or principal."],["Delegated monitoring",2,"Banks monitor borrowers on behalf of many depositors."],["Deposit insurance",8,"A government guarantee of deposits (in the U.S., the FDIC, up to $250,000)."],["Discount bond",3,"A bond bought below face value that pays only the face value at maturity."],["Discount rate",11,"The rate on Fed loans to banks (primary credit), a ceiling for market rates."],["Dual mandate",9,"The Fed's goals of maximum employment and stable prices."],["Efficient markets hypothesis",6,"Prices fully reflect available information."],["Excess reserves",10,"Reserves above any requirement."],["Excess volatility",6,"Shiller's finding that stock prices move more than dividends justify."],["Federal funds rate",11,"The overnight rate on loans of reserves between banks; the Fed's policy target."],["Fiat money",1,"Money not backed by a commodity, accepted by law and convention."],["Financial intermediary",2,"An institution that takes funds from savers and lends or invests them."],["Fisher effect",4,"Nominal interest rates move with expected inflation."],["FOMC",9,"Federal Open Market Committee: 12 voting members who set U.S. monetary policy."],["Forward guidance",11,"Central-bank communication about the likely future path of policy."],["Gordon growth model",6,"Stock price = next dividend ÷ (required return − growth)."],["Hierarchy of money",1,"The layered system in which each kind of money is a promise to pay a higher kind."],["Indirect finance",2,"Funds flowing from savers to borrowers through intermediaries."],["Interest on reserve balances (IORB)",11,"The rate the Fed pays on banks' reserves."],["Interest parity",12,"The interest-rate gap between two countries equals the expected change in their exchange rate."],["Interest-rate risk",3,"The risk that bond prices fall when rates rise; larger for long bonds."],["Lender of last resort",8,"A central bank lending to solvent banks in a panic."],["Leverage",7,"Assets divided by equity."],["Liquidity",1,"How easily an asset can be turned into money at full value."],["Liquidity preference",4,"Keynes's theory that the interest rate balances the supply and demand for money."],["Liquidity premium theory",5,"Long rates = average expected short rates + a term premium."],["M1",1,"Currency, demand deposits and other liquid deposits held by the public."],["M2",1,"M1 plus small time deposits and retail money-market funds."],["Maturity transformation",8,"Funding long-term assets with short-term liabilities."],["Medium of exchange",1,"Something generally accepted in payment."],["Monetary base",10,"Currency plus bank reserves."],["Money multiplier",10,"The ratio of the money supply to the monetary base."],["Moral hazard",2,"After a deal, a protected party takes more risk."],["Nominal interest rate",3,"The quoted rate, not adjusted for inflation."],["Open market operations",10,"Central-bank purchases or sales of securities."],["Overnight reverse repo (ON RRP)",11,"A Fed facility where money funds lend to the Fed overnight, setting a floor under rates."],["Present value",3,"Today's value of a future payment: CF ÷ (1 + i)ⁿ."],["Quantitative easing",11,"Large-scale central-bank purchases of long-term assets."],["Quantity theory of money",12,"MV = PY; over the long run, money growth drives inflation."],["Real interest rate",3,"The nominal rate minus expected inflation."],["Reserves",7,"Banks' cash and deposits at the central bank."],["Return on assets (ROA)",7,"Net income ÷ assets."],["Return on equity (ROE)",7,"Net income ÷ equity = ROA × leverage."],["Risk premium",5,"The extra yield investors demand for bearing default risk."],["Shadow banking",8,"Bank-like maturity transformation outside insured banks (repo, money funds, investment banks)."],["Store of value",1,"A way to hold purchasing power over time."],["Swap lines",12,"Agreements under which the Fed lends dollars to foreign central banks."],["Taylor rule",11,"A guide setting the policy rate from inflation and the output gap."],["Term structure",5,"The relationship between yield and maturity."],["Trilemma",12,"A country can't have a fixed exchange rate, free capital flows and independent monetary policy all at once."],["Unit of account",1,"The common measure in which prices are stated."],["Velocity",12,"How many times a dollar is spent per year: PY ÷ M."],["Yield curve",5,"A plot of yields on similar bonds with different maturities."],["Yield to maturity",3,"The interest rate that equates a bond's price to the PV of its payments."]];
+
+
+/* ---------- chart engine ---------- */
+function chart(o){
+ const W=520,H=360,L=58,R=18,T=16,B=46;
+ const y0=o.ymin||0, X=x=>L+x/o.xmax*(W-L-R), Y=y=>H-B-(y-y0)/(o.ymax-y0)*(H-T-B);
+ const P=p=>X(p[0]).toFixed(1)+','+Y(p[1]).toFixed(1);
+ let s=`<svg viewBox="0 0 ${W} ${H}" class="chart" role="img"><defs><clipPath id="cp-${o.id}"><rect x="${L}" y="${T-2}" width="${W-L-R+2}" height="${H-T-B+2}"/></clipPath></defs>`;
+ const xt=o.xt||o.xmax/5, yt=o.yt||(o.ymax-y0)/5, fx=o.xfmt||(v=>+v.toFixed(2)), fy=o.yfmt||(v=>(o.ypre||'')+(+v.toFixed(2)));
+ for(let x=0;x<=o.xmax+1e-9;x+=xt)s+=`<line x1="${X(x)}" x2="${X(x)}" y1="${T}" y2="${H-B}" class="grid"/><text x="${X(x)}" y="${H-B+17}" class="tick" text-anchor="middle">${fx(x)}</text>`;
+ for(let y=y0;y<=o.ymax+1e-9;y+=yt)s+=`<line x1="${L}" x2="${W-R}" y1="${Y(y)}" y2="${Y(y)}" class="grid"/><text x="${L-7}" y="${Y(y)+4}" class="tick" text-anchor="end">${fy(y)}</text>`;
+ s+=`<g clip-path="url(#cp-${o.id})">`;
+ (o.areas||[]).forEach(a=>{if(a.pts.length>2)s+=`<polygon points="${a.pts.map(P).join(' ')}" style="fill:var(--${a.c});fill-opacity:${a.op||.28}"/>`});
+ (o.lines||[]).forEach(l=>{let pts=l.pts;if(l.fn){pts=[];const[a,b]=l.dom||[0,o.xmax];const n=l.n||140;for(let i=0;i<=n;i++){const x=a+(b-a)*i/n,y=l.fn(x);if(isFinite(y))pts.push([x,Math.max(-o.ymax,Math.min(y,o.ymax*4))])}}
+  s+=`<polyline points="${pts.map(P).join(' ')}" fill="none" style="stroke:var(--${l.c})" stroke-width="${l.w||2.8}" ${l.dash?'stroke-dasharray="7 6"':''} ${l.op?`stroke-opacity="${l.op}"`:''} stroke-linecap="round" stroke-linejoin="round"/>`});
+ (o.guides||[]).forEach(g=>{s+=`<polyline points="${P([g[0],y0])} ${P(g)} ${P([0,g[1]])}" class="guide"/>`});
+ s+='</g>';
+ (o.dots||[]).forEach(d=>{if(d[0]>=-1e-9&&d[0]<=o.xmax+1e-9&&d[1]>=y0-1e-9&&d[1]<=o.ymax+1e-9)s+=`<circle cx="${X(d[0])}" cy="${Y(d[1])}" r="${d[3]||5.5}" style="fill:var(--${d[2]||'ink'});stroke:var(--paper)" stroke-width="2"/>`});
+ (o.labels||[]).forEach(t=>{const x=Math.min(Math.max(X(t[0]),L+4),W-R-2),y=Math.min(Math.max(Y(t[1]),T+12),H-B-4);s+=`<text x="${x}" y="${y}" class="lbl" text-anchor="${t[4]||'start'}" style="fill:var(--${t[3]||'ink'})">${t[2]}</text>`});
+ s+=`<line x1="${L}" y1="${T}" x2="${L}" y2="${H-B}" class="axis"/><line x1="${L}" y1="${H-B}" x2="${W-R}" y2="${H-B}" class="axis"/>`;
+ s+=`<text x="${(L+W-R)/2}" y="${H-8}" class="atitle" text-anchor="middle">${o.xlab}</text><text transform="translate(14 ${(T+H-B)/2}) rotate(-90)" class="atitle" text-anchor="middle">${o.ylab}</text></svg>`;
+ return s;
+}
+function lab(r,upd){
+ const run=()=>{$$('input[type=range]',r).forEach(i=>{const o=i.closest('label')&&i.closest('label').querySelector('output');if(!o)return;if(i.dataset.labels){o.textContent=i.dataset.labels.split('|')[+i.value-(+i.min)]}else o.textContent=(i.dataset.pre||'')+i.value+(i.dataset.suf||'')});upd()};
+ $$('input,select',r).forEach(i=>{i.addEventListener('input',run);if(i.type==='checkbox'||i.type==='radio'||i.tagName==='SELECT')i.addEventListener('change',run)});
+ run();return run;
+}
+const val=(r,n)=>{const e=r.querySelector(`[name=${n}]`);return e.type==='checkbox'?e.checked:(e.type==='radio'?r.querySelector(`[name=${n}]:checked`).value:+e.value)};
+const plot=(r,html,sel='.plot')=>{$(sel,r).innerHTML=html};
+const out=(r,html)=>{$('.readout',r).innerHTML=html};
+
+/* ---------- 3.1 bond ---------- */
+(()=>{const r=$('#lab-bond'),NN=[1,5,10,20,30];
+ const price=(c,N,y)=>{y/=100;let p=0;for(let t=1;t<=N;t++)p+=10*c/Math.pow(1+y,t);return p+1000/Math.pow(1+y,N)};
+ lab(r,()=>{
+  const c=val(r,'c'),N=NN[val(r,'n')],y=val(r,'y'),P=price(c,N,y),P1=price(c,N,y+1),lines=[];
+  if(N>1)lines.push({fn:x=>price(c,1,x),dom:[0.5,12],c:'ink2',dash:1,w:2});
+  lines.push({fn:x=>price(c,N,x),dom:[0.5,12],c:'c1'});
+  plot(r,chart({id:'bond',xmax:12,ymax:2000,xt:2,yt:500,ypre:'$',xfmt:v=>v+'%',xlab:'Market yield',ylab:'Bond price',lines,dots:[[y,P,'c5']],guides:[[y,P]],labels:[[11.8,price(c,N,11.8)-90,N+'-year bond','c1','end']].concat(N>1?[[11.8,price(c,1,11.8)+120,'1-year bond','muted','end']]:[])}));
+  const st=Math.abs(P-1000)<0.5?'at <b>par</b> (yield = coupon rate)':P>1000?'at a <b>premium</b> (coupon above market yield)':'at a <b>discount</b> (coupon below market yield)';
+  out(r,`A ${N}-year, ${c}% coupon bond at a ${y}% yield costs <b>$${f2(P)}</b>, ${st}. Current yield: ${c===0?'n/a (zero coupon)':f2(10*c/P*100)+'%'}.<br>If market yields rose 1 point, its price would fall to $${f2(P1)} (<b>${f1((P1-P)/P*100)}%</b>). Longer bonds carry more interest-rate risk.`);
+ });})();
+
+/* ---------- 4.1 loanable funds ---------- */
+(()=>{const r=$('#lab-lf');lab(r,()=>{
+ const pe=val(r,'pe'),c=val(r,'c'),w=val(r,'w'),i=pe+3-w+c,Q=600+100*w+100*c,lines=[];
+ if(pe!==2||c||w)lines.push({fn:q=>-1+0.01*q,c:'c2',dash:1,w:2,op:.45},{fn:q=>11-0.01*q,c:'c1',dash:1,w:2,op:.45});
+ lines.push({fn:q=>pe-3-2*w+0.01*q,c:'c2'},{fn:q=>pe+9+2*c-0.01*q,c:'c1'});
+ plot(r,chart({id:'lf',xmax:1200,ymax:16,xt:200,yt:4,yfmt:v=>v+'%',xlab:'Loanable funds ($ billions)',ylab:'Interest rate',lines,dots:[[Q,i,'ink']],guides:[[Q,i]],labels:[[1180,pe-3-2*w+11.8+0.8,'Supply of funds','c2','end'],[30,pe+9+2*c-0.3+0.9,'Demand for funds','c1']]}));
+ out(r,`Nominal interest rate <b>${f1(i)}%</b>, quantity of lending <b>$${f0(Q)} billion</b>. Real rate ≈ ${f1(i)} − ${pe} = <b>${f1(i-pe)}%</b>.`+(pe!==2?` Expected inflation moved the nominal rate one-for-one: the <b>Fisher effect</b>.`:'')+(c?` A ${c>0?'boom':'recession'} ${c>0?'raises':'lowers'} borrowing demand.`:'')+(w?` ${w>0?'More':'Less'} wealth ${w>0?'raises':'lowers'} the supply of funds.`:''));
+});})();
+
+/* ---------- 4.2 liquidity preference ---------- */
+(()=>{const r=$('#lab-lp');lab(r,()=>{
+ const m=val(r,'m'),y=val(r,'y'),i=10+2*y-m/100,lines=[];
+ if(m!==500||y)lines.push({fn:M=>10-M/100,dom:[0,1000],c:'c1',dash:1,w:2,op:.45},{pts:[[500,0],[500,14]],c:'c2',dash:1,w:2,op:.45});
+ lines.push({fn:M=>10+2*y-M/100,dom:[0,1000],c:'c1'},{pts:[[m,0],[m,14]],c:'c2'});
+ plot(r,chart({id:'lp',xmax:1000,ymax:14,xt:200,yt:2,yfmt:v=>v+'%',xlab:'Quantity of money ($ billions)',ylab:'Interest rate',lines,dots:[[m,i,'ink']],guides:[[m,i]],labels:[[m+12,13,'Money supply','c2'],[60,10+2*y-0.6+0.8,'Money demand','c1']]}));
+ out(r,`Equilibrium interest rate: <b>${f1(i)}%</b>. `+(m!==500?`${m>500?'More':'Less'} money ${m>500?'lowers':'raises'} the rate: the <b>liquidity effect</b>. `:'')+(y?`${y>0?'Higher':'Lower'} income ${y>0?'raises':'lowers'} money demand, so the rate ${y>0?'rises':'falls'}.`:'')+(m===500&&!y?'Shift the money supply to see the liquidity effect.':''));
+});})();
+
+/* ---------- 5.1 yield curve ---------- */
+(()=>{const r=$('#lab-yc');lab(r,()=>{
+ const r1=val(r,'r1'),g=val(r,'g'),tp=val(r,'tp'),sr=k=>Math.max(0,r1+g*k);
+ const ex=[],tot=[];for(let n=1;n<=10;n++){let s=0;for(let k=0;k<n;k++)s+=sr(k);ex.push([n,s/n]);tot.push([n,s/n+tp*(n-1)])}
+ plot(r,chart({id:'yc',xmax:10,ymax:12,xt:1,yt:2,yfmt:v=>v+'%',xfmt:v=>v?v+'y':'',xlab:'Years to maturity',ylab:'Yield',lines:[{pts:ex,c:'ink2',dash:1,w:2},{pts:tot,c:'c1'}],dots:tot.map(p=>[p[0],p[1],'c1',3.5]),labels:[[9.9,tot[9][1]+0.6,'Yield curve','c1','end'],[9.9,ex[9][1]-0.6,'Expectations only','muted','end']]}));
+ const sp=tot[9][1]-tot[0][1],sh=sp>0.15?'<b>upward-sloping</b>':sp<-0.15?'<b>inverted</b>':'<b>flat</b>';
+ out(r,`1-year yield ${f2(tot[0][1])}%, 10-year yield ${f2(tot[9][1])}%: the curve is ${sh} (10y − 1y spread ${sp>=0?'+':''}${f2(sp)} points). `+(sp<-0.15?'Markets expect short rates to fall, often a recession signal.':g>0?'Markets expect rates to rise.':tp>0&&g===0?'Even with flat expectations, the term premium tilts the curve up: the liquidity premium theory.':''));
+});})();
+
+/* ---------- 6.1 Gordon ---------- */
+(()=>{const r=$('#lab-gordon');lab(r,()=>{
+ const g=val(r,'g'),k=val(r,'k'),P=2/((k-g)/100),Pg=k-g-1>0?2/((k-g-1)/100):null;
+ plot(r,chart({id:'gor',xmax:12,ymax:250,xt:1,yt:50,ypre:'$',xfmt:v=>v>=4?v+'%':'',xlab:'Required return k',ylab:'Share price',lines:[{fn:x=>2/((x-g)/100),dom:[g+0.8,12],c:'c1'}],dots:[[k,P,'c5']],guides:[[k,P]],labels:[[11.8,2/((11.8-g)/100)+14,'g = '+g+'%','c1','end']]}));
+ out(r,`P = $2 ÷ (${k}% − ${g}%) = <b>$${f2(P)}</b>. `+(Pg?`If expected growth rose just one point, to ${g+1}%, the price would jump to <b>$${f2(Pg)}</b> (+${f0((Pg-P)/P*100)}%).`:'One more point of growth would make k − g zero: the formula breaks down when growth approaches the required return.')+' Small changes in beliefs move prices a lot, one reason Shiller found prices more volatile than dividends.');
+});})();
+
+/* ---------- 7.1 bank stress test ---------- */
+(()=>{const r=$('#lab-bank');lab(r,()=>{
+ const ll=val(r,'ll'),out_=val(r,'out'),rate=val(r,'rate');
+ let R=10,S=rate?17:20,L=70-ll,D=90-out_,need=out_,fire=0,short=0;
+ const ru=Math.min(R,need);R-=ru;need-=ru;const su=Math.min(S,need);S-=su;need-=su;
+ if(need>0){const book=need/0.8;if(book<=L){L-=book;fire=book-need}else{short=need-L*0.8;fire=L*0.2;L=0}}
+ const A=R+S+L,E=A-D,ratio=A>0?E/A*100:-100;
+ const bar=(x,segs)=>{let y=0;return segs.filter(s=>s[0]>0.001).map(s=>{const a={pts:[[x,y],[x,y+s[0]],[x+1,y+s[0]],[x+1,y]],c:s[1],op:.75};y+=s[0];return a})};
+ const areas=bar(0.5,[[R,'c3'],[S,'c1'],[L,'c4']]).concat(E>=0?bar(2,[[D,'c2'],[E,'c6']]):bar(2,[[D,'c2']]));
+ if(E<0)areas.push({pts:[[0.5,A],[0.5,D],[1.5,D],[1.5,A]],c:'c5',op:.35});
+ plot(r,chart({id:'bank',xmax:3.5,ymax:110,xt:3.5,yt:20,ypre:'$',xfmt:()=>'',xlab:'',ylab:'Balance sheet ($)',areas,labels:[[1,A+5,'Assets $'+f1(A),'ink','middle'],[2.5,Math.max(D,A)+5,(E>=0?'Deposits + capital':'Deposits')+' $'+f1(E>=0?A:D),'ink','middle']]}));
+ const st=short>0?`<b style="color:var(--c5)">Liquidity failure</b>: even selling every loan at fire-sale prices can't pay departing depositors.`:E<0?`<b style="color:var(--c5)">Insolvent</b>: assets ($${f1(A)}) are worth less than deposits ($${f1(D)}).`:ratio<5?`<b style="color:var(--c6)">Undercapitalized</b>: capital is only ${f1(ratio)}% of assets.`:`<b style="color:var(--c3)">Sound</b>: capital is ${f1(ratio)}% of assets (leverage ${f1(A/E)}×).`;
+ out(r,`${st} Capital: <b>$${f1(E)}</b> (started at $10).`+(rate?' Rising rates cut the securities from $20 to $17, as happened to SVB.':'')+(fire>0.01?` Fire-selling loans at 80¢ on the dollar cost <b>$${f1(fire)}</b> more.`:'')+(out_>0?` $${out_} of withdrawals were paid from reserves first, then securities${fire>0.01?', then loans':''}.`:''));
+});})();
+
+/* ---------- 8.1 Diamond-Dybvig ---------- */
+(()=>{const r=$('#lab-run');
+ const pay=p=>{const w=0.25+0.75*p/100,L=137.5*w;if(L<100){return{early:1.1,wait:w<0.999?1.5*(100-L)/(100*(1-w)):0,fail:false,w}}return{early:0.8/w,wait:0,fail:true,w}};
+ lab(r,()=>{
+  const p=val(r,'p'),ins=val(r,'ins'),o=pay(p);
+  const lines=ins?[{pts:[[0,1.1],[100,1.1]],c:'c3',w:3}]:[{fn:x=>pay(x).early,dom:[0,100],c:'c2',n:400},{fn:x=>pay(x).wait,dom:[0,99.9],c:'c1',n:400}];
+  plot(r,chart({id:'run',xmax:100,ymax:1.6,xt:20,yt:0.4,ypre:'$',xfmt:v=>v+'%',xlab:'Share of patient depositors who panic',ylab:'Payoff per $1 deposited',lines:lines.concat([{pts:[[p,0],[p,1.6]],c:'ink2',dash:1,w:1.5}]),
+   dots:ins?[[p,1.1,'c3']]:[[p,o.early,'c2'],[p,o.wait,'c1']],labels:ins?[[98,1.2,'Insured: everyone gets $1.10','c3','end']]:[[98,0.95,'Withdraw now','c2','end'],[30,1.42,'Wait','c1'],[23,0.12,'tipping point ≈ 22%','muted']]}));
+  if(ins)out(r,`With deposit insurance, every depositor is guaranteed $1.10 whatever others do. Patient depositors have no reason to run, so they wait, and the bank's loans mature and pay $1.50. <b>The insurance prevents the run and is never used.</b>`);
+  else out(r,`If ${p}% of patient depositors panic, ${f0(o.w*100)}% of deposits leave early. `+(o.fail?`<b style="color:var(--c5)">The bank fails</b>: liquidating every loan at 80¢ yields only $${f2(o.early)} per withdrawer, and those who wait get nothing.`:`Withdrawing pays <b>$1.10</b>; waiting pays <b>$${f2(o.wait)}</b>. `+(o.wait>=1.1?'Waiting is still better, so no one else needs to run: <b>good equilibrium</b>.':'<b style="color:var(--c5)">Waiting now pays less than withdrawing</b>, so every patient depositor should run too. The fear is self-fulfilling.')));
+ });})();
+
+/* ---------- 10.1 multiplier ---------- */
+(()=>{const r=$('#lab-mult'),RR=[0,.03,.10,.20],CC=[.1,.25,.5],EE=[0,.05,.2,.5,1,2];lab(r,()=>{
+ const rr=RR[val(r,'rr')],c=CC[val(r,'c')],e=EE[val(r,'e')],m=x=>(1+c)/(rr+x+c),M=m(e),Dd=M/(1+c);
+ plot(r,chart({id:'mult',xmax:2,ymax:12,xt:0.5,yt:2,xlab:'Excess reserve ratio e',ylab:'Money multiplier m',lines:[{fn:m,dom:[0,2],c:'c1'}],dots:[[e,M,'c5']],guides:[[e,M]],labels:[[1.95,m(1.95)+0.7,'rr = '+(rr*100)+'%, c = '+c,'c1','end']]}));
+ out(r,`m = (1 + ${c}) ÷ (${rr} + ${e} + ${c}) = <b>${f2(M)}</b>, so $1 trillion of base supports <b>$${f2(M)} trillion</b> of money: deposits $${f2(Dd)}T, currency $${f2(c*Dd)}T, reserves $${f2((rr+e)*Dd)}T. `+(e>=0.5?'When banks hoard reserves, as after 2008, the multiplier collapses.':rr===0?'With zero reserve requirements (U.S. since 2020), only currency and banks\' own choices limit the multiplier.':''));
+});})();
+
+/* ---------- 11.1 reserves ---------- */
+(()=>{const r=$('#lab-res'),SS=[0.5,1,1.5,2,3,4];lab(r,()=>{
+ const t=val(r,'t'),S=SS[val(r,'s')],DR=t,IO=t-0.10,RP=t-0.25,dem=x=>Math.max(RP,Math.min(DR,IO-0.07+1.2*Math.exp(-1.5*(x-0.5)))),e=dem(S);
+ plot(r,chart({id:'res',xmax:4.5,ymin:t-1,ymax:t+0.6,xt:0.5,yt:0.2,yfmt:v=>v.toFixed(1)+'%',xlab:'Reserves ($ trillions)',ylab:'Federal funds rate',
+  areas:[{pts:[[0,t-0.25],[4.5,t-0.25],[4.5,t],[0,t]],c:'c3',op:.1}],
+  lines:[{pts:[[0,DR],[4.5,DR]],c:'c5',dash:1,w:1.8},{pts:[[0,IO],[4.5,IO]],c:'c4',dash:1,w:1.8},{pts:[[0,RP],[4.5,RP]],c:'c6',dash:1,w:1.8},{fn:dem,dom:[0.05,4.5],c:'c1'},{pts:[[S,t-1],[S,t+0.6]],c:'c2'}],
+  dots:[[S,e,'ink']],labels:[[4.45,DR+0.05,'Discount rate '+DR.toFixed(2)+'% (ceiling)','c5','end'],[4.45,IO+0.05,'IORB '+IO.toFixed(2)+'%','c4','end'],[4.45,RP-0.12,'ON RRP '+RP.toFixed(2)+'% (floor)','c6','end'],[S+0.05,t+0.5,'Reserve supply','c2'],[0.15,t-0.95,'target range shaded','muted']]}));
+ out(r,`Target range <b>${(t-0.25).toFixed(2)}–${t.toFixed(2)}%</b>. Effective fed funds rate ≈ <b>${e.toFixed(2)}%</b>. `+(S>=2?'Reserves are <b>ample</b>: we\'re on the flat part of demand, so adding or removing reserves barely moves the rate. The Fed moves rates by changing IORB, ON RRP and the discount rate.':'Reserves are <b>scarce</b>: banks bid the rate up toward the ceiling. Before 2008 the Fed operated here, steering the rate by fine-tuning the quantity of reserves.'));
+});})();
+
+/* ---------- 11.2 Taylor ---------- */
+(()=>{const r=$('#lab-taylor'),PI=[0,1,2,3,4,5,6,8],GP=[-4,-2,0,2];lab(r,()=>{
+ const pi=PI[val(r,'pi')],gap=GP[val(r,'gap')],rs=val(r,'rs'),f=x=>rs+x+0.5*(x-2)+0.5*gap,i=f(pi),act=3.875;
+ plot(r,chart({id:'tay',xmax:8,ymax:16,xt:1,yt:2,xfmt:v=>v+'%',yfmt:v=>v+'%',xlab:'Inflation',ylab:'Policy rate',lines:[{fn:x=>Math.max(0,f(x)),dom:[0,8],c:'c1'},{pts:[[0,act],[8,act]],c:'c2',dash:1,w:2},{fn:x=>x,dom:[0,8],c:'ink2',dash:1,w:1.4}],dots:[[pi,Math.max(0,i),'c5']],guides:[[pi,Math.max(0,i)]],labels:[[7.9,Math.min(f(7.9),15.3)-0.8,'Taylor rule','c1','end'],[7.9,act+0.45,'Fed funds now ≈ 3.875%','c2','end'],[7.9,7.2,'i = π','muted','end']]}));
+ out(r,`Prescribed rate: ${rs} + ${pi} + 0.5×(${pi} − 2) + 0.5×(${gap}) = <b>${f2(i)}%</b>${i<0?' (below zero, so the rule hits the zero lower bound)':''}. Actual target midpoint: 3.875%. `+(i>act+0.25?'The rule says policy is <b>too loose</b>.':i<act-0.25?'The rule says policy is <b>too tight</b>.':'The rule roughly matches current policy.')+' The line is steeper than the dashed 45° line: the Taylor principle.');
+});})();
+
+/* ---------- 12.1 quantity theory ---------- */
+(()=>{const r=$('#lab-qtm'),MU=[0,2,5,8,12,20];lab(r,()=>{
+ const mu=MU[val(r,'mu')],v=val(r,'v'),g=val(r,'g'),pi=mu+v-g;
+ plot(r,chart({id:'qtm',xmax:20,ymin:-6,ymax:24,xt:4,yt:6,xfmt:v=>v+'%',yfmt:v=>v+'%',xlab:'Money growth',ylab:'Inflation',lines:[{fn:x=>x,c:'ink2',dash:1,w:1.5},{fn:x=>x+v-g,c:'c1'},{pts:[[0,0],[20,0]],c:'ink2',w:1}],dots:[[mu,pi,'c5']],guides:[],labels:[[19.8,19.8+v-g-2,'π = μ + v − g','c1','end'],[15,16.5,'π = μ','muted','end']]}));
+ out(r,`Inflation ≈ ${mu}% + ${v}% − ${g}% = <b>${pi}%</b>. `+(pi<0?'<b>Deflation</b>: money grows more slowly than real output.':mu>=12?'Rapid money growth means high inflation, as in every major inflation.':'')+(v?` Velocity ${v>0?'rising':'falling'} ${v>0?'adds to':'offsets'} inflation, which is why the link is loose year to year.`:''));
+});})();
+
+/* ---------- calculators (shared with the PDF edition) ---------- */
+window.__CALCS=CALCS;
+$$('[data-calc]').forEach(box=>{const k=box.dataset.calc,c=CALCS[k],fn=new Function('v','s',c.fn);box.id='calc-'+k;
+ box.innerHTML=`<div class="lh"><span class="tag">${c.tag.split(' ')[0]}</span>${c.title}</div><div class="lb"><p class="hint">${c.hint}</p><div class="calc" style="grid-template-columns:repeat(${c.inputs.length>1?Math.min(c.inputs.length,4):1},1fr)">${c.inputs.map((x,i)=>`<label>${x[0]}<input type="text" inputmode="${k==='hhi'?'text':'decimal'}" data-i="${i}" value="${x[1]}"></label>`).join('')}</div><div class="readout calcres"></div></div>`;
+ $('.lh .tag',box).textContent=c.tag;
+ const run=()=>{const s=$$('input',box).map(i=>i.value),v=s.map(parseFloat);let res;try{res=fn(v,s)}catch(e){res='Check your inputs.'}$('.readout',box).textContent=res};
+ $$('input',box).forEach(i=>i.addEventListener('input',run));run()});
+
+/* ---------- quizzes ---------- */
+window.__QZ=QZ;
+let QS=store.get('quiz',{});
+function renderQuiz(el){const ch=el.dataset.ch,qs=QZ[ch];QS[ch]=QS[ch]||{};
+ el.innerHTML=`<div class="eyebrow">Check your understanding</div><h2>Module ${ch} quiz</h2><div class="score"></div>`+qs.map((q,i)=>`<div class="q" data-i="${i}"><div class="qt">${i+1}. ${q[0]}</div><div class="opts">${q[1].map((o,j)=>`<button class="o" data-j="${j}">${o}</button>`).join('')}</div><div class="ex"></div></div>`).join('')+`<p><button class="btn" data-retry>Retry quiz</button></p>`;
+ const paint=()=>{let right=0,done=0;$$('.q',el).forEach(qe=>{const i=+qe.dataset.i,a=QS[ch][i];qe.classList.toggle('done',a!==undefined);$$('.o',qe).forEach(b=>b.className='o');
+  if(a!==undefined){done++;const ok=a===qs[i][2];if(ok)right++;$$('.o',qe)[qs[i][2]].classList.add('right');if(!ok)$$('.o',qe)[a].classList.add('wrong');$('.ex',qe).innerHTML=(ok?'<b style="color:var(--c3)">Correct.</b> ':'<b style="color:var(--c5)">Not quite.</b> ')+qs[i][3]}});
+  $('.score',el).textContent=done?`Score: ${right} / ${qs.length}`+(done===qs.length?(right===qs.length?' 🎉 Perfect!':' · Module complete'):''):''};
+ el.addEventListener('click',e=>{if(e.target.matches('[data-retry]')){QS[ch]={};save();paint();return}const b=e.target.closest('.o');if(!b)return;const i=+b.closest('.q').dataset.i;if(QS[ch][i]!==undefined)return;QS[ch][i]=+b.dataset.j;save();paint()});
+ paint()}
+const complete=ch=>QS[ch]&&Object.keys(QS[ch]).length===QZ[ch].length;
+function save(){store.set('quiz',QS);progress()}
+function progress(){const n=Object.keys(QZ).reduce((a,k)=>a+Object.keys(QS[k]||{}).length,0),t=Object.values(QZ).reduce((a,v)=>a+v.length,0),pc=Math.round(n/t*100);$('#progBar').style.width=pc+'%';$('#progPct').textContent=pc+'%';$$('[data-ckc]').forEach(e=>e.textContent=complete(e.dataset.ckc)?'✓':'')}
+$$('.quiz').forEach(renderQuiz);
+
+/* ---------- glossary ---------- */
+function gl(){const q=$('#glq').value.trim().toLowerCase();$('#gll').innerHTML=GL.filter(g=>!q||(g[0]+' '+g[2]).toLowerCase().includes(q)).map(g=>`<dt>${g[0]}</dt><dd>${g[2]} <a href="#m${g[1]}">Module ${g[1]} →</a></dd>`).join('')||'<dd>No matching terms.</dd>'}
+$('#glq').addEventListener('input',gl);gl();
+
+/* ---------- nav ---------- */
+$('#toc').innerHTML=`<h4>Start</h4><a href="#home" data-v="home"><span class="n">⌂</span>Cover &amp; contents</a><h4>Modules</h4>`+MODS.map((c,i)=>`<a href="#m${i+1}" data-v="m${i+1}"><span class="n">${i+1}</span>${c.t}<span class="ck" data-ckc="${i+1}"></span></a>`).join('')+`<h4>Reference</h4><a href="#glossary" data-v="glossary"><span class="n">A–Z</span>Glossary</a><a href="#about" data-v="about"><span class="n">©</span>Sources &amp; scholars</a>`;
+$('#cards').innerHTML=MODS.map((c,i)=>`<a class="card" href="#m${i+1}"><span class="ck" data-ckc="${i+1}"></span><div class="cn">MODULE ${i+1}</div><div class="ct">${c.t}</div><div class="cd">${c.d}</div></a>`).join('');
+MODS.forEach((c,i)=>{const v=$('#v-m'+(i+1)),pg=document.createElement('div');pg.className='pager';
+ pg.innerHTML=(i?`<a href="#m${i}"><small>← Previous</small>${MODS[i-1].t}</a>`:`<a href="#home"><small>← Back</small>Contents</a>`)+(i<MODS.length-1?`<a class="nx" href="#m${i+2}"><small>Next →</small>${MODS[i+1].t}</a>`:`<a class="nx" href="#glossary"><small>Next →</small>Glossary</a>`);v.appendChild(pg)});
+function route(){let h=location.hash.slice(1)||'home';let v=document.getElementById('v-'+h);if(!v){h='home';v=$('#v-home')}
+ $$('.view').forEach(x=>x.hidden=x!==v);$$('#toc a').forEach(a=>a.classList.toggle('active',a.dataset.v===h));document.body.classList.remove('open');window.scrollTo(0,0);if(/^m\d+$/.test(h))store.set('last',h)}
+window.addEventListener('hashchange',route);
+$('#menuBtn').onclick=()=>document.body.classList.toggle('open');$('#scrim').onclick=()=>document.body.classList.remove('open');
+const last=store.get('last',null);if(last&&last!=='m1'){$('#startBtn').href='#'+last;$('#startBtn').textContent='Continue reading (Module '+last.slice(1)+') →'}
+$('#resetBtn').onclick=()=>{QS={};store.set('quiz',QS);store.set('last',null);$$('.quiz').forEach(q=>{const n=q.cloneNode(false);q.replaceWith(n);renderQuiz(n)});progress();$('#startBtn').href='#m1';$('#startBtn').textContent='Start reading →'};
+progress();route();
+})();
+
+</script>
+</body>
+</html>

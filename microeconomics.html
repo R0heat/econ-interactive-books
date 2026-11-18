@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Microeconomics — An Interactive Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f2ea;--paper:#fffdf8;--ink:#1d2126;--muted:#5f6872;--line:#e2d9cb;--accent:#0f6e6e;--accent-ink:#fff;--soft:#e5f1ee;--warn:#fff4e0;
+--c1:#2563eb;--c2:#e8590c;--c3:#15924a;--c4:#8b3fd9;--c5:#d42a2a;--c6:#b98307;--ink2:#9aa1a9;
+--serif:"Source Serif 4",Georgia,serif;--sans:"IBM Plex Sans",system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#131518;--paper:#1b1e22;--ink:#e9e6e1;--muted:#9da6b0;--line:#2f343a;--accent:#4cc3b8;--accent-ink:#0b1515;--soft:#1b3331;--warn:#33291a;
+--c1:#6aa8ff;--c2:#ff9750;--c3:#4fd98a;--c4:#c48dff;--c5:#ff7070;--c6:#f3c94a;--ink2:#5d646c}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 var(--serif);-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+header.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;padding:10px 16px;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);font-family:var(--sans)}
+header.top .brand{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none;color:var(--ink)}
+header.top .bar{flex:1;max-width:220px;height:6px;border-radius:9px;background:var(--line);overflow:hidden;margin-left:auto}
+header.top .bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .4s}
+header.top .pct{font-size:13px;color:var(--muted);min-width:34px;text-align:right}
+.menu-btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:6px 10px;font:500 14px var(--sans);cursor:pointer}
+.layout{display:flex;max-width:1280px;margin:0 auto}
+nav.toc{width:280px;flex:none;position:sticky;top:53px;height:calc(100vh - 53px);overflow:auto;padding:22px 14px 40px;font-family:var(--sans);border-right:1px solid var(--line)}
+nav.toc h4{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:18px 10px 6px}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;text-decoration:none;color:var(--ink);font-size:14.5px;line-height:1.35}
+nav.toc a:hover{background:var(--soft)}
+nav.toc a.active{background:var(--accent);color:var(--accent-ink)}
+nav.toc a .n{font-size:12px;opacity:.65;min-width:18px}
+nav.toc a .ck{margin-left:auto;font-size:12px;color:var(--c3)}
+nav.toc a.active .ck{color:var(--accent-ink)}
+main{flex:1;min-width:0;padding:28px 22px 80px}
+.view{max-width:760px;margin:0 auto}
+.eyebrow{font:600 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(30px,5vw,42px);line-height:1.12;margin:.2em 0 .5em;letter-spacing:-.01em}
+h2{font-size:25px;line-height:1.25;margin:1.8em 0 .5em}
+h3{font:600 17px var(--sans);margin:1.4em 0 .4em}
+p{margin:0 0 1em}
+.lead{font-size:19.5px;color:var(--muted)}
+.box{border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:16px 20px;margin:1.4em 0}
+.box.obj{background:var(--soft);border-color:transparent}
+.box.obj h3,.box.take h3{margin-top:0}
+.box.obj ul,.box.take ul{margin:0;padding-left:1.2em}
+.box.take{border-left:4px solid var(--accent)}
+.box.ex{background:var(--warn);border-color:transparent}
+.formula{font:500 16px/1.5 var(--sans);background:var(--paper);border:1px dashed var(--line);border-radius:10px;padding:12px 16px;margin:1em 0;text-align:center;overflow-x:auto}
+.formula small{display:block;color:var(--muted);font-weight:400;font-size:13px;margin-top:4px}
+.term{font-weight:700;color:var(--accent)}
+table.t{width:100%;border-collapse:collapse;font:14.5px/1.45 var(--sans);margin:1em 0}
+table.t th,table.t td{border-bottom:1px solid var(--line);padding:8px 8px;text-align:left;vertical-align:top}
+table.t th{font-weight:600;color:var(--muted);font-size:13px}
+.tscroll{overflow-x:auto}
+/* labs */
+.lab{border:1px solid var(--line);background:var(--paper);border-radius:16px;margin:1.8em 0;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.03),0 8px 24px -16px rgba(0,0,0,.18)}
+.lab .lh{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--line);font:600 14px var(--sans)}
+.lab .lh .tag{font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:var(--accent);color:var(--accent-ink);padding:3px 8px;border-radius:99px}
+.lab .lb{padding:14px 18px 18px}
+.lab .hint{font:13.5px/1.5 var(--sans);color:var(--muted);margin:0 0 10px}
+.ctrls{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 18px;font:14px var(--sans);margin-bottom:8px}
+.ctrls label{display:flex;flex-direction:column;gap:4px}
+.ctrls label span{display:flex;justify-content:space-between;color:var(--muted)}
+.ctrls output{font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.ctrls label.chk{flex-direction:row;align-items:center;gap:8px;color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--accent);height:26px}
+input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;font:500 14px var(--sans);margin-bottom:10px;flex-wrap:wrap}
+.seg label{padding:7px 12px;cursor:pointer;border-right:1px solid var(--line)}
+.seg label:last-child{border-right:0}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label:has(input:checked){background:var(--accent);color:var(--accent-ink)}
+.plots{display:grid;grid-template-columns:1fr;gap:6px}
+.plots.two{grid-template-columns:1fr 1fr}
+@media (max-width:640px){.plots.two{grid-template-columns:1fr}}
+svg.chart{width:100%;height:auto;display:block;font-family:var(--sans)}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .axis{stroke:var(--muted);stroke-width:1.4}
+svg .tick{fill:var(--muted);font-size:12px}
+svg .atitle{fill:var(--muted);font-size:13px;font-weight:500}
+svg .guide{fill:none;stroke:var(--muted);stroke-width:1.2;stroke-dasharray:4 4}
+svg .lbl{font-size:13.5px;font-weight:600}
+.readout{font:14.5px/1.55 var(--sans);background:var(--bg);border-radius:10px;padding:10px 14px;margin-top:8px}
+.readout b{font-variant-numeric:tabular-nums}
+.stack{display:flex;height:26px;border-radius:7px;overflow:hidden;margin:8px 0 4px;background:var(--line)}
+.stack div{transition:width .25s;display:flex;align-items:center;justify-content:center;font:600 11px var(--sans);color:#fff;white-space:nowrap;overflow:hidden}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font:13px var(--sans);color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.btn{font:500 14px var(--sans);border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:9px;padding:8px 14px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:disabled{opacity:.45;cursor:default}
+.calc{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font:14px var(--sans)}
+@media (max-width:520px){.calc{grid-template-columns:repeat(2,1fr)}}
+.calc label{display:flex;flex-direction:column;gap:3px;color:var(--muted)}
+.calc input,.mx input{font:500 15px var(--sans);padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%}
+/* matrix */
+.mx{width:100%;border-collapse:separate;border-spacing:6px;font:14px var(--sans)}
+.mx th{font-weight:600;color:var(--muted);font-size:13px}
+.mx td.cell{background:var(--bg);border-radius:10px;padding:8px;border:2px solid transparent;text-align:center}
+.mx td.cell.ne{border-color:var(--c3);background:color-mix(in srgb,var(--c3) 12%,var(--bg))}
+.mx td.cell .pr{display:flex;gap:6px;justify-content:center}
+.mx td.cell input{width:56px;text-align:center;padding:5px}
+.mx td.cell input.br{outline:2px solid var(--c6);outline-offset:-2px;font-weight:700}
+.mx .rowp{color:var(--c1)} .mx .colp{color:var(--c2)}
+.hist{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.hist span{font:600 12px var(--sans);padding:4px 8px;border-radius:7px;background:var(--bg)}
+/* quiz */
+.quiz{margin:2.2em 0 1em;border-top:2px solid var(--ink);padding-top:12px}
+.quiz h2{margin-top:.3em}
+.q{border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:14px 16px;margin:12px 0}
+.q .qt{font-weight:600;margin-bottom:10px}
+.q .opts{display:grid;gap:7px}
+.q button.o{all:unset;box-sizing:border-box;cursor:pointer;font:15px/1.45 var(--sans);padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.q button.o:hover{border-color:var(--accent)}
+.q button.o.right{border-color:var(--c3);background:color-mix(in srgb,var(--c3) 14%,var(--bg))}
+.q button.o.wrong{border-color:var(--c5);background:color-mix(in srgb,var(--c5) 12%,var(--bg))}
+.q .ex{font:14px/1.55 var(--sans);color:var(--muted);margin-top:10px;display:none}
+.q.done .ex{display:block}
+.q.done button.o{cursor:default}
+.score{font:600 15px var(--sans)}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:40px;font-family:var(--sans)}
+.pager a{flex:1;border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink);font-size:14px}
+.pager a small{display:block;color:var(--muted);font-size:12px}
+.pager a.nx{text-align:right}
+/* home */
+.cover{padding:40px 0 10px}
+.cover h1{font-size:clamp(36px,7vw,58px)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:20px 0}
+.card{display:block;border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:14px 16px;text-decoration:none;color:var(--ink);font-family:var(--sans);position:relative}
+.card:hover{border-color:var(--accent)}
+.card .cn{font-size:12px;color:var(--accent);font-weight:600;letter-spacing:.08em}
+.card .ct{font:600 18px/1.25 var(--serif);margin:4px 0}
+.card .cd{font-size:13px;color:var(--muted);line-height:1.45}
+.card .ck{position:absolute;top:12px;right:14px;color:var(--c3);font-size:13px;font-weight:600}
+.gl input{width:100%;font:16px var(--sans);padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);margin:6px 0 14px}
+.gl dl{margin:0}
+.gl dt{font:600 16px var(--sans);margin-top:14px}
+.gl dd{margin:2px 0 0;color:var(--muted)}
+.gl dd a{font-size:13px;font-family:var(--sans)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;font:14px/1.45 var(--sans)}
+.grid2 div{background:var(--bg);border-radius:10px;padding:10px 12px}
+.grid2 b{display:block}
+.scrim{display:none}
+@media (max-width:900px){
+ nav.toc{position:fixed;top:53px;left:0;bottom:0;height:auto;z-index:40;background:var(--paper);transform:translateX(-100%);transition:transform .25s;box-shadow:0 0 40px rgba(0,0,0,.25)}
+ body.open nav.toc{transform:none}
+ body.open .scrim{display:block;position:fixed;inset:53px 0 0 0;background:rgba(0,0,0,.3);z-index:35}
+ main{padding:20px 16px 70px}
+}
+@media (min-width:901px){.menu-btn{display:none}}
+
+.calcres{white-space:pre-wrap}
+.lab .calc{margin-bottom:8px}
+.attr{font:14px/1.6 var(--sans)}
+.attr li{margin:4px 0}
+.mod-sub{font:500 13px var(--sans);color:var(--muted);margin:-.6em 0 1em}
+
+.mx td.cell input{width:64px}
+</style>
+</head>
+<body>
+<header class="top">
+ <button class="menu-btn" id="menuBtn" aria-label="Contents">☰ Contents</button>
+ <a class="brand" href="#home">Microeconomics · Interactive Edition</a>
+ <div class="bar" title="Quiz progress"><i id="progBar"></i></div><span class="pct" id="progPct">0%</span>
+</header>
+<div class="scrim" id="scrim"></div>
+<div class="layout">
+<nav class="toc" id="toc"></nav>
+<main id="main">
+<!-- ============ HOME ============ -->
+<section class="view" id="v-home">
+ <div class="cover">
+  <div class="eyebrow">An interactive textbook</div>
+  <h1>Microeconomics</h1>
+  <p style="font:500 16px var(--sans);margin:-.3em 0 1em">Adapted by <b>Rohit Pandit</b> · <span style="color:var(--muted)">Delaware</span></p>
+  <p class="lead">A 15-module course on how people, firms and governments make choices under scarcity. Every module has live graphs you can move, calculators, worked examples from the course, and a self-check quiz.</p>
+  <p style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn pri" href="#m1" id="startBtn">Start reading →</a><a class="btn" href="#glossary">Glossary</a><a class="btn" href="#about">About &amp; credits</a></p>
+  <p style="font:13px/1.5 var(--sans);color:var(--muted)">Based on <i>Microeconomics</i> by Lumen Learning and <i>Principles of Microeconomics</i> by OpenStax, both licensed CC BY 4.0. See <a href="#about">About &amp; credits</a>.</p>
+ </div>
+ <h2>Modules</h2>
+ <div class="cards" id="cards"></div>
+ <div class="box">
+  <h3 style="margin-top:0">How to use this book</h3>
+  <p style="margin:0;font-family:var(--sans);font-size:15px">Work through the modules in order, since later ideas build on earlier ones. When you reach a <b>Lab</b>, move the sliders and watch the graph and numbers change. <b>Calculators</b> let you plug in your own numbers. Finish the quiz at the end of a module to mark it complete; your progress is saved in this browser.</p>
+ </div>
+ <p style="font:13px var(--sans);color:var(--muted)"><button class="btn" id="resetBtn">Reset my progress</button></p>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="view" id="v-about" hidden>
+ <div class="eyebrow">About this book</div>
+ <h1>About &amp; credits</h1>
+ <div class="attr">
+ <p><b>Microeconomics: An Interactive Edition</b>, adapted by Rohit Pandit (Delaware).</p>
+ <p>This book is an adaptation of <a href="https://courses.lumenlearning.com/wm-microeconomics/">Microeconomics</a> by Lumen Learning, licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Much of that course is itself adapted from <a href="https://openstax.org/details/books/principles-microeconomics-2e">Principles of Microeconomics</a> by OpenStax (Rice University), also licensed CC BY 4.0.</p>
+ <h3>Changes made in this adaptation</h3>
+ <ul>
+  <li>The text was rewritten and condensed; the module structure, examples and data tables follow the original course.</li>
+  <li>Interactive labs, calculators, quizzes and a glossary were added. Some numbers in the labs are simplified illustrations rather than course data, as noted in each lab.</li>
+  <li>A few figures were recalculated where the original's rounding was inconsistent (for example, the Clip Joint cost table).</li>
+  <li>Videos and other all-rights-reserved media from the original course are not included, and neither are its external practice questions.</li>
+  <li>The Gini coefficient in Lab 13.2 is an addition, estimated from quintile shares.</li>
+ </ul>
+ <h3>A note on the data</h3>
+ <p>Statistics come from the original course and mostly describe the 2010s (for example, 2016 income shares and 2012 program figures). Use them to learn the concepts; for current figures, check sources such as the U.S. Census Bureau and the Bureau of Labor Statistics.</p>
+ <p>This adaptation is shared under the same <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> license.</p>
+ </div>
+</section>
+
+<!-- ============ GLOSSARY ============ -->
+<section class="view gl" id="v-glossary" hidden>
+ <div class="eyebrow">Reference</div>
+ <h1>Glossary</h1>
+ <input type="search" id="glq" placeholder="Search terms…" aria-label="Search glossary">
+ <dl id="gll"></dl>
+</section>
+
+<!-- ============ MODULE 1 ============ -->
+<section class="view" id="v-m1" hidden>
+ <div class="eyebrow">Module 1</div>
+ <h1>Economic Thinking</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Explain scarcity and name the four factors of production</li><li>Describe how specialization and the division of labor lead to trade</li><li>Tell microeconomics from macroeconomics</li><li>Use economic models, and read slopes on graphs</li></ul></div>
+ <p class="lead">Economics is the study of how people choose to use resources when those resources are scarce.</p>
+ <h2>Scarcity</h2>
+ <p><span class="term">Scarcity</span> means resources are limited relative to what people need and want. Time, money, labor, tools, land and raw materials are all finite. Even huge totals are not unlimited: in 2016 the U.S. labor force had more than 158 million workers, and the country covers about 3.8 million square miles. Because resources are limited, the goods and services we can produce are limited too, while human wants keep growing.</p>
+ <p>Choices under scarcity happen at every level. A student can't take every class with the best professor at the ideal time. A family picks between a new car and a vacation. A town weighs police protection against schools, and a nation weighs defense against environmental protection.</p>
+ <div class="grid2">
+  <div><b>Economic (scarce) goods</b>If they were free, people would want more than exists, so they carry a positive price. Most goods are like this.</div>
+  <div><b>Free goods</b>Supply exceeds demand even at a price of zero, like sand in a desert. Clean air used to be free; it is increasingly scarce.</div>
+ </div>
+ <h3>The factors of production</h3>
+ <div class="tscroll"><table class="t"><tr><th>Factor</th><th>What it includes</th></tr>
+ <tr><td><b>Land</b></td><td>All natural resources: land, trees, livestock, wind, sun, water</td></tr>
+ <tr><td><b>Capital</b></td><td>Anything made to produce other goods: tools, machinery, buildings. Money (financial capital) is not itself productive, but it can buy capital.</td></tr>
+ <tr><td><b>Labor</b></td><td>Any human effort, physical or mental (also called human capital)</td></tr>
+ <tr><td><b>Entrepreneurship</b></td><td>Spotting a profit opportunity, organizing the other factors, and taking the risk</td></tr></table></div>
+ <h2>Specialization, division of labor and trade</h2>
+ <p>Adam Smith's <em>The Wealth of Nations</em> (1776) opens with a pin factory. Making a pin took about 18 separate tasks. One worker doing everything might make 20 pins a day, but a team of 10 workers, each doing two or three tasks, made about 48,000. That is the power of the <span class="term">division of labor</span> and <span class="term">specialization</span>.</p>
+ <p>Specialization raises output for three reasons: people differ in skills and talents (and places differ in climate and resources); workers get faster and better through repetition; and large operations enjoy <span class="term">economies of scale</span>, where average cost falls as output grows (a plant making 50,000 cars a year makes each car far more cheaply than one making 100). But specialization only works if people can trade: you earn income doing one thing and use it to buy everything else. Markets make that possible.</p>
+ <h2>Microeconomics and macroeconomics</h2>
+ <p><span class="term">Microeconomics</span> studies individual households, workers and firms and how they interact in particular markets. <span class="term">Macroeconomics</span> looks at the economy as a whole: growth, unemployment, inflation, and government budgets and trade. This book is mainly about micro, with a look at international trade and finance at the end.</p>
+ <h2>Economic models</h2>
+ <p>An <span class="term">economic model</span> is a simplified version of reality that helps us understand and predict behavior. A good model is simple enough to grasp but captures what matters. Models can be expressed in words, graphs or algebra. Economists use graphs to <em>discover</em> answers, not just to illustrate them.</p>
+ <p>The <span class="term">circular flow diagram</span> is a basic model: households buy goods and services from firms in the <b>product market</b>, and sell their labor to firms in the <b>labor market</b>. Money flows one way and goods, services and labor flow the other.</p>
+ <h2>Reading graphs: slope</h2>
+ <p>The <span class="term">slope</span> of a line is rise over run: the change on the vertical axis divided by the change on the horizontal axis. A <b>positive slope</b> means the variables move together (price and quantity supplied). A <b>negative slope</b> means they move in opposite directions (price and quantity demanded). A slope of zero is a flat line: no relationship.</p>
+ <div class="box ex"><b>Worked example.</b> A line passes through (2, 1) and (6, 3). Rise = 3 − 1 = 2, run = 6 − 2 = 4, so the slope is 2/4 = <b>½</b>.</div>
+ <p>Curves have slopes too, measured between two points. In the table below, total cost is Q²: it gets steeper as output rises.</p>
+ <div class="lab" id="lab-slope">
+  <div class="lh"><span class="tag">Lab 1.1</span>Slope along a total cost curve</div>
+  <div class="lb">
+   <p class="hint">Pick a starting quantity. The red segment shows the rise and run to the next unit.</p>
+   <div class="ctrls"><label><span>Starting quantity Q<output></output></span><input type="range" name="q" min="1" max="9" step="1" value="4"></label></div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Scarcity (limited resources, unlimited wants) forces choices.</li><li>Specialization and the division of labor multiply output, and they require trade.</li><li>Models simplify reality; slope = rise ÷ run tells us how two variables are related.</li></ul></div>
+ <div class="quiz" data-ch="1"></div>
+</section>
+
+<!-- ============ MODULE 2 ============ -->
+<section class="view" id="v-m2" hidden>
+ <div class="eyebrow">Module 2</div>
+ <h1>Choice in a World of Scarcity</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Draw a budget constraint and calculate opportunity cost</li><li>Ignore sunk costs</li><li>Use the PPF to show trade-offs, efficiency and diminishing returns</li><li>Apply marginal analysis, and separate positive from normative statements</li></ul></div>
+ <p class="lead">Every choice has a cost: whatever you give up to get it.</p>
+ <h2>Budget constraints</h2>
+ <p>A <span class="term">budget constraint</span> shows every combination of goods a person can afford with their income (or time), assuming they spend all of it. Points on the line use the whole budget, points inside leave money unspent, and points outside are unaffordable.</p>
+ <div class="box ex"><b>Charlie's budget.</b> Charlie has $10 a week for burgers ($2 each) and bus tickets ($0.50 each). He could buy 5 burgers and no tickets, 20 tickets and no burgers, or a mix such as 2 burgers ($4) and 12 tickets ($6). Each extra burger costs him $2 ÷ $0.50 = <b>4 bus tickets</b>. That is its <span class="term">opportunity cost</span>, and it is also the slope of his budget line.</div>
+ <div class="lab" id="lab-budget">
+  <div class="lh"><span class="tag">Lab 2.1</span>Charlie's budget constraint</div>
+  <div class="lb">
+   <p class="hint">Change income and prices, then choose how many burgers to buy. The rest of the budget goes on bus tickets.</p>
+   <div class="ctrls">
+    <label><span>Weekly income<output></output></span><input type="range" name="I" min="4" max="20" step="2" value="10" data-pre="$"></label>
+    <label><span>Price of a burger<output></output></span><input type="range" name="pb" min="1" max="4" step="0.5" value="2" data-pre="$"></label>
+    <label><span>Price of a bus ticket<output></output></span><input type="range" name="pt" min="0.25" max="1" step="0.25" value="0.5" data-pre="$"></label>
+    <label><span>Burgers bought<output></output></span><input type="range" name="b" min="0" max="20" step="1" value="2"></label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h3>Sunk costs</h3>
+ <p><span class="term">Sunk costs</span> are past costs that can't be recovered, and they shouldn't affect decisions about the future. If you've paid $8 for a movie and it's awful after 30 minutes, the $8 is gone either way; the real question is whether the remaining 90 minutes are worth more than anything else you could do. Firms make the same mistake when they keep a failing product alive because of past development spending.</p>
+ <h2>The production possibilities frontier</h2>
+ <p>A society faces a similar constraint. A <span class="term">production possibilities frontier (PPF)</span> shows the combinations of two goods an economy can produce with its resources and technology. Picture health care and education: with 10 teachers each teaching 25 students, the most education possible is 250 students.</p>
+ <div class="tscroll"><table class="t"><tr><th></th><th>Budget constraint</th><th>PPF</th></tr>
+ <tr><td>Shows</td><td>What a person can buy</td><td>What a society can produce</td></tr>
+ <tr><td>Shape</td><td>Straight line</td><td>Usually bowed outward</td></tr>
+ <tr><td>Slope</td><td>Fixed price ratio</td><td>Changing opportunity cost</td></tr></table></div>
+ <p>Why the bow? Resources are specialized. Moving teachers out of health care into schools costs little health care and adds a lot of education, so the curve starts flat. But to push education further you must move doctors into classrooms, giving up a lot of health care for little extra education, so the curve gets steep. This is the <span class="term">law of diminishing returns</span>: each extra increment of resources devoted to one goal adds less than the last.</p>
+ <div class="lab" id="lab-ppf">
+  <div class="lh"><span class="tag">Lab 2.2</span>Production possibilities frontier</div>
+  <div class="lb">
+   <p class="hint">Slide along the frontier and watch the opportunity cost of education climb. Then grow the economy, or switch on a recession.</p>
+   <div class="ctrls">
+    <label><span>Education (students, hundreds)<output></output></span><input type="range" name="x" min="0" max="148" step="1" value="40"></label>
+    <label><span>Economic growth<output></output></span><input type="range" name="g" min="100" max="150" step="5" value="100" data-suf="%"></label>
+    <label class="chk"><input type="checkbox" name="idle"> Recession (idle resources)</label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h3>Productive and allocative efficiency</h3>
+ <p><span class="term">Productive efficiency</span> means you can't produce more of one good without producing less of another: every point <em>on</em> the PPF qualifies, and points inside waste resources. <span class="term">Allocative efficiency</span> means producing the mix society most wants, which is one particular point on the frontier. A young society might choose more education; an older one, more health care. An economy can get more of everything only by becoming more efficient (moving to the frontier) or by <b>growing</b> (shifting the frontier out).</p>
+ <p>Different countries have different PPFs. Brazil grows a lot of sugar cane per acre, the U.S. a lot of wheat. Each has a lower opportunity cost, a <span class="term">comparative advantage</span>, in one crop, so both gain by specializing and trading (Module 14).</p>
+ <h2>Thinking at the margin</h2>
+ <p>Most choices are about a little more or a little less. <span class="term">Marginal cost</span> is the change in total cost from a choice; <span class="term">marginal benefit</span> is the change in what you receive. A one-week beach rental costs $2,000 and two weeks $3,600, so the second week's marginal cost is only $1,600. A rational choice is one where <b>MB &gt; MC</b>: if a full gym membership costs $10 a month more than basic and adds the weight room, it's worth it only if the weight room is worth $10 a month to you.</p>
+ <h3>Positive and normative statements</h3>
+ <p>A <span class="term">positive statement</span> describes the world as it is and can be tested ("a higher minimum wage reduces teen employment"). A <span class="term">normative statement</span> says how things should be ("the minimum wage should be raised"). Economists can test the first kind; the second depends on values.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Budget constraints and PPFs show trade-offs; their slopes measure opportunity cost.</li><li>Ignore sunk costs; decide at the margin, choosing when MB &gt; MC.</li><li>The PPF bows out because of diminishing returns; points on it are productively efficient.</li></ul></div>
+ <div class="quiz" data-ch="2"></div>
+</section>
+
+<!-- ============ MODULE 3 ============ -->
+<section class="view" id="v-m3" hidden>
+ <div class="eyebrow">Module 3</div>
+ <h1>Supply and Demand</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Compare market, command and mixed economies</li><li>List what shifts demand and what shifts supply</li><li>Find equilibrium from a table, a graph or algebra</li><li>Predict what happens when one or both curves shift</li></ul></div>
+ <p class="lead">Supply and demand is the most widely used model in economics. It explains prices in almost any market.</p>
+ <h2>Economic systems</h2>
+ <p>Every economy must answer three questions: <b>what</b> to produce, <b>how</b> to produce it, and <b>who</b> gets it. In a <span class="term">market economy</span>, private owners make these decisions through markets, guided by profit and consumer demand (Hong Kong, Singapore, the U.S.). A market is <span class="term">competitive</span> when there are so many buyers and sellers that none controls the price, and <span class="term">free</span> when government doesn't set prices. In a <span class="term">command economy</span> the government owns resources and decides what is made and at what price (today, essentially North Korea and Cuba). Most real economies are <b>mixed</b>: the U.S. sits near the market end, many European countries a bit further toward government involvement, and China and Russia closer to command.</p>
+ <h2>Demand</h2>
+ <p>The <span class="term">quantity demanded</span> is what buyers will purchase at a given price. The law of demand says it falls as price rises. A change in the good's own price is a <em>movement along</em> the demand curve. Anything else shifts the curve, <em>ceteris paribus</em> (all else equal).</p>
+ <div class="box ex"><b>Cars and income.</b> At $20,000, buyers want 18 million cars. If incomes rise, demand shifts right and they want 20 million at that price; if incomes fall, 14.4 million. The shift happens at every price, not just $20,000.</div>
+ <div class="tscroll"><table class="t"><tr><th>Demand shifter</th><th>Increases demand when…</th></tr>
+ <tr><td>Tastes</td><td>The good becomes more popular (U.S. chicken consumption rose from 33 to 81 lb per person, 1980–2012, while beef fell from 77 to 57)</td></tr>
+ <tr><td>Population</td><td>There are more buyers (an aging population raises demand for hearing aids)</td></tr>
+ <tr><td>Income</td><td>Income rises, for a <b>normal good</b>. For an <b>inferior good</b> (generic groceries, used cars) demand falls when income rises</td></tr>
+ <tr><td>Price of a substitute</td><td>The substitute gets more expensive (cheaper tablets cut demand for laptops)</td></tr>
+ <tr><td>Price of a complement</td><td>The complement gets cheaper (cheaper golf clubs raise demand for golf balls)</td></tr>
+ <tr><td>Expectations</td><td>Buyers expect higher prices or shortages later (stocking up before a hurricane)</td></tr></table></div>
+ <h2>Supply</h2>
+ <p>Firms supply more when it's more profitable. Anything that lowers production costs shifts supply right; anything that raises them shifts it left.</p>
+ <div class="tscroll"><table class="t"><tr><th>Event</th><th>Supply shifts</th></tr>
+ <tr><td>Input prices fall (steel, gasoline)</td><td>Right</td></tr>
+ <tr><td>Good weather / drought</td><td>Right / left (a 2009 drought hit a region of China growing 60% of its wheat)</td></tr>
+ <tr><td>New cost-saving technology</td><td>Right (Green Revolution seeds roughly doubled harvests per acre)</td></tr>
+ <tr><td>Taxes, costly regulations</td><td>Left</td></tr>
+ <tr><td>Subsidies</td><td>Right</td></tr></table></div>
+ <p>If cheese rises by $0.75 per pizza, the pizzeria needs $0.75 more for every pizza: the supply curve shifts up (left) by exactly the cost increase.</p>
+ <h2>Equilibrium</h2>
+ <p><span class="term">Equilibrium</span> is the price where quantity demanded equals quantity supplied. In the gasoline market below it is $1.40 a gallon and 600 million gallons.</p>
+ <div class="tscroll"><table class="t"><tr><th>Price/gal</th><th>Qd (m gal)</th><th>Qs (m gal)</th><th>Result</th></tr>
+ <tr><td>$1.00</td><td>800</td><td>500</td><td>Shortage 300</td></tr><tr><td>$1.20</td><td>700</td><td>550</td><td>Shortage 150</td></tr>
+ <tr><td><b>$1.40</b></td><td><b>600</b></td><td><b>600</b></td><td><b>Equilibrium</b></td></tr>
+ <tr><td>$1.60</td><td>550</td><td>640</td><td>Surplus 90</td></tr><tr><td>$1.80</td><td>500</td><td>680</td><td>Surplus 180</td></tr>
+ <tr><td>$2.00</td><td>460</td><td>700</td><td>Surplus 240</td></tr><tr><td>$2.20</td><td>420</td><td>720</td><td>Surplus 300</td></tr></table></div>
+ <p>Above equilibrium there is a <span class="term">surplus</span> (excess supply): unsold gas piles up and sellers cut prices. Below it there is a <span class="term">shortage</span> (excess demand): buyers compete and prices rise. Either way, the price moves toward equilibrium. A competitive market in equilibrium is <span class="term">efficient</span>: no one can be made better off without making someone else worse off.</p>
+ <div class="lab" id="lab-sd">
+  <div class="lh"><span class="tag">Lab 3.1</span>Shifting supply and demand</div>
+  <div class="lb">
+   <p class="hint">Shift demand or supply and see the new equilibrium (dashed lines are the originals). Tick "Hold the price fixed" to create a shortage or surplus.</p>
+   <div class="ctrls">
+    <label><span>Demand shift<output></output></span><input type="range" name="d" min="-30" max="30" step="2" value="0"></label>
+    <label><span>Supply shift<output></output></span><input type="range" name="s" min="-30" max="30" step="2" value="0"></label>
+    <label class="chk"><input type="checkbox" name="ctl"> Hold the price fixed at $30</label>
+    <label><span>Fixed price<output></output></span><input type="range" name="p" min="2" max="60" step="0.5" value="30" data-pre="$"></label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h3>Solving with algebra</h3>
+ <p>If demand is Qd = 16 − 2P and supply is Qs = 2 + 5P, set them equal: 16 − 2P = 2 + 5P, so 14 = 7P and <b>P = $2</b>. Plug back in: Qd = 16 − 4 = 12 and Qs = 2 + 10 = 12, so <b>Q = 12</b>.</p>
+ <div class="lab" data-calc="eq"></div>
+ <h2>Four steps for analyzing changes</h2>
+ <ol><li>Draw the original supply and demand and mark equilibrium.</li><li>Decide which curve the event affects.</li><li>Decide which way it shifts.</li><li>Compare the new equilibrium with the old.</li></ol>
+ <p>Take the U.S. Postal Service. A pay raise for postal workers raises costs, so supply shifts left: price up, quantity down. Email and texting reduce demand: price down, quantity down. Together, quantity definitely falls, but the price could go either way, depending on which shift is bigger. Remember the distinction: a change in <em>demand</em> shifts the curve; a change in <em>quantity demanded</em> is a movement along it, caused by a supply shift.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Own-price changes move along curves; other factors shift them.</li><li>Equilibrium is where Qd = Qs; surpluses push prices down and shortages push them up.</li><li>When both curves shift, you can usually predict only price <em>or</em> quantity.</li></ul></div>
+ <div class="quiz" data-ch="3"></div>
+</section>
+
+<!-- ============ MODULE 4 ============ -->
+<section class="view" id="v-m4" hidden>
+ <div class="eyebrow">Module 4</div>
+ <h1>Applications of Supply and Demand</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Analyze price ceilings and price floors</li><li>Measure consumer, producer and social surplus</li><li>Explain why price controls cause deadweight loss</li><li>Apply supply and demand to labor and financial markets</li></ul></div>
+ <p class="lead">Governments sometimes decide the market price is "wrong" and set it by law. Supply and demand predicts what happens next.</p>
+ <h2>Price ceilings</h2>
+ <p>A <span class="term">price ceiling</span> is a legal maximum price, such as rent control. It's <em>binding</em> when set below equilibrium, and then it causes a shortage.</p>
+ <div class="box ex"><b>Rent control.</b> Apartments start at $500 with 15,000 units rented. Demand rises, so the market rent would climb to $600 with 17,000 units. A $500 ceiling keeps rents down, but at $500 renters want 19,000 apartments and landlords supply only 15,000: a <b>shortage of 4,000</b>. Fewer apartments are rented than without the ceiling.</div>
+ <div class="tscroll"><table class="t"><tr><th>Rent</th><th>Qs</th><th>Original Qd</th><th>New Qd</th></tr>
+ <tr><td>$400</td><td>12,000</td><td>18,000</td><td>23,000</td></tr><tr><td>$500</td><td>15,000</td><td>15,000</td><td>19,000</td></tr>
+ <tr><td>$600</td><td>17,000</td><td>13,000</td><td>17,000</td></tr><tr><td>$700</td><td>19,000</td><td>11,000</td><td>15,000</td></tr>
+ <tr><td>$800</td><td>20,000</td><td>10,000</td><td>14,000</td></tr></table></div>
+ <p>Binding ceilings also lower quality (landlords skimp on maintenance), shrink supply (rentals converted to condos), and benefit only the buyers lucky enough to get the good.</p>
+ <h2>Price floors</h2>
+ <p>A <span class="term">price floor</span> is a legal minimum price. Set above equilibrium it causes a surplus. Farm price supports are typical: governments often buy the surplus, so farmers gain while taxpayers and consumers pay. The EU's Common Agricultural Policy cost about €60 billion a year in 2014–2020, about 38% of the EU budget. The minimum wage is a price floor in the labor market ($7.25 an hour federally in 2016); critics argue it creates a labor surplus (unemployment). Note that price controls don't shift the curves; they move the market along them.</p>
+ <h2>Consumer and producer surplus</h2>
+ <p>The height of the demand curve is the most buyers would pay; the height of the supply curve is the least sellers would accept. <span class="term">Consumer surplus</span> is the gap between willingness to pay and the price, the area below demand and above price. <span class="term">Producer surplus</span> is the area above supply and below price. Together they make <span class="term">social surplus</span>, which is largest at equilibrium.</p>
+ <div class="box ex"><b>Worked example.</b> Equilibrium is $10 and 3 units; the demand curve starts at $25 and supply at $5. Consumer surplus = ½ × 3 × ($25 − $10) = <b>$22.50</b>. Producer surplus = ½ × 3 × ($10 − $5) = <b>$7.50</b>. Social surplus = <b>$30</b>.</div>
+ <h2>Why price controls are inefficient</h2>
+ <p>Ceilings and floors block trades that buyers and sellers both wanted. They <b>transfer</b> surplus (a ceiling moves some producer surplus to consumers; a floor does the reverse), but they also destroy some: that loss is the <span class="term">deadweight loss</span>, value no one gets. That's why consumers lobby for ceilings and producers for floors, even though society as a whole loses.</p>
+ <div class="lab" id="lab-wel">
+  <div class="lh"><span class="tag">Lab 4.1</span>Who wins, who loses?</div>
+  <div class="lb">
+   <p class="hint">Pick a policy, then adjust it. Colored areas show consumer surplus, producer surplus, tax revenue and deadweight loss.</p>
+   <div class="seg"><label><input type="radio" name="mode" value="tax" checked>Tax</label><label><input type="radio" name="mode" value="ceil">Price ceiling</label><label><input type="radio" name="mode" value="floor">Price floor</label></div>
+   <div class="ctrls"><label><span class="amtlbl">Tax per unit<output></output></span><input type="range" name="amt" min="0" max="60" step="2" value="20" data-pre="$"></label></div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="stack"></div>
+   <div class="legend"><span><i style="background:var(--c1)"></i>Consumer surplus</span><span><i style="background:var(--c2)"></i>Producer surplus</span><span><i style="background:var(--c3)"></i>Tax revenue</span><span><i style="background:var(--c5)"></i>Deadweight loss</span></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>Labor and financial markets</h2>
+ <p>Supply and demand work in any market. In the <b>labor market</b>, workers supply labor and employers demand it; the "price" is the wage. In <b>financial markets</b>, savers supply funds and borrowers demand them; the price is the interest rate.</p>
+ <p>New information technology substitutes for low-skill workers (file clerks) but complements high-skill ones (managers). Demand for low-skill labor shifts left (lower wages) and for high-skill labor right (higher wages). The college wage premium rose from about 30% in 1980 to about 60% in 2012. In finance, if foreign investors grow wary of U.S. debt, the supply of capital shifts left: interest rates rise and less is borrowed.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Binding ceilings cause shortages; binding floors cause surpluses.</li><li>Social surplus = consumer + producer surplus, maximized at equilibrium.</li><li>Price controls transfer surplus and create deadweight loss.</li></ul></div>
+ <div class="quiz" data-ch="4"></div>
+</section>
+
+<!-- ============ MODULE 5 ============ -->
+<section class="view" id="v-m5" hidden>
+ <div class="eyebrow">Module 5</div>
+ <h1>Elasticity</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Calculate price elasticity with the midpoint formula</li><li>Classify demand and supply as elastic, inelastic or unit elastic</li><li>Use income and cross-price elasticities</li><li>Predict effects on total revenue and on who pays a tax</li></ul></div>
+ <p class="lead">Elasticity measures how strongly one variable responds to a change in another, in percentage terms.</p>
+ <h2>Price elasticity of demand</h2>
+ <div class="formula">Price elasticity of demand = % change in quantity demanded ÷ % change in price</div>
+ <p>The <span class="term">midpoint method</span> uses the average of the two values as the base, so you get the same answer whether the price rises or falls:</p>
+ <div class="formula">%ΔQ = (Q₂ − Q₁) ÷ [(Q₂ + Q₁)/2] × 100 &nbsp;&nbsp; %ΔP = (P₂ − P₁) ÷ [(P₂ + P₁)/2] × 100</div>
+ <div class="box ex"><b>Two points on one demand curve.</b> From $70 (2,800 units) to $60 (3,000 units): %ΔQ = 200/2,900 = 6.9% and %ΔP = −10/65 = −15.4%, so elasticity ≈ 0.45: <b>inelastic</b>. From $120 (1,800) to $130 (1,600): %ΔQ = −11.8% and %ΔP = 8.0%, so elasticity ≈ 1.47: <b>elastic</b>. Same straight line, same slope, different elasticity: demand gets more elastic higher up the curve.</div>
+ <div class="tscroll"><table class="t"><tr><th>|Elasticity|</th><th>Category</th><th>Meaning</th></tr>
+ <tr><td>&gt; 1</td><td>Elastic</td><td>Quantity changes by a larger % than price</td></tr>
+ <tr><td>= 1</td><td>Unit elastic</td><td>Same % change</td></tr><tr><td>&lt; 1</td><td>Inelastic</td><td>Quantity changes by a smaller %</td></tr>
+ <tr><td>0 / ∞</td><td>Perfectly inelastic / elastic</td><td>Vertical / horizontal curve</td></tr></table></div>
+ <p>Demand is more elastic when there are close substitutes, when the good is a luxury rather than a necessity, when it takes a big share of the budget, and over longer time periods.</p>
+ <div class="lab" id="lab-el">
+  <div class="lh"><span class="tag">Lab 5.1</span>Elasticity along a demand curve</div>
+  <div class="lb">
+   <p class="hint">Move along the demand curve. The shaded rectangle is total revenue; the right panel traces revenue as quantity changes.</p>
+   <div class="ctrls"><label><span>Quantity<output></output></span><input type="range" name="q" min="5" max="95" step="1" value="30"></label></div>
+   <div class="plots two"><div class="plot"></div><div class="plot2"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>Elasticity and total revenue</h2>
+ <p><span class="term">Total revenue</span> = price × quantity. If demand is <b>inelastic</b>, raising the price raises revenue; if <b>elastic</b>, raising the price lowers it.</p>
+ <div class="grid2">
+  <div><b>Parking permits (inelastic)</b>A college raises permits from $40 to $48; sales fall from 12,800 to 11,520. Elasticity ≈ 0.58. Revenue rises from $512,000 to $552,960.</div>
+  <div><b>Helen's cookies (elastic)</b>Price rises from $2.00 to $2.20; weekly sales fall from 200 to 150. Elasticity ≈ 3. Revenue falls from $400 to $330.</div>
+ </div>
+ <div class="lab" data-calc="mid"></div>
+ <h2>Price elasticity of supply</h2>
+ <p>Supply elasticity uses the same formula with quantity supplied, and it's always positive. If apartments renting at $650 bring 10,000 units onto the market and $700 brings 13,000, %ΔQ = 26.1% and %ΔP = 7.4%, so supply elasticity ≈ <b>3.5 (elastic)</b>.</p>
+ <h2>Other elasticities</h2>
+ <div class="tscroll"><table class="t"><tr><th>Elasticity</th><th>Formula</th><th>Reading the sign</th></tr>
+ <tr><td>Income</td><td>%ΔQd ÷ %Δincome</td><td>+ normal good, − inferior good</td></tr>
+ <tr><td>Cross-price</td><td>%ΔQd of A ÷ %ΔP of B</td><td>+ substitutes, − complements</td></tr>
+ <tr><td>Wage elasticity of labor supply</td><td>%Δhours ÷ %Δwage</td><td>Teens elastic; adults 30–50 inelastic</td></tr>
+ <tr><td>Interest elasticity of savings</td><td>%Δsavings ÷ %Δinterest rate</td><td>Fairly inelastic in the short run</td></tr></table></div>
+ <div class="box ex"><b>Widgets and sprockets.</b> Widgets fall from $12 to $9 and sales rise from 8 to 10 (own-price elasticity ≈ −0.77). Sprocket sales rise from 9 to 10, a 10.5% rise, against a −28.6% change in the widget price: cross-price elasticity ≈ −0.37, so they are <b>complements</b>.</div>
+ <h2>Tax incidence</h2>
+ <p>Who really pays a tax doesn't depend on who hands the money to the government. The burden falls mostly on the <b>less elastic</b> side of the market, the side that can't easily walk away. Smokers bear most of cigarette taxes (inelastic demand); owners of beachfront hotels bear much of a hotel tax (inelastic supply). And when both sides are elastic, a tax shrinks the market so much that it raises little revenue.</p>
+ <div class="lab" id="lab-inc">
+  <div class="lh"><span class="tag">Lab 5.3</span>Who pays a $20 tax?</div>
+  <div class="lb">
+   <p class="hint">Make demand or supply steeper (less elastic) or flatter (more elastic) and see how the $20 tax splits between buyers and sellers.</p>
+   <div class="ctrls">
+    <label><span>Demand<output></output></span><input type="range" name="bd" min="0" max="4" step="1" value="2" data-labels="very elastic|elastic|medium|inelastic|very inelastic"></label>
+    <label><span>Supply<output></output></span><input type="range" name="bs" min="0" max="4" step="1" value="2" data-labels="very elastic|elastic|medium|inelastic|very inelastic"></label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Use the midpoint formula; report elasticity as an absolute value.</li><li>Inelastic demand: price and revenue move together. Elastic: they move apart.</li><li>The less elastic side of the market bears more of a tax.</li></ul></div>
+ <div class="quiz" data-ch="5"></div>
+</section>
+
+<!-- ============ MODULE 6 ============ -->
+<section class="view" id="v-m6" hidden>
+ <div class="eyebrow">Module 6</div>
+ <h1>Utility</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Compute total and marginal utility</li><li>Find consumer equilibrium using marginal utility per dollar</li><li>Explain income and substitution effects</li><li>Use indifference curves, and describe insights from behavioral economics</li></ul></div>
+ <p class="lead">Behind every demand curve is a person trying to get the most satisfaction from a limited budget.</p>
+ <h2>Total and marginal utility</h2>
+ <p><span class="term">Utility</span> is the satisfaction people get from consuming. <span class="term">Total utility</span> is the satisfaction from everything consumed; <span class="term">marginal utility</span> (MU) is the change from one more unit. Typically each extra unit adds less than the one before: <span class="term">diminishing marginal utility</span>. Total utility still rises, just more slowly. (Utils are a teaching device; all that matters is that people can rank what they prefer.)</p>
+ <div class="tscroll"><table class="t"><tr><th>Qty</th><th>T-shirts: total U</th><th>MU</th><th>Movies: total U</th><th>MU</th></tr>
+ <tr><td>1</td><td>22</td><td>22</td><td>16</td><td>16</td></tr><tr><td>2</td><td>43</td><td>21</td><td>31</td><td>15</td></tr>
+ <tr><td>3</td><td>63</td><td>20</td><td>45</td><td>14</td></tr><tr><td>4</td><td>81</td><td>18</td><td>58</td><td>13</td></tr>
+ <tr><td>5</td><td>97</td><td>16</td><td>70</td><td>12</td></tr><tr><td>6</td><td>111</td><td>14</td><td>81</td><td>11</td></tr>
+ <tr><td>7</td><td>123</td><td>12</td><td>91</td><td>10</td></tr><tr><td>8</td><td>133</td><td>10</td><td>100</td><td>9</td></tr></table></div>
+ <h2>Maximizing utility</h2>
+ <p>José has $56. T-shirts cost $14 and movies $7. His affordable bundles run from 4 T-shirts and no movies to 8 movies and no T-shirts. The best bundle, his <span class="term">consumer equilibrium</span>, is the one with the highest total utility. The rule that finds it: keep buying whichever good gives the most <span class="term">marginal utility per dollar</span> (MU ÷ price) until the budget runs out. At the optimum:</p>
+ <div class="formula">MU₁ / P₁ = MU₂ / P₂<small>For José: 1 T-shirt and 6 movies, where 22/$14 = 11/$7 ≈ 1.6 utils per dollar.</small></div>
+ <div class="lab" id="lab-util">
+  <div class="lh"><span class="tag">Lab 6.1</span>José's best bundle</div>
+  <div class="lb">
+   <p class="hint">Choose how many T-shirts José buys; the rest of his $56 goes on movies. Find the highest total utility.</p>
+   <div class="ctrls"><label><span>T-shirts ($14 each)<output></output></span><input type="range" name="t" min="0" max="4" step="1" value="3"></label></div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>When income or prices change</h2>
+ <p>Jazmin spends $1,000 a year on concerts ($50) and bed-and-breakfast getaways ($200). She chooses 8 concerts and 3 getaways. If her income doubles, she might buy more of both (most common), or more of one and less of the other. If she buys less of something as income rises, it's an <b>inferior good</b> for her.</p>
+ <p>A price rise has two effects. The <span class="term">substitution effect</span>: the good is now relatively expensive, so you buy less of it and more of other things. The <span class="term">income effect</span>: your income buys less overall, so (for normal goods) you buy less of everything. For the good whose price rose, both effects cut consumption. For other goods they pull in opposite directions.</p>
+ <h2>Indifference curves</h2>
+ <p>An <span class="term">indifference curve</span> joins bundles that give equal utility. Curves slope down, bow toward the origin, and higher is better. Their slope is the <span class="term">marginal rate of substitution</span> (MRS): how much of one good you'd give up for one more of the other. Lilly would give up 36 doughnuts for a third book when she has few books, but only 5 for a twelfth: the MRS falls because of diminishing marginal utility. Her best choice is where the highest reachable indifference curve just touches her budget line, where MRS equals the price ratio.</p>
+ <div class="lab" id="lab-cc">
+  <div class="lh"><span class="tag">Lab 6.2</span>Budget line and indifference curve</div>
+  <div class="lb">
+   <p class="hint">This consumer has utility U = √(x·y). Change income or prices. Click "Save as before" first, then change a price to compare.</p>
+   <div class="ctrls">
+    <label><span>Income<output></output></span><input type="range" name="I" min="20" max="120" step="5" value="60" data-pre="$"></label>
+    <label><span>Price of coffee (x)<output></output></span><input type="range" name="px" min="2" max="10" step="0.5" value="3" data-pre="$"></label>
+    <label><span>Price of a book (y)<output></output></span><input type="range" name="py" min="2" max="10" step="0.5" value="5" data-pre="$"></label>
+   </div>
+   <p style="margin:4px 0 8px"><button class="btn" data-act="save">Save as before</button> <button class="btn" data-act="clear">Clear</button></p>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>Behavioral economics</h2>
+ <p>Traditional economics assumes people are fully rational. <span class="term">Behavioral economics</span> adds psychology:</p>
+ <ul><li><b>Loss aversion:</b> losing $1 hurts about 2.25 times as much as gaining $1 pleases.</li>
+ <li><b>Mental accounting:</b> people treat "found" money differently from earned money, even though money is <span class="term">fungible</span>. Someone with $1,000 of credit card debt at 15% and $2,000 of savings at 2% loses about $130 a year by not paying the debt off.</li>
+ <li><b>Self-control and nudges:</b> automatic enrollment in retirement plans (with an opt-out) raises participation to nearly everyone.</li>
+ <li><b>Bounded rationality:</b> limited time, information and attention keep us from always finding the best choice.</li></ul>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Marginal utility diminishes; total utility is the sum of marginal utilities.</li><li>Consumer equilibrium equalizes MU per dollar across goods (MRS = price ratio).</li><li>Price changes work through substitution and income effects.</li></ul></div>
+ <div class="quiz" data-ch="6"></div>
+</section>
+
+<!-- ============ MODULE 7 ============ -->
+<section class="view" id="v-m7" hidden>
+ <div class="eyebrow">Module 7</div>
+ <h1>Production and Costs</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Use a production function and explain diminishing marginal product</li><li>Calculate accounting and economic profit</li><li>Compute and graph average and marginal costs</li><li>Explain economies and diseconomies of scale</li></ul></div>
+ <p class="lead">To understand supply, we need to know what it costs a firm to produce.</p>
+ <h2>The production function</h2>
+ <p>A <span class="term">production function</span> shows the most output a firm can make from its inputs, Q = f(L, K). <b>Fixed inputs</b> (a building under lease) can't change quickly; <b>variable inputs</b> (ingredients, staff) can. In the <span class="term">short run</span> at least one input is fixed; in the <span class="term">long run</span> all inputs can change.</p>
+ <p><span class="term">Marginal product</span> is the extra output from one more worker. With a two-person crosscut saw, 1 lumberjack cuts 4 trees, 2 cut 10, 3 cut 12, 4 cut 13 and 5 still cut 13. Marginal product rises (4, then 6) and then falls (2, 1, 0): the <span class="term">law of diminishing marginal product</span>. Extra workers must share fixed equipment.</p>
+ <div class="lab" id="lab-prod">
+  <div class="lh"><span class="tag">Lab 7.1</span>A typing firm: short run vs long run</div>
+  <div class="lb">
+   <p class="hint">Add typists. With one PC, diminishing returns set in at the second worker. Give the firm three PCs (the long-run choice) and they start later.</p>
+   <div class="ctrls">
+    <label><span>Typists<output></output></span><input type="range" name="L" min="1" max="6" step="1" value="3"></label>
+    <label class="chk"><input type="checkbox" name="k3"> Long run: buy two more PCs (K = 3)</label>
+   </div>
+   <div class="plots two"><div class="plot"></div><div class="plot2"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>Costs and profit</h2>
+ <p><span class="term">Explicit costs</span> are actual payments (wages, rent, materials). <span class="term">Implicit costs</span> are opportunity costs of resources the firm already owns, like the owner's time.</p>
+ <div class="formula">Accounting profit = Revenue − Explicit costs &nbsp;&nbsp;|&nbsp;&nbsp; Economic profit = Revenue − Explicit − Implicit costs</div>
+ <div class="box ex"><b>Fred's law practice.</b> Fred earns $125,000 at a corporate firm. On his own he'd take in $200,000 and pay $50,000 rent and $35,000 for a clerk. Accounting profit is $115,000, but subtracting his forgone salary gives an economic profit of <b>−$10,000</b>.</div>
+ <div class="lab" data-calc="profit"></div>
+ <h2>Short-run costs</h2>
+ <p>Total cost = fixed cost + variable cost. Per unit: <b>ATC</b> = TC ÷ Q, <b>AVC</b> = VC ÷ Q, <b>AFC</b> = FC ÷ Q and <b>MC</b> = ΔTC ÷ ΔQ. Here is a barbershop, The Clip Joint, with $160 of fixed costs and $80 per worker:</p>
+ <div class="tscroll"><table class="t"><tr><th>Workers</th><th>Haircuts</th><th>FC</th><th>VC</th><th>TC</th><th>MC</th><th>ATC</th><th>AVC</th></tr>
+ <tr><td>1</td><td>16</td><td>$160</td><td>$80</td><td>$240</td><td>$5.00</td><td>$15.00</td><td>$5.00</td></tr>
+ <tr><td>2</td><td>40</td><td>$160</td><td>$160</td><td>$320</td><td>$3.33</td><td>$8.00</td><td>$4.00</td></tr>
+ <tr><td>3</td><td>60</td><td>$160</td><td>$240</td><td>$400</td><td>$4.00</td><td>$6.67</td><td>$4.00</td></tr>
+ <tr><td>4</td><td>72</td><td>$160</td><td>$320</td><td>$480</td><td>$6.67</td><td>$6.67</td><td>$4.44</td></tr>
+ <tr><td>5</td><td>80</td><td>$160</td><td>$400</td><td>$560</td><td>$10.00</td><td>$7.00</td><td>$5.00</td></tr>
+ <tr><td>6</td><td>84</td><td>$160</td><td>$480</td><td>$640</td><td>$20.00</td><td>$7.62</td><td>$5.71</td></tr></table></div>
+ <p>ATC and AVC are U-shaped, and <b>MC crosses both at their minimum points</b> (around 72 haircuts here). Think of grades: a score below your average pulls it down; one above pulls it up.</p>
+ <div class="lab" id="lab-cost">
+  <div class="lh"><span class="tag">Lab 7.2</span>A firm's cost curves</div>
+  <div class="lb">
+   <p class="hint">Variable cost here is VC = 20q − 3q² + 0.2q³. Change the fixed cost and notice what moves (ATC, AFC) and what doesn't (MC, AVC).</p>
+   <div class="ctrls">
+    <label><span>Fixed cost<output></output></span><input type="range" name="fc" min="0" max="100" step="5" value="40" data-pre="$"></label>
+    <label><span>Output q<output></output></span><input type="range" name="q" min="1" max="14" step="0.5" value="6"></label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="legend"><span><i style="background:var(--c5)"></i>MC</span><span><i style="background:var(--c1)"></i>ATC</span><span><i style="background:var(--c3)"></i>AVC</span><span><i style="background:var(--c6)"></i>AFC</span></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>The long run and economies of scale</h2>
+ <p>In the long run a firm can choose its plant size. The <span class="term">long-run average cost (LRAC)</span> curve traces the lowest average cost for each output. When LRAC falls as output grows, there are <span class="term">economies of scale</span>: a small factory makes 1,000 alarm clocks at $12 each, a medium one 2,000 at $8, and a large one 5,000 at $4. Doubling a pipe's circumference roughly quadruples its capacity; chemical engineers' "six-tenths rule" says raising output by some percentage raises cost by only about 60% of that percentage.</p>
+ <p>Typically LRAC falls (economies of scale), flattens (<b>constant returns to scale</b>), then rises (<span class="term">diseconomies of scale</span>), as huge organizations grow hard to manage. Don't confuse this with diminishing marginal returns, which is a short-run idea with some inputs fixed.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Diminishing marginal product makes marginal cost rise.</li><li>Economic profit subtracts implicit as well as explicit costs.</li><li>MC crosses ATC and AVC at their minimums; LRAC shows economies and diseconomies of scale.</li></ul></div>
+ <div class="quiz" data-ch="7"></div>
+</section>
+
+<!-- ============ MODULE 8 ============ -->
+<section class="view" id="v-m8" hidden>
+ <div class="eyebrow">Module 8</div>
+ <h1>Perfect Competition</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Describe a perfectly competitive market</li><li>Find profit-maximizing output with totals and with marginals</li><li>Apply the break-even and shutdown rules</li><li>Explain entry, exit and long-run efficiency</li></ul></div>
+ <p class="lead">In perfect competition, no single firm can change the price. Its only real decision is how much to produce.</p>
+ <h2>The price taker</h2>
+ <p>Perfect competition has many firms selling identical products, with free entry and exit. Each firm is a <span class="term">price taker</span> facing a horizontal demand curve at the market price, so each extra unit adds exactly the price to revenue. Memory aid "MR. DARP": <b>M</b>arginal <b>R</b>evenue = <b>D</b>emand = <b>A</b>verage <b>R</b>evenue = <b>P</b>rice.</p>
+ <h2>Maximizing profit</h2>
+ <p>A raspberry farm sells frozen packs at $4. Compare total revenue with total cost, or compare marginal revenue with marginal cost:</p>
+ <div class="tscroll"><table class="t"><tr><th>Packs</th><th>TR</th><th>TC</th><th>MC</th><th>Profit</th></tr>
+ <tr><td>0</td><td>$0</td><td>$62</td><td>–</td><td>−$62</td></tr><tr><td>20</td><td>$80</td><td>$110</td><td>$2.00</td><td>−$30</td></tr>
+ <tr><td>40</td><td>$160</td><td>$138</td><td>$1.20</td><td>$22</td></tr><tr><td>60</td><td>$240</td><td>$165</td><td>$1.50</td><td>$75</td></tr>
+ <tr><td>70</td><td>$280</td><td>$190</td><td>$2.50</td><td>$90</td></tr><tr><td><b>80</b></td><td><b>$320</b></td><td><b>$230</b></td><td><b>$4.00</b></td><td><b>$90</b></td></tr>
+ <tr><td>90</td><td>$360</td><td>$296</td><td>$6.60</td><td>$64</td></tr><tr><td>100</td><td>$400</td><td>$400</td><td>$10.40</td><td>$0</td></tr>
+ <tr><td>120</td><td>$480</td><td>$715</td><td>$16.50</td><td>−$235</td></tr></table></div>
+ <p>While MR ($4) exceeds MC, producing more adds profit; once MC exceeds MR, it subtracts. Profit peaks where <b>MR = MC</b>, at 80 packs.</p>
+ <div class="formula">Profit-maximizing rule: produce where MR = MC &nbsp;→&nbsp; for a price taker, P = MC</div>
+ <h2>Break-even and shutdown</h2>
+ <p>The <span class="term">break-even point</span> is where MC crosses ATC at its minimum: at that price, economic profit is zero. The <span class="term">shutdown point</span> is where MC crosses AVC at its minimum. Fixed costs must be paid either way in the short run, so a firm keeps operating at a loss as long as revenue covers variable costs.</p>
+ <div class="box ex"><b>Yoga studio.</b> Rent is $10,000 a month (fixed); instructors cost $15,000 (variable). With $20,000 of revenue it loses $5,000 by staying open but $10,000 by closing: stay open. With $12,000 of revenue it can't even cover instructors, so it should close and lose only the $10,000 rent.</div>
+ <div class="lab" id="lab-pc">
+  <div class="lh"><span class="tag">Lab 8.1</span>The price-taking firm</div>
+  <div class="lb">
+   <p class="hint">Set the market price. The firm picks q where P = MC. Green area = profit, red = loss. Fixed cost is $40, with the cost curves from Lab 7.2.</p>
+   <div class="ctrls"><label><span>Market price<output></output></span><input type="range" name="p" min="4" max="45" step="0.5" value="24" data-pre="$"></label></div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <p>The firm's <b>short-run supply curve</b> is its MC curve above minimum AVC.</p>
+ <h2>Entry, exit and the long run</h2>
+ <p>Profits attract <span class="term">entry</span>: new firms shift market supply right and push the price down. Losses cause <span class="term">exit</span>, which pushes the price up. This stops only when price equals the minimum of average cost, at <b>zero economic profit</b> (a "normal" return that covers all opportunity costs). Exit is common: in 2011, about 535,000 U.S. firms started and 576,000 failed.</p>
+ <h2>Efficiency</h2>
+ <p>In long-run equilibrium, perfect competition is <b>productively efficient</b> (goods are made at the lowest average cost) and <b>allocatively efficient</b> (P = MC, so the value of the last unit to buyers equals its cost to society). If P &gt; MC, society would gain from more output; if P &lt; MC, from less. "Efficient" is a technical term: it doesn't address pollution, poverty or unequal ability to pay.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Produce where P = MR = MC.</li><li>Operate if P ≥ min AVC; shut down below it; break even at min ATC.</li><li>Entry and exit drive long-run economic profit to zero, giving productive and allocative efficiency.</li></ul></div>
+ <div class="quiz" data-ch="8"></div>
+</section>
+
+<!-- ============ MODULE 9 ============ -->
+<section class="view" id="v-m9" hidden>
+ <div class="eyebrow">Module 9</div>
+ <h1>Monopoly</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Explain the barriers to entry that create monopolies</li><li>Find a monopoly's profit-maximizing output and price</li><li>Show why monopoly is inefficient and how price discrimination changes that</li><li>Describe antitrust policy, concentration measures and regulation</li></ul></div>
+ <p class="lead">A monopoly sells all or nearly all of a product with no close substitutes, protected by barriers to entry.</p>
+ <h2>Barriers to entry</h2>
+ <div class="tscroll"><table class="t"><tr><th>Barrier</th><th>Example</th></tr>
+ <tr><td><b>Legal monopoly</b></td><td>U.S. Postal Service first-class mail; local utilities</td></tr>
+ <tr><td><b>Intellectual property</b></td><td>Patents (20 years), copyrights (author's life + 70 years), trademarks, trade secrets (Coca-Cola's formula)</td></tr>
+ <tr><td><b>Natural monopoly</b></td><td>Economies of scale so large one firm serves the market most cheaply: water pipes, power lines</td></tr>
+ <tr><td><b>Control of a resource</b></td><td>ALCOA's bauxite in the 1930s; DeBeers diamonds</td></tr>
+ <tr><td><b>Intimidating rivals</b></td><td><span class="term">Predatory pricing</span>: slashing prices to drive out an entrant (illegal but hard to prove); huge ad budgets; famous brands</td></tr></table></div>
+ <p>From the late 1970s to the 1990s, the U.S. deregulated telecommunications, airlines, trucking, banking and electricity as technology made competition possible.</p>
+ <h2>Profit maximization</h2>
+ <p>A monopolist faces the downward-sloping market demand curve. To sell more it must cut the price on <em>every</em> unit, so <b>marginal revenue is less than price</b>. For a straight-line demand curve, MR starts at the same intercept and falls twice as fast. The monopolist produces where <b>MR = MC</b>, then reads the price off the demand curve.</p>
+ <div class="tscroll"><table class="t"><tr><th>Q</th><th>Price</th><th>TR</th><th>TC</th><th>MR</th><th>MC</th><th>Profit</th></tr>
+ <tr><td>1</td><td>1,200</td><td>1,200</td><td>500</td><td>1,200</td><td>500</td><td>700</td></tr>
+ <tr><td>2</td><td>1,100</td><td>2,200</td><td>775</td><td>1,000</td><td>275</td><td>1,425</td></tr>
+ <tr><td>3</td><td>1,000</td><td>3,000</td><td>1,000</td><td>800</td><td>225</td><td>2,000</td></tr>
+ <tr><td>4</td><td>900</td><td>3,600</td><td>1,250</td><td>600</td><td>250</td><td>2,350</td></tr>
+ <tr><td><b>5</b></td><td><b>800</b></td><td>4,000</td><td>1,650</td><td><b>400</b></td><td><b>400</b></td><td><b>2,350</b></td></tr>
+ <tr><td>6</td><td>700</td><td>4,200</td><td>2,500</td><td>200</td><td>850</td><td>1,700</td></tr>
+ <tr><td>7</td><td>600</td><td>4,200</td><td>4,000</td><td>0</td><td>1,500</td><td>200</td></tr></table></div>
+ <p>HealthPill maximizes profit at 5 units and a price of 800, where MR = MC. Revenue would be highest at 6–7 units, but profit wouldn't.</p>
+ <h2>Inefficiency and price discrimination</h2>
+ <p>A single-price monopoly stops at a quantity where buyers still value extra units above their cost: the lost surplus is <b>deadweight loss</b>. <span class="term">Price discrimination</span> (charging different customers different prices) lets the firm sell those extra units, for example through sales or matinee tickets. It needs market power, a way to sort customers, and no resale. It can seem unfair, but it reduces deadweight loss.</p>
+ <div class="lab" id="lab-mono">
+  <div class="lh"><span class="tag">Lab 9.1</span>Monopoly vs competition</div>
+  <div class="lb">
+   <p class="hint">Demand is P = 100 − Q. Change marginal cost, or let the monopolist charge each buyer their exact willingness to pay (perfect price discrimination).</p>
+   <div class="ctrls">
+    <label><span>Marginal cost<output></output></span><input type="range" name="c" min="0" max="80" step="2" value="20" data-pre="$"></label>
+    <label class="chk"><input type="checkbox" name="pd"> Perfect price discrimination</label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="legend"><span><i style="background:var(--c1)"></i>Consumer surplus</span><span><i style="background:var(--c3)"></i>Monopoly profit</span><span><i style="background:var(--c5)"></i>Deadweight loss</span></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>Antitrust and mergers</h2>
+ <p>U.S. antitrust law began with the <b>Sherman Act</b> (1890; Standard Oil was split into 34 firms in 1911), followed by the <b>Clayton Act</b> (1914), which banned mergers that "substantially lessen competition", and the creation of the FTC. Regulators measure concentration in two ways:</p>
+ <ul><li>The <span class="term">four-firm concentration ratio</span>: the market shares of the four largest firms added up.</li>
+ <li>The <span class="term">Herfindahl-Hirschman Index (HHI)</span>: the sum of every firm's squared market share. A monopoly scores 10,000; 100 equal firms score 100. Older FTC guidelines: below 1,000 probably approve, 1,000–1,800 look closely, above 1,800 probably challenge.</li></ul>
+ <div class="lab" data-calc="hhi"></div>
+ <h2>Regulating natural monopolies</h2>
+ <p>Breaking up a natural monopoly raises average costs. Forcing <b>price = MC</b> is allocatively efficient but leaves the firm losing money (it would need a subsidy). Setting <b>price = average cost</b> lets it cover costs with a normal profit, the most practical choice. <span class="term">Cost-plus regulation</span> does this but gives weak incentives to cut costs; <span class="term">price cap regulation</span> fixes a maximum price for several years, so firms that cut costs keep the savings.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Barriers to entry sustain monopoly; MR &lt; P for a monopolist.</li><li>Produce where MR = MC and price from demand: higher price, less output, deadweight loss.</li><li>Antitrust uses concentration ratios and the HHI; regulators often set P = AC for natural monopolies.</li></ul></div>
+ <div class="quiz" data-ch="9"></div>
+</section>
+
+<!-- ============ MODULE 10 ============ -->
+<section class="view" id="v-m10" hidden>
+ <div class="eyebrow">Module 10</div>
+ <h1>Monopolistic Competition and Oligopoly</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Explain product differentiation and the monopolistic competitor's demand curve</li><li>Show why long-run profit falls to zero with free entry</li><li>Explain why oligopolies form and why collusion is unstable</li><li>Analyze the prisoner's dilemma and Nash equilibrium</li></ul></div>
+ <p class="lead">Most real markets sit between the extremes of perfect competition and monopoly.</p>
+ <h2>Monopolistic competition</h2>
+ <p><span class="term">Monopolistic competition</span> means many firms selling <span class="term">differentiated products</span>: restaurants, boutiques, beer, golf balls. Products differ in physical features, location, service (guarantees, delivery) and buyer perception (brand, advertising). Over 1,800 golf ball models meet official standards, and most players can't tell them apart, yet makers spend heavily marketing differences.</p>
+ <p>Each firm faces a downward-sloping but fairly elastic demand curve: raise the price and you lose some customers, not all. It maximizes profit where MR = MC. But barriers to entry are low, so short-run profits attract rivals, each of which shifts the firm's demand left until <b>price equals average cost and economic profit is zero</b>. Unlike perfect competition, the firm ends up with price above MC and above minimum average cost: not productively or allocatively efficient, but offering variety.</p>
+ <div class="lab" id="lab-mc">
+  <div class="lh"><span class="tag">Lab 10.1</span>Entry erodes a restaurant's profit</div>
+  <div class="lb">
+   <p class="hint">A restaurant with a new sauce earns profits. Let rivals enter one by one and watch its demand curve shift left until it just touches average cost.</p>
+   <div class="ctrls"><label><span>Rival firms that have entered<output></output></span><input type="range" name="n" min="0" max="5" step="1" value="0"></label></div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <p>Advertising tries to make demand less elastic or shift it right. U.S. advertising spending was about $139.5 billion in 2012. Critics see much of it as wasteful, rival ads canceling each other out; defenders value variety and information.</p>
+ <h2>Oligopoly</h2>
+ <p>An <b>oligopoly</b> has a few large firms, often because of economies of scale or other barriers. Each firm's best choice depends on what the others do. Firms can <span class="term">collude</span>, acting together like a monopoly (a formal agreement is a <span class="term">cartel</span>), or compete hard. Collusion is illegal under U.S. antitrust law: French detergent makers were fined €361 million, and lysine producers including ADM were fined $100 million in 1996.</p>
+ <h2>The prisoner's dilemma</h2>
+ <p><span class="term">Game theory</span> analyzes such situations. In the classic prisoner's dilemma, confessing is each prisoner's <span class="term">dominant strategy</span>, so both confess and serve 5 years, though both staying silent would mean only 2 years each. In a duopoly, if both firms hold output low they earn $1,000 each; if one expands it gets $1,500 and the other $200; if both expand, $400 each. Expanding is dominant, so they end up at $400: a <span class="term">Nash equilibrium</span> where neither can gain by changing alone, yet both are worse off.</p>
+ <div class="lab" id="lab-game">
+  <div class="lh"><span class="tag">Lab 10.2</span>Nash equilibrium finder</div>
+  <div class="lb">
+   <p class="hint">Choose a preset or type your own payoffs. Best responses are outlined in gold; Nash equilibria are boxed in green. Each cell shows (<span style="color:var(--c1)">Firm A</span>, <span style="color:var(--c2)">Firm B</span>).</p>
+   <div class="seg" id="presets"><label><input type="radio" name="pre" value="pd" checked>Duopoly output</label><label><input type="radio" name="pre" value="co">Coordination</label><label><input type="radio" name="pre" value="ch">Entry (chicken)</label></div>
+   <div class="tscroll"><table class="mx" id="mx"></table></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <p>How do firms sustain cooperation without legal contracts? By monitoring each other and punishing cheating. A <span class="term">kinked demand curve</span> arises if rivals match price cuts but not increases, which discourages both. In repeated play, strategies like tit-for-tat (cooperate, then copy your rival's last move) can keep cooperation going.</p>
+ <div class="lab" id="lab-rep">
+  <div class="lh"><span class="tag">Lab 10.3</span>Play the repeated duopoly game</div>
+  <div class="lb">
+   <p class="hint">8 rounds. Both hold output low: $1,000 each. Both expand: $400 each. If you expand while your rival holds low, you get $1,500 and they get $200 (and the reverse).</p>
+   <div class="ctrls"><label><span>Rival's strategy</span><select name="bot" style="font:15px var(--sans);padding:7px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"><option value="tft">Tit-for-tat</option><option value="grim">Grim trigger (never forgives)</option><option value="alld">Always expand</option><option value="rand">Unpredictable</option></select></label></div>
+   <p style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn pri" data-m="C">Hold output low</button><button class="btn" data-m="D">Expand output</button><button class="btn" data-m="R">New game</button></p>
+   <div class="hist"></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Monopolistic competitors differentiate; entry drives long-run profit to zero.</li><li>Oligopolists are interdependent; collusion pays but is illegal and unstable.</li><li>In a prisoner's dilemma, dominant strategies lead to a Nash equilibrium that's worse for everyone.</li></ul></div>
+ <div class="quiz" data-ch="10"></div>
+</section>
+
+<!-- ============ MODULE 11 ============ -->
+<section class="view" id="v-m11" hidden>
+ <div class="eyebrow">Module 11</div>
+ <h1>Public Goods and Externalities</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Explain negative and positive externalities and why they cause market failure</li><li>Identify public goods, common resources and the free-rider problem</li><li>Compare command-and-control regulation with market-oriented tools</li><li>Apply the Coase theorem</li></ul></div>
+ <p class="lead">Markets work well when buyers and sellers bear all the costs and benefits of their choices. Often they don't.</p>
+ <h2>Negative externalities</h2>
+ <p>A <span class="term">negative externality</span> is a cost that falls on people outside the transaction, like pollution. <b>Social cost</b> = private cost + external cost. Because firms ignore the external part, the market produces too much: a <span class="term">market failure</span>.</p>
+ <div class="box ex"><b>Refrigerators.</b> Suppose each refrigerator causes $100 of pollution damage. If producers had to pay it, supply would shift up by $100. Equilibrium would move from $650 and 45,000 units to <b>$700 and 40,000 units</b>: a higher price, less output and less pollution.</div>
+ <div class="lab" id="lab-ext">
+  <div class="lh"><span class="tag">Lab 11.1</span>Pollution and the Pigouvian tax</div>
+  <div class="lb">
+   <p class="hint">Raise the external cost per unit. Then switch on a tax equal to it.</p>
+   <div class="ctrls">
+    <label><span>External cost per unit<output></output></span><input type="range" name="e" min="0" max="40" step="2" value="20" data-pre="$"></label>
+    <label class="chk"><input type="checkbox" name="tax"> Impose Pigouvian tax</label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>Positive externalities</h2>
+ <p>With a <span class="term">positive externality</span>, others benefit too: flu shots protect people who weren't vaccinated, and research spills over to competitors. Marginal social benefit is above marginal private benefit, so the market produces too little. Inventors capture only about one-third to one-half of an innovation's total benefits. If a drug company that can borrow at 8% counts only its private return, it invests $30 million in R&amp;D; counting social benefits, the ideal is $52 million. Subsidies, vouchers and public funding of education and research narrow the gap. Education's private return is large (median weekly earnings in 2016: $519 without high school, $698 with a diploma, $1,270 with a bachelor's degree), and it also brings social benefits such as better health and lower crime.</p>
+ <h2>Public goods and common resources</h2>
+ <div class="grid2">
+  <div><b>Private goods</b>Rival &amp; excludable: a pizza</div>
+  <div><b>Public goods</b>Non-rival &amp; non-excludable: national defense, police and fire protection</div>
+  <div><b>Common resources</b>Rival &amp; non-excludable: queen conch in Caribbean waters, ocean fish</div>
+  <div><b>Club goods</b>Non-rival &amp; excludable: a patented invention while the patent lasts</div>
+ </div>
+ <p style="margin-top:1em">People can enjoy a <span class="term">public good</span> without paying for it, so markets underprovide it: the <span class="term">free-rider problem</span>. Common resources suffer the <span class="term">tragedy of the commons</span> (Garrett Hardin, 1968): nobody owns them, so nobody conserves them. Fishing licenses, catch limits, shorter seasons and outright bans (the U.S. has effectively banned conch harvesting since 1986) are the usual responses. Every public good has positive externalities, but not every good with positive externalities is a public good: students capture most of education's benefits.</p>
+ <h2>Command-and-control regulation</h2>
+ <p>The EPA (1970), the Clean Air Act (1970) and the Clean Water Act (1972) set <span class="term">effluent standards</span>: legal limits on emissions, sometimes with required equipment. They've cleaned the air and water substantially, but critics note three weaknesses: no reward for beating the standard, the same rule for firms with very different costs of cutting pollution, and political loopholes.</p>
+ <h2>Market-oriented tools</h2>
+ <p>A <span class="term">pollution charge</span> taxes each unit emitted. A firm cuts emissions wherever cutting is cheaper than paying the tax, so cleanup happens where it costs least.</p>
+ <div class="lab" id="lab-abate">
+  <div class="lh"><span class="tag">Lab 11.2</span>Pay the charge or clean up?</div>
+  <div class="lb">
+   <p class="hint">A firm emits 50 lbs of particulates. Cutting each 10 lbs costs $300, $500, $900, $1,500 and $2,500. Set the charge per 10 lbs and the firm picks the cheapest response.</p>
+   <div class="ctrls"><label><span>Pollution charge per 10 lbs<output></output></span><input type="range" name="tax" min="200" max="3000" step="100" value="1000" data-pre="$"></label></div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <p><span class="term">Marketable permits</span> cap total pollution and let firms trade allowances. Suppose four firms emitting 1,200 tons of lead get permits for half. Gamma cuts cheaply from 600 to 200 tons and sells 100 spare permits; Alpha (150 tons, 100 permits) and new entrant Delta (50 tons) buy 50 each. Total emissions hit the 600-ton cap, and the cheapest cuts get made first. The 1990 Clean Air Act amendments used shrinkable permits to halve sulfur dioxide from power plants. Permits suit a few hundred large emitters; charges suit millions of small ones (cars, cans); outright standards suit catastrophic dangers like nuclear waste.</p>
+ <h3>Property rights and the Coase theorem</h3>
+ <p>Sparks from a train set a farmer's field on fire: should the farmer build a fence or the railroad fit a spark catcher? Ronald Coase (Nobel 1991) showed that once property rights are clearly assigned and bargaining is cheap, the parties will find the cheapest fix themselves. The <span class="term">Coase theorem</span> also explains why paying landowners to keep habitat works better than penalties that tempt them to hide endangered species.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Negative externalities mean overproduction; positive ones mean underproduction.</li><li>Public goods invite free riders; common resources get overused.</li><li>Pollution charges and tradable permits reach a target at lower cost than uniform standards.</li></ul></div>
+ <div class="quiz" data-ch="11"></div>
+</section>
+
+<!-- ============ MODULE 12 ============ -->
+<section class="view" id="v-m12" hidden>
+ <div class="eyebrow">Module 12</div>
+ <h1>Labor Markets</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Derive labor demand from marginal revenue product</li><li>Explain monopsony and why it lowers wages and employment</li><li>Analyze unions and bilateral monopoly</li><li>Discuss discrimination and immigration with economic evidence</li></ul></div>
+ <p class="lead">Labor is a market like any other, but it's a market for people's time, skills and livelihoods.</p>
+ <h2>The demand for labor</h2>
+ <p>Labor demand is a <span class="term">derived demand</span>: firms want workers because they want what workers produce. A worker's <span class="term">marginal revenue product</span> (MRP) is their marginal product times the marginal revenue from selling it. A firm hires until the wage equals MRP. In a perfectly competitive output market, MR = price, and MRP equals the <b>value of the marginal product</b> (MPL × P). Firms with market power have MR &lt; P, so they demand less labor.</p>
+ <div class="tscroll"><table class="t"><tr><th>Workers</th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+ <tr><td>Marginal product</td><td>4</td><td>3</td><td>2</td><td>1</td></tr>
+ <tr><td>Marginal revenue</td><td>$4</td><td>$3</td><td>$2</td><td>$1</td></tr>
+ <tr><td>MRP</td><td>$16</td><td>$9</td><td>$4</td><td>$1</td></tr></table></div>
+ <p>At a $9 wage this firm hires 2 workers. Earlier hires bring in more than they're paid; that gap pays for capital and the firm's profit.</p>
+ <h2>Monopsony</h2>
+ <p>A <span class="term">monopsony</span> is a labor market with a single employer. To hire one more worker it must raise the wage for everyone, so the <span class="term">marginal cost of labor</span> is above the wage:</p>
+ <div class="tscroll"><table class="t"><tr><th>Workers</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+ <tr><td>Wage</td><td>$1</td><td>$2</td><td>$3</td><td>$4</td><td>$5</td></tr>
+ <tr><td>Total labor cost</td><td>$1</td><td>$4</td><td>$9</td><td>$16</td><td>$25</td></tr>
+ <tr><td>Marginal cost of labor</td><td>$1</td><td>$3</td><td>$5</td><td>$7</td><td>$9</td></tr></table></div>
+ <p>The monopsonist hires where MRP = marginal cost of labor, then pays the lowest wage that attracts that many workers: <b>fewer workers and lower wages</b> than a competitive market.</p>
+ <div class="lab" id="lab-labor">
+  <div class="lh"><span class="tag">Lab 12.1</span>Competitive market vs monopsony</div>
+  <div class="lb">
+   <p class="hint">Labor supply is W = L (as in the table). Shift labor demand (MRP) and switch between a competitive market and a single employer.</p>
+   <div class="ctrls">
+    <label><span>Labor demand (MRP intercept)<output></output></span><input type="range" name="A" min="12" max="24" step="3" value="18" data-pre="$"></label>
+    <label class="chk"><input type="checkbox" name="mono" checked> Single employer (monopsony)</label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>Unions</h2>
+ <p>A <span class="term">labor union</span> bargains collectively, acting like a monopoly seller of labor. It can push wages above equilibrium, which reduces employment (often through slower hiring or automation rather than layoffs), though higher morale and lower turnover may raise productivity. In 2016 about 10.7% of U.S. workers were union members (40.3% in local government but only 6.6% in the private sector), and members earned about 20% more than comparable nonunion workers. Membership has fallen since the mid-1950s, when about a quarter of workers belonged, because of the shift to services, import competition, protective laws and a tougher legal environment. When a union faces a monopsony (<span class="term">bilateral monopoly</span>), employment falls below the competitive level and the wage depends on bargaining power.</p>
+ <h2>Discrimination</h2>
+ <p>Labor market <span class="term">discrimination</span> means equally qualified workers get different pay or opportunities because of race or gender. Raw gaps don't prove it: comparisons must control for education and experience. The female-to-male earnings ratio reached about 80% after 2010, but controlling for education, experience and occupation, a 2007 study found a gap of about 5%. Mothers earn 7–14% less than comparable women without children. Black men earned 62% of white men's pay in 1964 and 75.3% in 2013, and résumés with white-sounding names got 50% more callbacks. Gary Becker argued competition punishes discriminating employers, yet discrimination has persisted. Key laws include the Equal Pay Act (1963) and the Civil Rights Act (1964).</p>
+ <h2>Immigration</h2>
+ <p>The U.S. received 10.1 million immigrants in 2000–2008, about half from the rest of the Americas. Most economists find immigration's overall gains real but modest: low-skill immigration lowers low-skill wages a little (around 1% in one study), helps buyers of those services, adds to federal tax revenue, and can strain state and local budgets. Policy proposals range from points systems favoring skills (Canada, Australia) to paths to citizenship for people brought to the U.S. as children.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Firms hire until the wage equals marginal revenue product.</li><li>Monopsony lowers both employment and wages; unions push wages up.</li><li>Careful comparisons, controlling for productivity, are needed to measure discrimination.</li></ul></div>
+ <div class="quiz" data-ch="12"></div>
+</section>
+
+<!-- ============ MODULE 13 ============ -->
+<section class="view" id="v-m13" hidden>
+ <div class="eyebrow">Module 13</div>
+ <h1>Income Distribution</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Define poverty and the poverty line</li><li>Explain the poverty trap and how the safety net is designed</li><li>Measure inequality with quintiles and the Lorenz curve</li><li>Explain causes of rising inequality and policies to reduce it</li></ul></div>
+ <p class="lead">Markets reward productivity, but they don't guarantee that everyone has enough. Poverty and inequality are related but different problems.</p>
+ <h2>Poverty</h2>
+ <p>The U.S. <span class="term">poverty line</span>, devised by Mollie Orshansky in 1963, is three times the cost of an adequate diet, adjusted for family size and inflation. In 2015 it was $11,790 for one person and $25,240 for a family of four. The poverty rate hasn't fallen below 11% in four decades; it peaked at 15.9% in 2011 and was 14.5% in 2013, with higher rates for children (19.9%), Black (27.1%) and Hispanic (23.5%) Americans. Worldwide, about half of people live on less than $2.50 a day. The official U.S. measure counts only cash income, so it leaves out food aid, Medicaid and housing help.</p>
+ <h2>The poverty trap</h2>
+ <p>If benefits fall by $1 for every $1 earned, working gains nothing: the <span class="term">poverty trap</span>. A single mother earning $8 an hour with an $18,000 guarantee would have exactly $18,000 whether she works 0 or 2,000 hours. If benefits fall only 50 cents per dollar earned, every hour of work raises her income. The trade-off: slower phase-outs cost the government more.</p>
+ <div class="lab" id="lab-trap">
+  <div class="lh"><span class="tag">Lab 13.1</span>The poverty trap</div>
+  <div class="lb">
+   <p class="hint">An $18,000 guarantee and an $8 wage. Choose how fast benefits are withdrawn and how many hours she works.</p>
+   <div class="ctrls">
+    <label><span>Benefits lost per $1 earned<output></output></span><input type="range" name="r" min="0" max="100" step="25" value="100" data-pre="" data-suf="¢"></label>
+    <label><span>Hours worked per year<output></output></span><input type="range" name="h" min="0" max="2500" step="500" value="1000"></label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>The safety net</h2>
+ <div class="tscroll"><table class="t"><tr><th>Program</th><th>What it does</th></tr>
+ <tr><td><b>TANF</b> (1996)</td><td>Block grants to states; work requirements; 5-year lifetime limit. Families receiving it fell from 4.8 million (1995) to 1.8 million (2012).</td></tr>
+ <tr><td><b>EITC</b> (1975)</td><td>A tax credit for the working poor, about $60 billion for 27 million households in 2012. It rewards work: in 2013 a single parent with two children could get up to $5,372.</td></tr>
+ <tr><td><b>SNAP</b> (1964)</td><td>Food assistance; about 46.6 million people in 2012. Benefits fall about $30 per $100 earned.</td></tr>
+ <tr><td><b>Medicaid</b> (1965)</td><td>Health insurance for low-income families, the elderly and disabled; about 67 million enrolled in 2012</td></tr>
+ <tr><td>Others</td><td>School meals, WIC, heating help (LIHEAP), housing aid, SSI</td></tr></table></div>
+ <h2>Measuring inequality</h2>
+ <p>Economists rank households by income and split them into fifths, called <span class="term">quintiles</span>. The top fifth's share of U.S. income rose from 44.1% in 1980 to 51.5% in 2016, while the bottom fifth's fell from 4.2% to 3.1%.</p>
+ <div class="tscroll"><table class="t"><tr><th>Year</th><th>Lowest</th><th>Second</th><th>Third</th><th>Fourth</th><th>Highest</th><th>Top 5%</th></tr>
+ <tr><td>1967</td><td>4.0</td><td>10.8</td><td>17.3</td><td>24.2</td><td>43.6</td><td>17.2</td></tr>
+ <tr><td>1980</td><td>4.2</td><td>10.2</td><td>16.8</td><td>24.7</td><td>44.1</td><td>16.5</td></tr>
+ <tr><td>1990</td><td>3.8</td><td>9.6</td><td>15.9</td><td>24.0</td><td>46.6</td><td>18.5</td></tr>
+ <tr><td>2000</td><td>3.6</td><td>8.9</td><td>14.8</td><td>23.0</td><td>49.8</td><td>22.1</td></tr>
+ <tr><td>2016</td><td>3.1</td><td>8.3</td><td>14.2</td><td>22.9</td><td>51.5</td><td>22.6</td></tr></table></div>
+ <p>A <span class="term">Lorenz curve</span> plots the cumulative share of people against the cumulative share of income. A perfectly equal society follows the 45° line; the further the curve sags below it, the more unequal the distribution. The <b>Gini coefficient</b> (an extension not covered in the original course) turns that gap into one number: 0 is perfect equality and 1 is complete inequality.</p>
+ <div class="lab" id="lab-lorenz">
+  <div class="lh"><span class="tag">Lab 13.2</span>Lorenz curves around the world</div>
+  <div class="lb">
+   <p class="hint">Choose a country or year. Tick the box to compare with the U.S. in 2016.</p>
+   <div class="ctrls">
+    <label><span>Country / year<output></output></span><input type="range" name="d" min="0" max="8" step="1" value="0" data-labels="U.S. 1980|U.S. 2016|Germany 2000|Brazil 2009|Mexico 2010|China 2009|India 2010|Russia 2009|Nigeria 2010"></label>
+    <label class="chk"><input type="checkbox" name="cmp"> Compare with U.S. 2016</label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>Why inequality has grown</h2>
+ <p>About half the rise in U.S. household inequality comes from changing families: more two-earner couples, high earners marrying each other, and more single-parent households. The rest reflects a widening skill gap. The number of bachelor's degrees awarded rose more than 90% between 1970 and 2014, yet college workers' pay premium still grew, because <b>demand for skilled labor rose even faster</b>, driven by information technology and globalization.</p>
+ <h2>Policies</h2>
+ <p>Governments reduce inequality through <span class="term">redistribution</span> (a <span class="term">progressive tax</span> system plus programs like the EITC), a "ladder of opportunity" (preschool, schools, college aid, retraining, anti-discrimination laws) and the <b>estate tax</b> (which in 2013 applied only to estates above $5.25 million). Heavy redistribution can weaken incentives to work, but some policies, such as good public education, can raise equality and output together. Wealth (assets minus debts) is even more unequal than income.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Steep benefit phase-outs create a poverty trap; the EITC rewards work.</li><li>Quintile shares and the Lorenz curve measure inequality, which has risen in the U.S. since 1980.</li><li>Family changes and fast-growing demand for skills explain much of the rise.</li></ul></div>
+ <div class="quiz" data-ch="13"></div>
+</section>
+
+<!-- ============ MODULE 14 ============ -->
+<section class="view" id="v-m14" hidden>
+ <div class="eyebrow">Module 14</div>
+ <h1>Globalization and Trade</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Distinguish absolute and comparative advantage</li><li>Calculate the gains from specialization and trade</li><li>Explain intra-industry trade</li><li>Analyze who wins and loses from trade, tariffs and quotas</li></ul></div>
+ <p class="lead">Countries trade for the same reason people do: specializing in what you do relatively best leaves everyone with more.</p>
+ <h2>Absolute vs comparative advantage</h2>
+ <p>A country has an <span class="term">absolute advantage</span> if it produces a good with fewer resources (Canada makes 100 lb of beef with 2 ranchers; Argentina needs 3). It has a <span class="term">comparative advantage</span> if its <em>opportunity cost</em> is lower. David Ricardo showed in 1817 that trade benefits both partners even when one is better at everything.</p>
+ <div class="tscroll"><table class="t"><tr><th>Workers needed per 1,000…</th><th>Shoes</th><th>Refrigerators</th><th>Opp. cost of 1 refrigerator</th></tr>
+ <tr><td>United States</td><td>4</td><td>1</td><td>0.25 shoes</td></tr>
+ <tr><td>Mexico</td><td>5</td><td>4</td><td>0.8 shoes</td></tr></table></div>
+ <p>The U.S. has an absolute advantage in both goods, but its comparative advantage is in refrigerators; Mexico's is in shoes. With 40 workers each, both start by splitting workers evenly: the U.S. makes 5,000 shoes and 20,000 refrigerators, Mexico 4,000 shoes and 5,000 refrigerators (9,000 shoes and 25,000 refrigerators in total). If the U.S. moves 6 workers into refrigerators and Mexico moves 10 into shoes, the totals become 9,500 shoes and 28,500 refrigerators: more of both. Any trade rate between 1.25 and 4 refrigerators per shoe benefits both countries.</p>
+ <div class="lab" id="lab-ca">
+  <div class="lh"><span class="tag">Lab 14.1</span>Specialize and gain</div>
+  <div class="lb">
+   <p class="hint">Each country has 40 workers. Choose how many make shoes; the rest make refrigerators. Can you beat the no-trade totals (9,000 shoes, 25,000 refrigerators) in both goods?</p>
+   <div class="ctrls">
+    <label><span>U.S. workers making shoes<output></output></span><input type="range" name="us" min="0" max="40" step="2" value="20"></label>
+    <label><span>Mexican workers making shoes<output></output></span><input type="range" name="mx" min="0" max="40" step="5" value="20"></label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>Intra-industry trade</h2>
+ <p>About 60% of U.S. and European trade is <span class="term">intra-industry trade</span>: the U.S. both exports and imports cars, food and machinery. Similar economies gain by specializing in narrow product niches, by splitting up the <b>value chain</b> (an iPhone is designed in the U.S., uses Korean parts and is assembled in China), and through economies of scale, while consumers get more variety and competition.</p>
+ <h2>Supply and demand in trade</h2>
+ <p>Without trade, sugar costs 12¢ per pound in Brazil and 24¢ in the U.S. With trade, the price settles at 16¢ in both: Brazil exports 15 tons and the U.S. imports 15. Brazilian producers and U.S. consumers gain; Brazilian consumers and U.S. producers lose. Total surplus rises in both countries, but trade has <b>income distribution effects</b>.</p>
+ <h2>Protectionism</h2>
+ <p><span class="term">Protectionism</span> limits imports through <span class="term">tariffs</span> (import taxes), <span class="term">import quotas</span> (quantity limits, such as the U.S. sugar quota) and <span class="term">nontariff barriers</span> (rules, inspections, paperwork). Justifications include saving jobs, infant industries and national security. Protection helps the protected producers but costs consumers and firms that use the goods as inputs, generally more than the producers gain. Despite heavy apparel protection, U.S. textile and apparel jobs fell 42% from 2007 to 2012.</p>
+ <div class="lab" id="lab-sugar">
+  <div class="lh"><span class="tag">Lab 14.2</span>A tariff on imported sugar</div>
+  <div class="lb">
+   <p class="hint">The world price of sugar is 16¢/lb. Add a tariff, or close the border completely.</p>
+   <div class="ctrls">
+    <label><span>Tariff (¢ per lb)<output></output></span><input type="range" name="t" min="0" max="8" step="1" value="0"></label>
+    <label class="chk"><input type="checkbox" name="closed"> Ban imports (no trade)</label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <h2>Trade agreements</h2>
+ <p>The <b>World Trade Organization</b> (1995, successor to GATT) negotiates lower barriers in rounds; average tariffs in industrialized countries fell from about 40% in 1946 to under 5% by 1990. Regional deals range from <b>free trade agreements</b> (NAFTA) to <b>common markets</b> and <b>economic unions</b> (the EU). Antidumping rules let countries impose tariffs on imports sold below cost.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Comparative advantage, not absolute advantage, drives gains from trade.</li><li>Trade raises total surplus but creates winners and losers.</li><li>Tariffs and quotas raise domestic prices, protect producers and cost consumers more than producers gain.</li></ul></div>
+ <div class="quiz" data-ch="14"></div>
+</section>
+
+<!-- ============ MODULE 15 ============ -->
+<section class="view" id="v-m15" hidden>
+ <div class="eyebrow">Module 15</div>
+ <h1>Exchange Rates and International Finance</h1>
+ <div class="box obj"><h3>You will learn to</h3><ul><li>Explain who supplies and demands currencies</li><li>Identify who wins and loses when a currency strengthens or weakens</li><li>Predict exchange-rate changes from expectations, interest rates and inflation</li><li>Compare exchange-rate policies</li></ul></div>
+ <p class="lead">An exchange rate is just a price: the price of one currency in terms of another.</p>
+ <h2>The foreign exchange market</h2>
+ <p>Every international transaction demands one currency and supplies another. The dollar is demanded by foreigners buying U.S. exports, visiting the U.S., or investing here, through <span class="term">foreign direct investment</span> (owning 10% or more of a firm) or <span class="term">portfolio investment</span> (purely financial). Americans buying imports, traveling or investing abroad supply dollars. About $5.3 trillion trades every day, mostly portfolio flows between banks, and the dollar is on one side of about 88% of trades. Firms reduce exchange-rate risk by <span class="term">hedging</span>.</p>
+ <h2>Strong and weak currencies</h2>
+ <p>When a currency <span class="term">appreciates</span> (strengthens), it buys more foreign currency; when it <span class="term">depreciates</span> (weakens), less. If the dollar weakens from $1.50 to $2.00 per pound, a $25,000 Ford pickup falls from £16,667 to £12,500 in Britain, while a £6 six-pack of British ale rises from $9 to $12 in the U.S. A strong dollar helps U.S. importers and tourists abroad but hurts U.S. exporters. As the course puts it, a stronger currency isn't necessarily better, just different.</p>
+ <div class="lab" data-calc="fx"></div>
+ <h2>What moves exchange rates</h2>
+ <div class="tscroll"><table class="t"><tr><th>Change</th><th>Demand for currency</th><th>Supply</th><th>Currency</th></tr>
+ <tr><td>Expected appreciation</td><td>Right</td><td>Left</td><td>Appreciates (and expectations feed on themselves)</td></tr>
+ <tr><td>Higher relative interest rates</td><td>Right</td><td>Left</td><td>Appreciates</td></tr>
+ <tr><td>Higher relative inflation</td><td>Left</td><td>Right</td><td>Depreciates (as in Mexico in 1986–87, when inflation topped 200%)</td></tr></table></div>
+ <div class="lab" id="lab-fx">
+  <div class="lh"><span class="tag">Lab 15.1</span>The market for U.S. dollars</div>
+  <div class="lb">
+   <p class="hint">The price of a dollar is in Mexican pesos. Change how U.S. interest rates and inflation compare with Mexico's.</p>
+   <div class="ctrls">
+    <label><span>U.S. interest rate vs Mexico<output></output></span><input type="range" name="r" min="-2" max="2" step="1" value="0" data-labels="much lower|lower|same|higher|much higher"></label>
+    <label><span>U.S. inflation vs Mexico<output></output></span><input type="range" name="pi" min="-2" max="2" step="1" value="0" data-labels="much lower|lower|same|higher|much higher"></label>
+   </div>
+   <div class="plots"><div class="plot"></div></div>
+   <div class="readout"></div>
+  </div>
+ </div>
+ <p>In the long run, <span class="term">arbitrage</span> pushes exchange rates toward <span class="term">purchasing power parity</span> (PPP), the rate at which traded goods cost the same everywhere. PPP rates also make GDP comparisons more reliable: Japan's ¥500 trillion GDP is $4.6 trillion at 108 yen per dollar but $5.5 trillion at 90 yen per dollar.</p>
+ <h2>Why exchange rates matter</h2>
+ <p>Exchange rates affect exports and therefore aggregate demand. Sudden swings disrupt business plans, and a currency collapse can break banks that borrowed in dollars but lent in their own currency, as in East Asia in 1997–98 and Argentina in 2002.</p>
+ <h2>Exchange-rate policies</h2>
+ <div class="tscroll"><table class="t"><tr><th></th><th>Floating</th><th>Soft peg</th><th>Hard peg</th><th>Merged currency</th></tr>
+ <tr><td>How it works</td><td>Market sets the rate (the dollar)</td><td>Central bank intervenes now and then</td><td>Rate fixed; constant intervention</td><td>Share or adopt a currency (euro; Ecuador uses the dollar)</td></tr>
+ <tr><td>Short-run volatility</td><td>High</td><td>Moderate</td><td>Very low</td><td>None</td></tr>
+ <tr><td>Monetary independence</td><td>Full</td><td>Some</td><td>Very little</td><td>None</td></tr></table></div>
+ <p>There's no consensus on the best regime; sound fundamentals (low inflation, stable growth, sustainable trade balances) matter most. Some countries use capital controls or <b>Tobin taxes</b> on short-term flows, with mixed success.</p>
+ <div class="box take"><h3>Key takeaways</h3><ul><li>Exchange rates are set by supply and demand for currencies.</li><li>Appreciation helps importers and hurts exporters; depreciation does the reverse.</li><li>Higher interest rates and expected appreciation strengthen a currency; higher inflation weakens it.</li></ul></div>
+ <div class="quiz" data-ch="15"></div>
+ <div class="box" style="text-align:center"><h3 style="margin-top:0">You've reached the end 🎓</h3><p style="font-family:var(--sans);font-size:15px;margin:0">Head back to the <a href="#home">contents</a> to see which quizzes are left, or browse the <a href="#glossary">glossary</a> to review.</p></div>
+</section>
+
+</main>
+</div>
+<script>
+(function(){
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const store={get(k,d){try{const v=localStorage.getItem('lumenmicro_'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('lumenmicro_'+k,JSON.stringify(v))}catch(e){}}};
+const f0=n=>Math.round(n).toLocaleString('en-US'), f1=n=>(Math.round(n*10)/10).toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1}), f2=n=>n.toFixed(2), d2=n=>'$'+n.toFixed(2);
+
+const MODS=[
+ {t:'Economic Thinking',d:'Scarcity, specialization, models and slope'},
+ {t:'Choice in a World of Scarcity',d:'Budget constraints, the PPF and marginal analysis'},
+ {t:'Supply and Demand',d:'Economic systems, shifts and equilibrium'},
+ {t:'Applications of Supply and Demand',d:'Price controls, surplus and deadweight loss'},
+ {t:'Elasticity',d:'Midpoint formula, total revenue and tax incidence'},
+ {t:'Utility',d:'Marginal utility, consumer equilibrium and behavioral economics'},
+ {t:'Production and Costs',d:'Production functions, cost curves and economies of scale'},
+ {t:'Perfect Competition',d:'Price takers, shutdown, entry and efficiency'},
+ {t:'Monopoly',d:'Barriers, MR = MC, price discrimination and antitrust'},
+ {t:'Monopolistic Competition and Oligopoly',d:'Differentiation, collusion and game theory'},
+ {t:'Public Goods and Externalities',d:'Market failure and environmental policy'},
+ {t:'Labor Markets',d:'Labor demand, monopsony, unions and discrimination'},
+ {t:'Income Distribution',d:'Poverty, the safety net and inequality'},
+ {t:'Globalization and Trade',d:'Comparative advantage, gains from trade and protectionism'},
+ {t:'Exchange Rates and International Finance',d:'Currency markets and exchange-rate policy'}];
+
+/* ---------- chart engine ---------- */
+function chart(o){
+ const W=520,H=360,L=58,R=18,T=16,B=46;
+ const X=x=>L+x/o.xmax*(W-L-R), Y=y=>H-B-y/o.ymax*(H-T-B);
+ const P=p=>X(p[0]).toFixed(1)+','+Y(p[1]).toFixed(1);
+ let s=`<svg viewBox="0 0 ${W} ${H}" class="chart" role="img"><defs><clipPath id="cp-${o.id}"><rect x="${L}" y="${T-2}" width="${W-L-R+2}" height="${H-T-B+2}"/></clipPath></defs>`;
+ const xt=o.xt||o.xmax/5, yt=o.yt||o.ymax/5, fx=o.xfmt||(v=>+v.toFixed(2)), fy=o.yfmt||(v=>(o.ypre||'')+(+v.toFixed(2)));
+ for(let x=0;x<=o.xmax+1e-9;x+=xt)s+=`<line x1="${X(x)}" x2="${X(x)}" y1="${T}" y2="${H-B}" class="grid"/><text x="${X(x)}" y="${H-B+17}" class="tick" text-anchor="middle">${fx(x)}</text>`;
+ for(let y=0;y<=o.ymax+1e-9;y+=yt)s+=`<line x1="${L}" x2="${W-R}" y1="${Y(y)}" y2="${Y(y)}" class="grid"/><text x="${L-7}" y="${Y(y)+4}" class="tick" text-anchor="end">${fy(y)}</text>`;
+ s+=`<g clip-path="url(#cp-${o.id})">`;
+ (o.areas||[]).forEach(a=>{if(a.pts.length>2)s+=`<polygon points="${a.pts.map(P).join(' ')}" style="fill:var(--${a.c});fill-opacity:${a.op||.28}"/>`});
+ (o.lines||[]).forEach(l=>{let pts=l.pts;if(l.fn){pts=[];const[a,b]=l.dom||[0,o.xmax];const n=l.n||140;for(let i=0;i<=n;i++){const x=a+(b-a)*i/n,y=l.fn(x);if(isFinite(y))pts.push([x,Math.max(-o.ymax,Math.min(y,o.ymax*4))])}}
+  s+=`<polyline points="${pts.map(P).join(' ')}" fill="none" style="stroke:var(--${l.c})" stroke-width="${l.w||2.8}" ${l.dash?'stroke-dasharray="7 6"':''} ${l.op?`stroke-opacity="${l.op}"`:''} stroke-linecap="round" stroke-linejoin="round"/>`});
+ (o.guides||[]).forEach(g=>{s+=`<polyline points="${P([g[0],0])} ${P(g)} ${P([0,g[1]])}" class="guide"/>`});
+ s+='</g>';
+ (o.dots||[]).forEach(d=>{if(d[0]>=-1e-9&&d[0]<=o.xmax+1e-9&&d[1]>=-1e-9&&d[1]<=o.ymax+1e-9)s+=`<circle cx="${X(d[0])}" cy="${Y(d[1])}" r="${d[3]||5.5}" style="fill:var(--${d[2]||'ink'});stroke:var(--paper)" stroke-width="2"/>`});
+ (o.labels||[]).forEach(t=>{const x=Math.min(Math.max(X(t[0]),L+4),W-R-2),y=Math.min(Math.max(Y(t[1]),T+12),H-B-4);s+=`<text x="${x}" y="${y}" class="lbl" text-anchor="${t[4]||'start'}" style="fill:var(--${t[3]||'ink'})">${t[2]}</text>`});
+ s+=`<line x1="${L}" y1="${T}" x2="${L}" y2="${H-B}" class="axis"/><line x1="${L}" y1="${H-B}" x2="${W-R}" y2="${H-B}" class="axis"/>`;
+ s+=`<text x="${(L+W-R)/2}" y="${H-8}" class="atitle" text-anchor="middle">${o.xlab}</text><text transform="translate(14 ${(T+H-B)/2}) rotate(-90)" class="atitle" text-anchor="middle">${o.ylab}</text></svg>`;
+ return s;
+}
+function lab(r,upd){
+ const run=()=>{$$('input[type=range]',r).forEach(i=>{const o=i.closest('label')&&i.closest('label').querySelector('output');if(!o)return;if(i.dataset.labels){o.textContent=i.dataset.labels.split('|')[+i.value-(+i.min)]}else o.textContent=(i.dataset.pre||'')+i.value+(i.dataset.suf||'')});upd()};
+ $$('input,select',r).forEach(i=>{i.addEventListener('input',run);if(i.type==='checkbox'||i.type==='radio'||i.tagName==='SELECT')i.addEventListener('change',run)});
+ run();return run;
+}
+const val=(r,n)=>{const e=r.querySelector(`[name=${n}]`);return e.type==='checkbox'?e.checked:(e.type==='radio'?r.querySelector(`[name=${n}]:checked`).value:+e.value)};
+const plot=(r,html,sel='.plot')=>{$(sel,r).innerHTML=html};
+const out=(r,html)=>{$('.readout',r).innerHTML=html};
+
+/* ---------- 1.1 slope ---------- */
+(()=>{const r=$('#lab-slope');lab(r,()=>{
+ const q=val(r,'q'),a=q*q,b=(q+1)*(q+1),s=b-a;
+ plot(r,chart({id:'slope',xmax:10,ymax:110,xt:1,yt:20,ypre:'$',xlab:'Quantity of output (Q)',ylab:'Total cost',lines:[{fn:x=>x*x,c:'c1'},{pts:[[q,a],[q+1,a]],c:'c4',w:2,dash:1},{pts:[[q+1,a],[q+1,b]],c:'c4',w:2,dash:1},{pts:[[q,a],[q+1,b]],c:'c5',w:3.4}],
+  dots:[[q,a,'c1'],[q+1,b,'c5']],labels:[[q+0.5,a-5,'run = 1','c4','middle'],[q+1.15,(a+b)/2,'rise = $'+s,'c4'],[1.2,100,'TC = Q²','c1']]}));
+ out(r,`From Q = ${q} (TC $${a}) to Q = ${q+1} (TC $${b}): rise = <b>$${s}</b>, run = <b>1</b>, so the slope is <b>${s}</b>. Each extra unit adds $${s} to total cost here. The curve gets steeper as output grows, so the slope rises.`);
+});})();
+
+/* ---------- 2.1 budget ---------- */
+(()=>{const r=$('#lab-budget');lab(r,()=>{
+ const I=val(r,'I'),pb=val(r,'pb'),pt=val(r,'pt'),bw=val(r,'b'),mb=Math.floor(I/pb+1e-9),b=Math.min(bw,mb),t=(I-pb*b)/pt;
+ const lines=[];if(I!==10||pb!==2||pt!==0.5)lines.push({pts:[[0,20],[5,0]],c:'ink2',dash:1,w:2});
+ lines.push({pts:[[0,I/pt],[I/pb,0]],c:'c1'});
+ plot(r,chart({id:'bud',xmax:20,ymax:80,xt:2,yt:10,xlab:'Burgers per week',ylab:'Bus tickets per week',areas:[{pts:[[0,0],[0,I/pt],[I/pb,0]],c:'c1',op:.1}],lines,dots:[[b,t,'c5']],guides:[[b,t]],labels:[[0.4,Math.min(I/pt,80)-3,'Budget line','c1'],[I/pb*0.25,I/pt*0.25,'affordable','muted']]}));
+ out(r,`Charlie buys <b>${b} burger${b===1?'':'s'}</b> ($${f2(pb*b)}) and <b>${f1(t)} bus tickets</b> ($${f2(pt*t)}), spending his whole $${I}.`+(bw>mb?` (He can afford at most ${mb} burgers.)`:'')+`<br>Opportunity cost of one more burger = $${f2(pb)} ÷ $${f2(pt)} = <b>${f2(pb/pt)} bus tickets</b>, the slope of the budget line.`+(lines.length>1?' The dashed line is the original $10 budget.':''));
+});})();
+
+/* ---------- 2.2 PPF ---------- */
+(()=>{const r=$('#lab-ppf');lab(r,()=>{
+ const g=val(r,'g')/100,X0=100*g,Y0=80*g,x=Math.min(val(r,'x'),X0*.995),idle=val(r,'idle');
+ const f=t=>t>=X0?0:Y0*Math.sqrt(1-(t/X0)**2);
+ let px=x,py=f(x);if(idle){px*=.7;py*=.7}
+ const oc=Y0/X0*(x/X0)/Math.sqrt(1-(x/X0)**2),ty=f(x);
+ const lines=[{fn:f,dom:[0,X0],c:'c1'},{pts:[[x-15,ty+15*oc],[x+15,ty-15*oc]],c:'c5',w:1.6,dash:1}];
+ if(g>1)lines.unshift({fn:t=>t>=100?0:80*Math.sqrt(1-(t/100)**2),dom:[0,100],c:'ink2',dash:1,w:2});
+ plot(r,chart({id:'ppf',xmax:150,ymax:125,xt:25,yt:25,xlab:'Education (hundreds of students)',ylab:'Health care (thousands of patients)',lines,dots:[[px,py,'c5']],guides:[[px,py]],labels:[[X0*.62,f(X0*.62)+8,'PPF','c1'],[145,115,'Unattainable','muted','end'],[12,12,'Inefficient','muted']]}));
+ out(r,`Output: <b>${Math.round(px)}</b> education and <b>${Math.round(py)}</b> health care. `+(idle?`This point is <b>inside</b> the frontier: resources are idle, so society could have more of <em>both</em>.`:`Opportunity cost of 1 more unit of education ≈ <b>${f2(oc)}</b> units of health care (the slope of the red tangent). It rises as you move right: diminishing returns.`)+(g>1?` Growth has pushed the frontier out ${Math.round((g-1)*100)}%; the dashed curve is the old PPF.`:''));
+});})();
+
+/* ---------- 3.1 S&D ---------- */
+(()=>{const r=$('#lab-sd');lab(r,()=>{
+ const ds=val(r,'d'),ss=val(r,'s'),ctl=val(r,'ctl'),pp=val(r,'p');
+ r.querySelector('[name=p]').closest('label').style.opacity=ctl?1:.45;
+ const P=(90+ds-ss)/4,Q=10+ss+2*P,lines=[];
+ if(ds)lines.push({fn:q=>(100-q)/2,c:'c1',dash:1,w:2,op:.45});if(ss)lines.push({fn:q=>(q-10)/2,dom:[10,140],c:'c2',dash:1,w:2,op:.45});
+ lines.push({fn:q=>(100+ds-q)/2,dom:[0,100+ds],c:'c1'},{fn:q=>(q-10-ss)/2,dom:[Math.max(0,10+ss),140],c:'c2'});
+ const dots=[[Q,P,'ink']],labels=[[6,(100+ds-6)/2+4,'D','c1'],[132,(132-10-ss)/2-6,'S','c2','end']];let extra='';
+ if(ctl){const qd=Math.max(0,100+ds-2*pp),qs=Math.max(0,10+ss+2*pp),gap=qd-qs;lines.push({pts:[[0,pp],[140,pp]],c:'c5',w:1.8,dash:1},{pts:[[Math.min(qd,qs),pp],[Math.max(qd,qs),pp]],c:'c5',w:6,op:.5});dots.push([qd,pp,'c1'],[qs,pp,'c2']);labels.push([138,pp+2.2,'Fixed price','c5','end']);
+  extra=`<br>At the fixed price of <b>${d2(pp)}</b>, buyers want <b>${f1(qd)}</b> but sellers offer <b>${f1(qs)}</b>: `+(Math.abs(gap)<.5?'the market clears.':gap>0?`a <b style="color:var(--c5)">shortage of ${f1(gap)}</b>.`:`a <b style="color:var(--c5)">surplus of ${f1(-gap)}</b>.`)}
+ plot(r,chart({id:'sd',xmax:140,ymax:70,xt:20,yt:10,ypre:'$',xlab:'Quantity',ylab:'Price',lines,dots,labels,guides:[[Q,P]]}));
+ const dP=P-22.5,dQ=Q-55,arr=(v,m)=>Math.abs(v)<.05?'unchanged':(v>0?'up ':'down ')+m+f1(Math.abs(v));
+ out(r,`Equilibrium price <b>${d2(P)}</b>, quantity <b>${f1(Q)}</b>.`+((ds||ss)?` Compared with the start ($22.50, 55.0): price ${arr(dP,'$')}, quantity ${arr(dQ,'')}.`:'')+extra);
+});})();
+
+/* ---------- 4.1 welfare ---------- */
+(()=>{const r=$('#lab-wel'),sl=r.querySelector('[name=amt]'),lbl=r.querySelector('.amtlbl');let last='tax';
+ const cfg={tax:['Tax per unit',0,60,20,2],ceil:['Price ceiling',22,70,40,1],floor:['Price floor',50,98,76,1]};
+ const run=lab(r,()=>{
+  const m=val(r,'mode');if(m!==last){const c=cfg[m];last=m;lbl.firstChild.textContent=c[0];sl.min=c[1];sl.max=c[2];sl.step=c[4];sl.value=c[3];run();return}
+  const a=+sl.value;let Q=40,Pb=60,Ps=60,note='';
+  if(m==='tax'){Q=(80-a)/2;Pb=100-Q;Ps=20+Q;note=`Buyers now pay <b>${d2(Pb)}</b> (up ${d2(Pb-60)}), sellers keep <b>${d2(Ps)}</b> (down ${d2(60-Ps)}).`}
+  else if(m==='ceil'){if(a<60){Q=a-20;Pb=Ps=a;note=`Binding ceiling: buyers want ${f0(100-a)} units but sellers supply ${f0(Q)}. <b style="color:var(--c5)">Shortage of ${f0(100-a-Q)}</b>.`}else note='The ceiling is above the $60 equilibrium price, so it is <b>not binding</b>.'}
+  else{if(a>60){Q=100-a;Pb=Ps=a;note=`Binding floor: sellers offer ${f0(a-20)} units but buyers want ${f0(Q)}. <b style="color:var(--c5)">Surplus of ${f0(a-20-Q)}</b>.`}else note='The floor is below the $60 equilibrium price, so it is <b>not binding</b>.'}
+  const CS=Q*(100-Pb)-Q*Q/2,PS=Q*(Ps-20)-Q*Q/2,TX=(Pb-Ps)*Q,DW=(40-Q)**2;
+  const areas=[{pts:[[0,100],[0,Pb],[Q,Pb],[Q,100-Q]],c:'c1'},{pts:[[0,20],[0,Ps],[Q,Ps],[Q,20+Q]],c:'c2'}];
+  if(TX>0)areas.push({pts:[[0,Ps],[Q,Ps],[Q,Pb],[0,Pb]],c:'c3',op:.35});if(DW>0)areas.push({pts:[[Q,100-Q],[Q,20+Q],[40,60]],c:'c5',op:.4});
+  const lines=[{fn:q=>100-q,c:'c1'},{fn:q=>20+q,c:'c2'}],labels=[[4,93,'D','c1'],[96,112,'S','c2','end']];
+  if(m==='tax'&&a>0){lines.push({fn:q=>20+a+q,c:'c2',dash:1,w:2});labels.push([92-a,118,'S + tax','c2','end'])}
+  if(m!=='tax')lines.push({pts:[[0,a],[100,a]],c:'c5',w:1.8,dash:1}),labels.push([98,a+3,m==='ceil'?'Ceiling':'Floor','c5','end']);
+  plot(r,chart({id:'wel',xmax:100,ymax:120,xt:20,yt:20,ypre:'$',xlab:'Quantity',ylab:'Price',areas,lines,labels,dots:[[Q,Pb,'c1'],[Q,Ps,'c2']],guides:[[Q,Pb]]}));
+  const seg=(v,c,t)=>v>1?`<div style="width:${v/1600*100}%;background:var(--${c})">${v/1600>.09?t:''}</div>`:'';
+  $('.stack',r).innerHTML=seg(CS,'c1','CS')+seg(PS,'c2','PS')+seg(TX,'c3','Tax')+seg(DW,'c5','DWL');
+  out(r,`Quantity traded: <b>${f0(Q)}</b> (vs 40 at equilibrium). ${note}<br>Consumer surplus <b>$${f0(CS)}</b> · Producer surplus <b>$${f0(PS)}</b>`+(TX>0?` · Tax revenue <b>$${f0(TX)}</b>`:'')+` · Deadweight loss <b style="color:var(--c5)">$${f0(DW)}</b> (of a maximum $1,600 total surplus).`);
+ });
+})();
+
+/* ---------- 5.1 elasticity ---------- */
+(()=>{const r=$('#lab-el');lab(r,()=>{
+ const q=val(r,'q'),p=10-q/10,e=p/(10-p),tr=p*q,cls=Math.abs(e-1)<.03?'unit elastic':e>1?'elastic':'inelastic';
+ plot(r,chart({id:'el',xmax:100,ymax:10,xt:20,yt:2,ypre:'$',xlab:'Quantity',ylab:'Price',areas:[{pts:[[0,0],[0,p],[q,p],[q,0]],c:'c3'}],lines:[{fn:x=>10-x/10,c:'c1'}],dots:[[q,p,'c1']],guides:[[q,p]],labels:[[8,8.6,'Elastic','c4'],[92,2.2,'Inelastic','c4','end'],[q/2,p/2,'TR','c3','middle']]}));
+ plot(r,chart({id:'tr',xmax:100,ymax:260,xt:20,yt:50,ypre:'$',xlab:'Quantity',ylab:'Total revenue',lines:[{fn:x=>x*(10-x/10),c:'c3'}],dots:[[q,tr,'c3']],guides:[[q,tr]],labels:[[50,252,'max at |E| = 1','muted','middle']]}),'.plot2');
+ out(r,`At P = <b>${d2(p)}</b>, Q = <b>${q}</b>: |E| = <b>${f2(e)}</b>, so demand is <b>${cls}</b>. Total revenue = <b>$${f1(tr)}</b>. `+(cls==='elastic'?'Cutting the price here would <b>raise</b> revenue.':cls==='inelastic'?'Raising the price here would <b>raise</b> revenue.':'Revenue is at its maximum.'));
+});})();
+
+/* ---------- 5.3 tax incidence ---------- */
+(()=>{const r=$('#lab-inc'),SL=[0.5,1,2,3,4];lab(r,()=>{
+ const bd=SL[val(r,'bd')],bs=SL[val(r,'bs')],t=20,Q0=80/(bd+bs),P0=100-bd*Q0,Qt=(80-t)/(bd+bs),Pc=100-bd*Qt,Pp=Pc-t,cb=Pc-P0,pb=P0-Pp;
+ plot(r,chart({id:'inc',xmax:90,ymax:120,xt:15,yt:20,ypre:'$',xlab:'Quantity',ylab:'Price',
+  areas:[{pts:[[0,P0],[Qt,P0],[Qt,Pc],[0,Pc]],c:'c1',op:.35},{pts:[[0,Pp],[Qt,Pp],[Qt,P0],[0,P0]],c:'c2',op:.35},{pts:[[Qt,Pc],[Qt,Pp],[Q0,P0]],c:'c5',op:.45}],
+  lines:[{fn:q=>100-bd*q,dom:[0,100/bd],c:'c1'},{fn:q=>20+bs*q,c:'c2'},{fn:q=>20+t+bs*q,c:'c2',dash:1,w:2}],
+  dots:[[Q0,P0,'ink'],[Qt,Pc,'c1'],[Qt,Pp,'c2']],labels:[[Math.min(100/bd,88)*.06+1,100-bd*(Math.min(100/bd,88)*.06+1)+5,'D','c1'],[86,Math.min(20+bs*86,116)-4,'S','c2','end']]}));
+ out(r,`Blue = buyers' share of the tax, orange = sellers' share, red = deadweight loss.<br>Buyers pay <b>${d2(Pc)}</b> (up <b>${d2(cb)}</b>, ${Math.round(cb/t*100)}% of the tax); sellers keep <b>${d2(Pp)}</b> (down <b>${d2(pb)}</b>, ${Math.round(pb/t*100)}%). `+(Math.abs(cb-pb)<0.01?'With equally elastic sides, the burden splits evenly.':cb>pb?'Demand is less elastic than supply, so <b>buyers</b> bear more.':'Supply is less elastic than demand, so <b>sellers</b> bear more.')+` Quantity falls from ${f1(Q0)} to ${f1(Qt)}; tax revenue $${f0(t*Qt)}, deadweight loss $${f0(.5*t*(Q0-Qt))}.`);
+});})();
+
+/* ---------- 6.1 utility ---------- */
+(()=>{const r=$('#lab-util'),TT=[0,22,43,63,81],TM=[0,16,31,45,58,70,81,91,100],tot=[0,1,2,3,4].map(t=>TT[t]+TM[8-2*t]);lab(r,()=>{
+ const t=val(r,'t'),m=8-2*t,U=tot[t];
+ plot(r,chart({id:'util',xmax:4.4,ymax:110,xt:1,yt:20,xfmt:v=>v>4?'':String(v),xlab:'T-shirts bought (the rest of $56 goes on movies)',ylab:'Total utility',lines:[{pts:tot.map((u,i)=>[i,u]),c:'c4'}],dots:tot.map((u,i)=>[i,u,i===t?'c5':'c4',i===t?7:4.5]),labels:tot.map((u,i)=>[i,u+6,String(u),'muted','middle'])}));
+ const nextT=t<4?(TT[t+1]-TT[t])/14:null,lastM=m>0?(TM[m]-TM[m-1])/7:null,lastT=t>0?(TT[t]-TT[t-1])/14:null,nextM=m<8?(TM[m+1]-TM[m])/7:null;
+ let adv='';
+ if(t===1)adv='This is the best bundle: the last T-shirt and the last movie give the same utility per dollar (≈1.6), so no swap helps.';
+ else if(t===0)adv=`The first T-shirt would give ${f2(nextT)} utils per dollar, more than the last movies (${f2(lastM)}), so swap two movies for a T-shirt.`;
+ else adv=`The last T-shirt gives only ${f2(lastT)} utils per dollar, while another movie would give ${f2(nextM)}, so swap a T-shirt for two movies.`;
+ out(r,`<b>${t} T-shirt${t===1?'':'s'}</b> ($${14*t}) + <b>${m} movie${m===1?'':'s'}</b> ($${7*m}) = $56. Total utility: <b>${U}</b>${U===103?' (the maximum)':''}.<br>${adv}`);
+});})();
+
+/* ---------- 6.2 consumer choice ---------- */
+(()=>{const r=$('#lab-cc');let base=null;
+ const run=lab(r,()=>{
+  const I=val(r,'I'),px=val(r,'px'),py=val(r,'py'),x=I/(2*px),y=I/(2*py),U2=x*y,lines=[],dots=[],labels=[];
+  if(base){const bx=base.I/(2*base.px),by=base.I/(2*base.py),bu=bx*by;lines.push({fn:t=>(base.I-base.px*t)/base.py,dom:[0,base.I/base.px],c:'ink2',dash:1,w:2},{fn:t=>bu/t,dom:[bu/62,60],c:'ink2',dash:1,w:1.6});dots.push([bx,by,'ink2'])}
+  lines.push({fn:t=>(I-px*t)/py,dom:[0,I/px],c:'c1'},{fn:t=>U2/t,dom:[U2/62,60],c:'c4'});dots.push([x,y,'c4']);
+  labels.push([Math.min(I/px,58)*.9,(I-px*Math.min(I/px,58)*.9)/py+3,'Budget','c1'],[56,U2/56+3.5,'IC','c4','end']);
+  plot(r,chart({id:'cc',xmax:60,ymax:60,xt:10,yt:10,xlab:'Coffees (x)',ylab:'Books (y)',lines,dots,labels,guides:[[x,y]]}));
+  let cmp='';if(base){const bx=base.I/(2*base.px),by=base.I/(2*base.py);cmp=`<br>Before: ${f1(bx)} coffees, ${f1(by)} books. Change: coffee ${x>=bx?'+':''}${f1(x-bx)}, books ${y>=by?'+':''}${f1(y-by)}.`}
+  out(r,`Best bundle: <b>${f1(x)} coffees</b> and <b>${f1(y)} books</b>, utility <b>${f1(Math.sqrt(U2))}</b>. Here MRS = <b>${f2(y/x)}</b> = Px/Py = <b>${f2(px/py)}</b>.`+cmp);
+ });
+ r.addEventListener('click',e=>{const a=e.target.dataset.act;if(a==='save'){base={I:val(r,'I'),px:val(r,'px'),py:val(r,'py')};run()}if(a==='clear'){base=null;run()}});
+})();
+
+/* ---------- 7.1 production ---------- */
+(()=>{const r=$('#lab-prod'),T1=[0,5,7,8,8,8,8],T3=[0,5,10,15,17,18,18];lab(r,()=>{
+ const L=val(r,'L'),k3=val(r,'k3'),T=k3?T3:T1,O=k3?T1:T3,mp=i=>T[i]-T[i-1];
+ plot(r,chart({id:'tp',xmax:6,ymax:20,xt:1,yt:5,xlab:'Typists',ylab:'Total product (letters/hr)',lines:[{pts:O.map((v,i)=>[i,v]),c:'ink2',dash:1,w:2},{pts:T.map((v,i)=>[i,v]),c:'c1'}],dots:[[L,T[L],'c5']],guides:[[L,T[L]]],labels:[[5.9,T[6]-1.5,k3?'K = 3':'K = 1','c1','end'],[5.9,O[6]+1.2,k3?'K = 1':'K = 3','muted','end']]}));
+ const areas=[];for(let i=1;i<=6;i++){const v=mp(i);if(v>0)areas.push({pts:[[i-.35,0],[i-.35,v],[i+.35,v],[i+.35,0]],c:i===L?'c5':'c3',op:i===L?.7:.4})}
+ plot(r,chart({id:'mp',xmax:7,ymax:6,xt:1,yt:1,xfmt:v=>v<1||v>6?'':String(v),xlab:'Typists',ylab:'Marginal product',areas}),'.plot2');
+ const m=mp(L),first=k3?4:2;
+ out(r,`With <b>${k3?'3 PCs':'1 PC'}</b>, ${L} typist${L>1?'s':''} produce <b>${T[L]}</b> letters per hour; the ${L}${['','st','nd','rd'][L]||'th'} typist adds <b>${m}</b>. Diminishing marginal product starts with typist ${first}. `+(k3?`More capital lets the firm use more labor productively: 3 typists make ${T3[3]} letters instead of ${T1[3]}.`:'Extra typists must share one PC, so beyond 3 they add nothing.'));
+});})();
+
+/* ---------- cost functions (7.2, 8.1) ---------- */
+const VC=q=>20*q-3*q*q+.2*q**3,MC=q=>20-6*q+.6*q*q,AVC=q=>20-3*q+.2*q*q;
+(()=>{const r=$('#lab-cost');lab(r,()=>{
+ const F=val(r,'fc'),q=val(r,'q'),ATC=t=>AVC(t)+F/t;
+ const lines=[{fn:MC,dom:[0,14],c:'c5'},{fn:AVC,dom:[.3,14],c:'c3'}];if(F>0)lines.push({fn:ATC,dom:[.3,14],c:'c1'},{fn:t=>F/t,dom:[.3,14],c:'c6',dash:1,w:2});
+ let qmin=1,best=1e9;for(let t=.5;t<=14;t+=.01){const v=ATC(t);if(v<best){best=v;qmin=t}}
+ const dots=[[q,MC(q),'c5'],[q,AVC(q),'c3']];if(F>0)dots.push([q,ATC(q),'c1']);
+ plot(r,chart({id:'cost',xmax:14,ymax:60,xt:2,yt:10,ypre:'$',xlab:'Output q',ylab:'Cost per unit',lines,dots,labels:[[13.6,MC(13.6)-1,'MC','c5','end'],[1,AVC(1)+3,'AVC','c3']].concat(F>0?[[1.2,Math.min(ATC(1.2),56),'ATC','c1']]:[]),guides:[[7.5,AVC(7.5)]]}));
+ out(r,`At q = <b>${q}</b>: TC = <b>${d2(F+VC(q))}</b> · MC = <b>${d2(MC(q))}</b> · AVC = <b>${d2(AVC(q))}</b> · ATC = <b>${d2(AVC(q)+F/q)}</b><br>Min AVC = $8.75 at q = 7.5 (dashed guide). `+(F>0?`Min ATC = <b>${d2(best)}</b> at q ≈ <b>${f1(qmin)}</b>. MC crosses both at their minimums.`:'With no fixed cost, ATC = AVC.'));
+});})();
+(()=>{const r=$('#lab-pc'),F=40,ATC=t=>AVC(t)+F/t;let be=1e9;for(let t=.5;t<=14;t+=.01)be=Math.min(be,ATC(t));
+ lab(r,()=>{
+  const p=val(r,'p');let q=p>=8.75?(6+Math.sqrt(2.4*p-12))/1.2:0,txt;
+  const lines=[{fn:MC,dom:[0,14],c:'c5'},{fn:ATC,dom:[.6,14],c:'c1'},{fn:AVC,dom:[.3,14],c:'c3',w:2},{pts:[[0,p],[14,p]],c:'c4',w:2.2}],areas=[],dots=[],labels=[[13.8,p+1.6,'P = MR','c4','end'],[13.6,MC(13.6)-1,'MC','c5','end'],[1.1,Math.min(ATC(1.1),58),'ATC','c1'],[.6,AVC(.6)-2,'AVC','c3']];
+  if(q>0){const a=ATC(q),pi=(p-a)*q;areas.push({pts:[[0,a],[q,a],[q,p],[0,p]],c:pi>=0?'c3':'c5',op:.32});dots.push([q,p,'c4'],[q,a,'c1']);
+   txt=`The firm produces <b>q = ${f1(q)}</b> where P = MC. ATC there is <b>${d2(a)}</b>, so ${pi>=0?`<b style="color:var(--c3)">profit = $${f1(pi)}</b>.`:`<b style="color:var(--c5)">loss = $${f1(-pi)}</b>.`} `+(pi>.05?'Profits attract <b>entry</b>, so the price will fall in the long run.':pi<-.05?`Price covers AVC, so operating loses less than shutting down (which would lose the full $${F}). In the long run, firms <b>exit</b>.`:'This is the break-even point: zero economic profit.')}
+  else txt=`Price is below minimum AVC ($8.75). The firm <b style="color:var(--c5)">shuts down</b>: q = 0, loss = the $${F} fixed cost.`;
+  plot(r,chart({id:'pc',xmax:14,ymax:50,xt:2,yt:10,ypre:'$',xlab:'Output q',ylab:'$ per unit',lines,areas,dots,labels,guides:q>0?[[q,p]]:[]}));
+  out(r,txt+`<br><span style="color:var(--muted)">Break-even price (min ATC) ≈ ${d2(be)} · Shutdown price (min AVC) = $8.75</span>`);
+ });})();
+
+/* ---------- 9.1 monopoly ---------- */
+(()=>{const r=$('#lab-mono');lab(r,()=>{
+ const c=val(r,'c'),pd=val(r,'pd'),Qm=(100-c)/2,Pm=(100+c)/2,Qc=100-c;
+ const lines=[{fn:q=>100-q,c:'c1'},{fn:q=>100-2*q,dom:[0,50],c:'c4',w:2.2},{pts:[[0,c],[100,c]],c:'c5'}],labels=[[96,8,'D','c1','end'],[47,9,'MR','c4','end'],[98,c+3.5,'MC','c5','end']],areas=[];
+ if(!pd){areas.push({pts:[[0,100],[0,Pm],[Qm,Pm]],c:'c1'},{pts:[[0,c],[Qm,c],[Qm,Pm],[0,Pm]],c:'c3',op:.32},{pts:[[Qm,Pm],[Qm,c],[Qc,c]],c:'c5',op:.4});
+  plot(r,chart({id:'mono',xmax:100,ymax:110,xt:20,yt:20,ypre:'$',xlab:'Quantity',ylab:'Price',lines,areas,labels,dots:[[Qm,Pm,'c1'],[Qm,c,'c4'],[Qc,c,'ink']],guides:[[Qm,Pm]]}));
+  out(r,`Monopoly: MR = MC at <b>Q = ${f1(Qm)}</b>, price <b>${d2(Pm)}</b>. Competition would give Q = ${f1(Qc)} at P = ${d2(c)}.<br>Consumer surplus <b>$${f0(.5*Qm*(100-Pm))}</b> · Profit <b style="color:var(--c3)">$${f0((Pm-c)*Qm)}</b> · Deadweight loss <b style="color:var(--c5)">$${f0(.5*(Qc-Qm)*(Pm-c))}</b>`)}
+ else{areas.push({pts:[[0,100],[0,c],[Qc,c]],c:'c3',op:.32});
+  plot(r,chart({id:'mono',xmax:100,ymax:110,xt:20,yt:20,ypre:'$',xlab:'Quantity',ylab:'Price',lines,areas,labels,dots:[[Qc,c,'ink']],guides:[[Qc,c]]}));
+  out(r,`With perfect price discrimination the firm sells to everyone willing to pay at least MC: <b>Q = ${f1(Qc)}</b>. Deadweight loss is <b>$0</b>, but so is consumer surplus: the whole $${f0(.5*Qc*(100-c))} becomes profit.`)}
+});})();
+
+/* ---------- 10.1 monopolistic competition ---------- */
+(()=>{const r=$('#lab-mc');lab(r,()=>{
+ const n=val(r,'n'),a=50-4*n,Q=(a-10)/2,P=(a+10)/2,ATC=q=>10+100/q,ac=ATC(Q),pi=(P-ac)*Q;
+ plot(r,chart({id:'mc',xmax:50,ymax:60,xt:10,yt:10,ypre:'$',xlab:'Meals per day',ylab:'Price',
+  areas:Math.abs(pi)>0.5?[{pts:[[0,ac],[Q,ac],[Q,P],[0,P]],c:pi>0?'c3':'c5',op:.32}]:[],
+  lines:[n?{fn:q=>50-q,dom:[0,50],c:'c1',dash:1,w:2,op:.45}:{pts:[[0,0],[0,0]],c:'c1'},{fn:q=>a-q,dom:[0,a],c:'c1'},{fn:q=>a-2*q,dom:[0,a/2],c:'c4',w:2.2},{pts:[[0,10],[50,10]],c:'c5'},{fn:ATC,dom:[2,50],c:'c2'}],
+  dots:[[Q,P,'c1'],[Q,ac,'c2']],guides:[[Q,P]],labels:[[Math.min(a-3,47),5,'D','c1','end'],[48,ATC(48)+3,'ATC','c2','end'],[48,12.5,'MC','c5','end'],[a/2-1,4,'MR','c4','end']]}));
+ out(r,`After ${n} rival${n===1?'':'s'} entered: the restaurant sells <b>${f1(Q)}</b> meals at <b>${d2(P)}</b>; ATC is ${d2(ac)}, so `+(pi>0.5?`<b style="color:var(--c3)">profit = $${f0(pi)}</b> a day, which attracts more entry.`:`<b>economic profit is zero</b>: demand just touches ATC. Entry stops. Price (${d2(P)}) is still above MC ($10), and ATC is still falling at this output: the firm has <b>excess capacity</b>.`));
+});})();
+
+/* ---------- 10.2 game ---------- */
+(()=>{const r=$('#lab-game'),mx=$('#mx');
+ const PRE={pd:{s:['Hold output low','Expand output'],p:[[[1000,1000],[200,1500]],[[1500,200],[400,400]]]},co:{s:['Standard X','Standard Y'],p:[[[5,5],[0,0]],[[0,0],[3,3]]]},ch:{s:['Enter','Stay out'],p:[[[-2,-2],[6,0]],[[0,6],[0,0]]]}};
+ let cur;
+ function build(k){cur=JSON.parse(JSON.stringify(PRE[k]));const s=cur.s;
+  mx.innerHTML=`<tr><th></th><th class="colp">B: ${s[0]}</th><th class="colp">B: ${s[1]}</th></tr>`+[0,1].map(i=>`<tr><th class="rowp" style="text-align:right">A: ${s[i]}</th>`+[0,1].map(j=>`<td class="cell" data-i="${i}" data-j="${j}"><div class="pr"><input type="number" class="rowp" data-k="0" value="${cur.p[i][j][0]}" aria-label="A payoff"><input type="number" class="colp" data-k="1" value="${cur.p[i][j][1]}" aria-label="B payoff"></div></td>`).join('')+'</tr>').join('');solve()}
+ function solve(){const p=cur.p,s=cur.s,ne=[];
+  $$('td.cell',mx).forEach(td=>{const i=+td.dataset.i,j=+td.dataset.j,a=p[i][j][0]>=p[1-i][j][0],b=p[i][j][1]>=p[i][1-j][1];td.querySelector('[data-k="0"]').classList.toggle('br',a);td.querySelector('[data-k="1"]').classList.toggle('br',b);td.classList.toggle('ne',a&&b);if(a&&b)ne.push([i,j])});
+  const dA=[0,1].find(i=>p[i][0][0]>p[1-i][0][0]&&p[i][1][0]>p[1-i][1][0]),dB=[0,1].find(j=>p[0][j][1]>p[0][1-j][1]&&p[1][j][1]>p[1][1-j][1]);
+  let t=`<b>Dominant strategies:</b> Firm A: ${dA!==undefined?s[dA]:'none'}; Firm B: ${dB!==undefined?s[dB]:'none'}.<br><b>Nash equilibri${ne.length===1?'um':'a'}:</b> `+(ne.length?ne.map(([i,j])=>`(${s[i]}, ${s[j]}) → payoffs (${p[i][j][0]}, ${p[i][j][1]})`).join('; '):'none in pure strategies');
+  if(ne.find(([i,j])=>[0,1].some(a=>[0,1].some(b=>p[a][b][0]>p[i][j][0]&&p[a][b][1]>p[i][j][1]))))t+=`<br><b style="color:var(--c5)">A dilemma!</b> Another outcome would make <em>both</em> firms better off, but neither will move there alone.`;
+  if(ne.length>1)t+='<br>With more than one equilibrium, firms need a way to coordinate.';
+  out(r,t)}
+ mx.addEventListener('input',e=>{const td=e.target.closest('td.cell');if(!td)return;const v=parseFloat(e.target.value);if(isNaN(v))return;cur.p[+td.dataset.i][+td.dataset.j][+e.target.dataset.k]=v;solve()});
+ $$('#presets input').forEach(i=>i.addEventListener('change',()=>build(i.value)));build('pd');
+})();
+
+/* ---------- 10.3 repeated ---------- */
+(()=>{const r=$('#lab-rep'),N=8,PAY={CC:[1000,1000],CD:[200,1500],DC:[1500,200],DD:[400,400]};let h=[];
+ function bot(){const k=val(r,'bot');if(k==='alld')return'D';if(k==='rand')return Math.random()<.5?'C':'D';if(!h.length)return'C';if(k==='tft')return h[h.length-1][0];return h.some(x=>x[0]==='D')?'D':'C'}
+ function render(){const me=h.reduce((a,x)=>a+PAY[x[0]+x[1]][0],0),them=h.reduce((a,x)=>a+PAY[x[0]+x[1]][1],0),nm=x=>x==='C'?'Low':'<span style="color:var(--c5)">Expand</span>';
+  $('.hist',r).innerHTML=h.map((x,i)=>`<span>R${i+1}: You ${nm(x[0])} · Rival ${nm(x[1])}</span>`).join('');
+  const done=h.length>=N;$$('[data-m=C],[data-m=D]',r).forEach(b=>b.disabled=done);
+  out(r,done?`<b>Game over.</b> You earned <b>$${f0(me)}</b> (rival $${f0(them)}). Holding output low every round would have earned $8,000 each. `+(me>=7000?'Great: you sustained cooperation.':me>=5000?'Partial cooperation. Did expanding trigger retaliation?':'The output war ate your profits: the prisoner\'s dilemma at work.'):`Round ${Math.min(h.length+1,N)} of ${N}. Your total: <b>$${f0(me)}</b> · Rival: <b>$${f0(them)}</b>.`)}
+ r.addEventListener('click',e=>{const m=e.target.dataset.m;if(!m)return;if(m==='R'){h=[];render();return}if(h.length>=N)return;const b=bot();h.push([m,b]);render()});
+ r.querySelector('[name=bot]').addEventListener('change',()=>{h=[];render()});render();
+})();
+
+/* ---------- 11.1 externality ---------- */
+(()=>{const r=$('#lab-ext');lab(r,()=>{
+ const e=val(r,'e'),tax=val(r,'tax'),Qs=(80-e)/2,Ps=100-Qs,DW=tax?0:.5*e*(40-Qs),areas=[];
+ if(!tax&&e>0)areas.push({pts:[[Qs,Ps],[40,60],[40,60+e]],c:'c5',op:.4});
+ if(tax&&e>0)areas.push({pts:[[0,Ps-e],[Qs,Ps-e],[Qs,Ps],[0,Ps]],c:'c3',op:.3});
+ plot(r,chart({id:'ext',xmax:100,ymax:120,xt:20,yt:20,ypre:'$',xlab:'Quantity of output',ylab:'Price / cost',areas,lines:[{fn:q=>100-q,c:'c1'},{fn:q=>20+q,c:'c2'},{fn:q=>20+e+q,c:'c5',dash:e?0:1}],
+  labels:[[4,93,'D (= social benefit)','c1'],[96,112,'Private cost','c2','end'],[90-e,118,'Social cost','c5','end']],dots:[[40,60,'c2'],[Qs,Ps,'c5']],guides:[[Qs,Ps],[40,60]]}));
+ out(r,e===0?'With no external cost, private and social costs match and the market quantity of 40 is efficient.':tax?`A tax of <b>$${e}</b> per unit makes producers face the full social cost. Output falls to the efficient <b>${f1(Qs)}</b>, deadweight loss disappears, and the tax raises <b style="color:var(--c3)">$${f0(e*Qs)}</b>.`:`The market ignores the $${e} of harm per unit and produces <b>40</b>; the efficient quantity is <b>${f1(Qs)}</b>. Overproduction creates a deadweight loss of <b style="color:var(--c5)">$${f0(DW)}</b> (red triangle).`);
+});})();
+
+/* ---------- 11.2 abatement ---------- */
+(()=>{const r=$('#lab-abate'),C=[300,500,900,1500,2500];lab(r,()=>{
+ const T=val(r,'tax'),k=C.filter(c=>c<T).length,ac=C.slice(0,k).reduce((a,b)=>a+b,0),tp=T*(5-k);
+ const areas=C.map((c,i)=>({pts:[[i+.12,0],[i+.12,c],[i+.88,c],[i+.88,0]],c:i<k?'c3':'c2',op:.55}));
+ plot(r,chart({id:'abate',xmax:5,ymax:3000,xt:1,yt:500,ypre:'$',xfmt:v=>v===0?'0':(v*10)+' lb',xlab:'Pollution cut (each bar = 10 lbs)',ylab:'Cost of cutting 10 lbs',areas,lines:[{pts:[[0,T],[5,T]],c:'c5',w:2.4,dash:1}],labels:[[4.95,T+90,'charge $'+T,'c5','end']].concat(C.map((c,i)=>[i+.5,c+90,'$'+c,'muted','middle']))}));
+ out(r,`Green bars cost less than the charge, so the firm cuts them: <b>${k*10} lbs</b> cut for <b>$${f0(ac)}</b>. It still emits <b>${(5-k)*10} lbs</b> and pays <b>$${f0(tp)}</b> in charges. Total cost: <b>$${f0(ac+tp)}</b>. `+(T===1000?'(At $1,000 this matches the course example: cut 30 lbs, pay on 20.)':'A higher charge means more cleanup.'));
+});})();
+
+/* ---------- 12.1 monopsony ---------- */
+(()=>{const r=$('#lab-labor');lab(r,()=>{
+ const A=val(r,'A'),mono=val(r,'mono'),Lc=A/2,Wc=A/2,Lm=A/3,Wm=A/3;
+ const lines=[{fn:l=>l,c:'c2'},{fn:l=>A-l,dom:[0,A],c:'c1'}],labels=[[15.5,14.5,'Supply (wage)','c2','end'],[1,A-2,'MRP (demand)','c1']],dots=[[Lc,Wc,mono?'ink2':'ink']],areas=[],guides=[];
+ if(mono){lines.push({fn:l=>2*l,c:'c4',dash:1,w:2.2});labels.push([12.6,25,'Marginal cost of labor','c4','end']);areas.push({pts:[[Lm,Wm],[Lm,A-Lm],[Lc,Wc]],c:'c5',op:.35});dots.push([Lm,A-Lm,'c4'],[Lm,Wm,'c5']);guides.push([Lm,Wm])}else guides.push([Lc,Wc]);
+ plot(r,chart({id:'lab',xmax:16,ymax:26,xt:2,yt:4,ypre:'$',xlab:'Workers hired',ylab:'Wage per hour',lines,labels,dots,areas,guides}));
+ out(r,mono?`The single employer hires where MRP = marginal cost of labor: <b>${f1(Lm)} workers</b>, paid the lowest wage that attracts them, <b>${d2(Wm)}</b>. A competitive market would employ <b>${f1(Lc)}</b> at <b>${d2(Wc)}</b>. The red triangle is the lost value.`:`In a competitive labor market the wage settles where supply meets demand: <b>${f1(Lc)} workers</b> at <b>${d2(Wc)}</b> an hour. Tick the box to see a monopsony.`);
+});})();
+
+/* ---------- 13.1 poverty trap ---------- */
+(()=>{const r=$('#lab-trap'),G=18000,w=8;lab(r,()=>{
+ const rr=val(r,'r')/100,h=val(r,'h'),inc=x=>w*x+Math.max(0,G-rr*w*x),e=w*h,s=Math.max(0,G-rr*w*h),tot=e+s;
+ const lines=[{fn:x=>w*x,c:'ink2',dash:1,w:2},{fn:inc,dom:[0,2500],c:'c1',n:250}];if(rr<1)lines.unshift({fn:x=>w*x+Math.max(0,G-w*x),dom:[0,2500],c:'c5',dash:1,w:2,n:250});
+ plot(r,chart({id:'trap',xmax:2500,ymax:40000,xt:500,yt:10000,yfmt:v=>'$'+(v/1000)+'k',xlab:'Hours worked per year',ylab:'Total income',lines,dots:[[h,tot,'c1']],guides:[[h,tot]],labels:[[2480,w*2480-2400,'earnings only','muted','end'],[60,(inc(60))+1800,'total income','c1']].concat(rr<1?[[2480,22000,'$1-for-$1 trap','c5','end']]:[])}));
+ out(r,`Working <b>${f0(h)}</b> hours: earnings <b>$${f0(e)}</b> + support <b>$${f0(s)}</b> = <b>$${f0(tot)}</b>. `+(s>0?`While support lasts, each extra hour raises income by only <b>$${f2(w*(1-rr))}</b>.`:'Support has run out, so each hour now adds the full $8.')+(rr===1?' This is the <b>poverty trap</b>: income stays at $18,000 until about 2,250 hours.':''));
+});})();
+
+/* ---------- 13.2 Lorenz ---------- */
+(()=>{const r=$('#lab-lorenz'),D=[['U.S. 1980',[4.2,10.2,16.8,24.7,44.1]],['U.S. 2016',[3.1,8.3,14.2,22.9,51.5]],['Germany 2000',[8.5,13.7,17.8,23.1,36.9]],['Brazil 2009',[2.9,7.1,12.4,19.0,58.6]],['Mexico 2010',[4.9,8.8,13.3,20.2,52.8]],['China 2009',[4.7,9.7,15.3,23.2,47.1]],['India 2010',[8.5,12.1,15.7,20.8,42.8]],['Russia 2009',[6.1,10.4,14.8,21.3,47.1]],['Nigeria 2010',[4.4,8.3,13.0,20.3,54.0]]];
+ const cum=s=>{let c=0;return[[0,0]].concat(s.map((v,i)=>{c+=v;return[(i+1)*20,i===4?100:c]}))},gini=s=>{const p=cum(s);let b=0;for(let i=1;i<p.length;i++)b+=0.2*(p[i][1]+p[i-1][1])/100;return 1-b};
+ lab(r,()=>{
+  const d=val(r,'d'),cmp=val(r,'cmp'),[nm,s]=D[d],pts=cum(s),lines=[{pts:[[0,0],[100,100]],c:'ink2',dash:1,w:2}];
+  if(cmp&&d!==1)lines.push({pts:cum(D[1][1]),c:'c2',w:2.2,dash:1});
+  lines.push({pts,c:'c1'});
+  plot(r,chart({id:'lor',xmax:100,ymax:100,xt:20,yt:20,xfmt:v=>v+'%',yfmt:v=>v+'%',xlab:'Cumulative share of households (poorest first)',ylab:'Cumulative share of income',areas:[{pts:pts.concat([[0,0]]).reverse(),c:'c5',op:.14}],lines,dots:pts.map(p=>[p[0],p[1],'c1',4]),labels:[[60,68,'Perfect equality','muted','end'],[96,pts[4][1]-5,nm,'c1','end']].concat(cmp&&d!==1?[[96,cum(D[1][1])[4][1]+5,'U.S. 2016','c2','end']]:[])}));
+  out(r,`<b>${nm}</b>: the poorest 40% receive <b>${f1(pts[2][1])}%</b> of income; the richest 20% receive <b>${f1(s[4])}%</b>. Approximate Gini coefficient: <b>${gini(s).toFixed(2)}</b>`+(cmp&&d!==1?` (U.S. 2016: ${gini(D[1][1]).toFixed(2)})`:'')+`. The bigger the shaded gap, the more unequal the distribution.`);
+ });})();
+
+/* ---------- 14.1 comparative advantage ---------- */
+(()=>{const r=$('#lab-ca');lab(r,()=>{
+ const us=val(r,'us'),mx=val(r,'mx'),uS=us*250,uF=(40-us)*1000,mS=mx*200,mF=(40-mx)*250,TS=uS+mS,TF=uF+mF;
+ plot(r,chart({id:'ca',xmax:10,ymax:40,xt:2,yt:10,xlab:'Shoes (thousands)',ylab:'Refrigerators (thousands)',lines:[{pts:[[0,40],[10,0]],c:'c1'},{pts:[[0,10],[8,0]],c:'c2'}],
+  dots:[[5,20,'ink2',4],[4,5,'ink2',4],[uS/1000,uF/1000,'c1'],[mS/1000,mF/1000,'c2']],labels:[[1.2,36,'U.S. PPF','c1'],[5.6,4.6,'Mexico PPF','c2']]}));
+ const both=TS>=9000&&TF>=25000,more=TS>9000||TF>25000;
+ out(r,`U.S.: ${f0(uS)} shoes, ${f0(uF)} refrigerators. Mexico: ${f0(mS)} shoes, ${f0(mF)} refrigerators.<br>World total: <b>${f0(TS)} shoes</b> (${TS>=9000?'+':''}${f0(TS-9000)}) and <b>${f0(TF)} refrigerators</b> (${TF>=25000?'+':''}${f0(TF-25000)}) vs no trade. `+(both&&more?'<b style="color:var(--c3)">More of both, or more of one with no less of the other:</b> specialization by comparative advantage pays.':both?'Same as no trade.':'Less of something. Try moving U.S. workers into refrigerators and Mexican workers into shoes.')+' Grey dots mark the no-trade points.');
+});})();
+
+/* ---------- 14.2 sugar tariff ---------- */
+(()=>{const r=$('#lab-sugar'),Qs=p=>50+1.25*p,Qd=p=>110-1.25*p,CS=p=>.5*(88-p)*Qd(p),PS=p=>50*p+.625*p*p;lab(r,()=>{
+ const t=val(r,'t'),closed=val(r,'closed'),P=closed?24:Math.min(24,16+t),s=Qs(P),d=Qd(P),imp=d-s,rev=closed?0:t*imp;
+ const dCS=CS(P)-CS(16),dPS=PS(P)-PS(16),dw=-(dCS+dPS+rev),areas=[];
+ if(P>16){if(rev>0)areas.push({pts:[[s,16],[d,16],[d,P],[s,P]],c:'c3',op:.35});areas.push({pts:[[70,16],[s,16],[s,P]],c:'c5',op:.4},{pts:[[d,P],[d,16],[90,16]],c:'c5',op:.4})}
+ plot(r,chart({id:'sug',xmax:120,ymax:40,xt:20,yt:8,yfmt:v=>v+'¢',xlab:'Sugar (tons)',ylab:'Price per lb',areas,lines:[{fn:q=>(110-q)/1.25,dom:[0,110],c:'c1'},{fn:q=>(q-50)/1.25,dom:[50,120],c:'c2'},{pts:[[0,16],[120,16]],c:'ink2',dash:1,w:2},{pts:[[0,P],[120,P]],c:'c4',w:1.8,dash:P===16?0:1}],
+  dots:[[s,P,'c2'],[d,P,'c1']],labels:[[4,36,'U.S. demand','c1'],[118,36,'U.S. supply','c2','end'],[118,14.4,'world price 16¢','muted','end']].concat(P>16?[[118,P+1.4,'U.S. price '+P+'¢','c4','end']]:[])}));
+ out(r,`U.S. price <b>${P}¢</b>: domestic producers supply <b>${f1(s)}</b> tons, buyers want <b>${f1(d)}</b>, imports <b>${f1(imp)}</b>.`+(P>16?`<br>Compared with free trade: consumers lose <b>${f0(-dCS)}</b>, producers gain <b>${f0(dPS)}</b>`+(rev>0?`, tariff revenue <b>${f0(rev)}</b>`:'')+`; net loss (red triangles) <b style="color:var(--c5)">${f0(dw)}</b> (¢/lb × tons).`:' Free trade: consumers enjoy the low world price.')+(closed?' With the border closed, the price returns to the 24¢ no-trade level.':'')+'<br><span style="color:var(--muted)">A simplified straight-line version of the course\'s U.S. sugar market.</span>');
+});})();
+
+/* ---------- 15.1 FX ---------- */
+(()=>{const r=$('#lab-fx');lab(r,()=>{
+ const ri=val(r,'r'),pi=val(r,'pi'),dD=1.2*ri-0.8*pi,dS=0.8*ri-1.2*pi,e=10+(dD+dS)/2,Q=80+5*(dD-dS);
+ const lines=[];if(ri||pi)lines.push({fn:q=>18-q/10,dom:[0,120],c:'c1',dash:1,w:2,op:.45},{fn:q=>2+q/10,dom:[0,120],c:'c2',dash:1,w:2,op:.45});
+ lines.push({fn:q=>18+dD-q/10,dom:[0,120],c:'c1'},{fn:q=>2+dS+q/10,dom:[0,120],c:'c2'});
+ plot(r,chart({id:'fx',xmax:120,ymax:20,xt:20,yt:4,xlab:'Quantity of dollars traded (billions)',ylab:'Pesos per dollar',lines,dots:[[Q,e,'ink']],guides:[[Q,e]],labels:[[4,18+dD-1.4,'Demand for $','c1'],[116,2+dS+11.6+1.2,'Supply of $','c2','end']]}));
+ const ch=(e-10)/10*100;
+ out(r,`One dollar buys <b>${f1(e)} pesos</b> (1 peso = $${(1/e).toFixed(3)}). `+(Math.abs(ch)<.1?'Nothing has changed.':`The dollar has <b>${ch>0?'appreciated':'depreciated'}</b> ${f0(Math.abs(ch))}% against the peso.`)+(ri?` ${ri>0?'Higher':'Lower'} U.S. interest rates make dollar assets ${ri>0?'more':'less'} attractive.`:'')+(pi?` ${pi>0?'Higher':'Lower'} U.S. inflation ${pi>0?'erodes':'protects'} the dollar's purchasing power.`:''));
+});})();
+
+/* ---------- calculators (shared with the PDF edition) ---------- */
+const CALCS={
+ eq:{title:'Equilibrium solver',tag:'Calculator 3.2',hint:'Demand Qd = a − bP and supply Qs = c + dP. Enter the four numbers.',inputs:[['a (demand intercept)','16'],['b (demand slope)','2'],['c (supply intercept)','2'],['d (supply slope)','5']],
+  fn:'var a=v[0],b=v[1],c=v[2],d=v[3];if(isNaN(a)||isNaN(b)||isNaN(c)||isNaN(d)||b+d==0)return "Enter four numbers.";var P=(a-c)/(b+d),Q=a-b*P;if(P<0||Q<0)return "These curves don\'t cross at a positive price and quantity.";return "Set demand equal to supply: "+a+" - "+b+"P = "+c+" + "+d+"P\\nSo P = ("+a+" - "+c+") / ("+b+" + "+d+") = $"+P.toFixed(2)+"\\nQuantity: Qd = "+(a-b*P).toFixed(2)+" and Qs = "+(c+d*P).toFixed(2)+". Equilibrium Q = "+Q.toFixed(2);'},
+ mid:{title:'Midpoint elasticity calculator',tag:'Calculator 5.2',hint:'Enter two price-quantity points on a demand curve (defaults: the parking-permit example).',inputs:[['Price 1','40'],['Quantity 1','12800'],['Price 2','48'],['Quantity 2','11520']],
+  fn:'var p1=v[0],q1=v[1],p2=v[2],q2=v[3];if(isNaN(p1)||isNaN(q1)||isNaN(p2)||isNaN(q2)||p1==p2||p1+p2==0||q1+q2==0)return "Enter two points with different prices.";var pq=(q2-q1)/((q1+q2)/2),pp=(p2-p1)/((p1+p2)/2),e=Math.abs(pq/pp);var c=Math.abs(e-1)<0.005?"unit elastic":(e>1?"elastic":"inelastic");var t1=p1*q1,t2=p2*q2;return "Change in quantity: "+(pq*100).toFixed(2)+"%   Change in price: "+(pp*100).toFixed(2)+"%\\nPrice elasticity |E| = "+e.toFixed(2)+" ("+c+")\\nTotal revenue: $"+t1.toFixed(0)+" -> $"+t2.toFixed(0)+(t2>t1?" (up)":(t2<t1?" (down)":" (unchanged)"));'},
+ profit:{title:'Accounting vs economic profit',tag:'Calculator 7.3',hint:'Defaults are Fred\'s law practice.',inputs:[['Total revenue ($)','200000'],['Explicit costs ($)','85000'],['Implicit costs ($)','125000']],
+  fn:'var R=v[0],E=v[1],I=v[2];if(isNaN(R)||isNaN(E)||isNaN(I))return "Enter three numbers.";var A=R-E,P=R-E-I;function m(x){var s=Math.round(Math.abs(x)).toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g,",");return (x<0?"-$":"$")+s;}return "Accounting profit = "+m(R)+" - "+m(E)+" = "+m(A)+"\\nEconomic profit = "+m(R)+" - "+m(E)+" - "+m(I)+" = "+m(P)+"\\n"+(P>0?"The business earns more than the next-best use of its resources.":(P<0?"The owner would earn more in the next-best alternative.":"Zero economic profit: a normal return."));'},
+ hhi:{title:'Market concentration (HHI and four-firm ratio)',tag:'Calculator 9.2',hint:'List every firm\'s market share in percent, separated by commas (default: the course\'s example industry).',inputs:[['Market shares (%)','16, 10, 8, 6, 6, 6, 6, 6, 6, 6, 3, 3, 3, 3, 3, 3, 3, 3']],
+  fn:'var p=s[0].split(/[^0-9.]+/),a=[];for(var i=0;i<p.length;i++){var x=parseFloat(p[i]);if(!isNaN(x)&&x>0)a.push(x);}if(!a.length)return "Enter market shares separated by commas.";a.sort(function(x,y){return y-x;});var tot=0,h=0,c=0;for(var i=0;i<a.length;i++){tot+=a[i];h+=a[i]*a[i];if(i<4)c+=a[i];}var g=h<1000?"below 1,000: the merger would probably be approved":(h<=1800?"1,000-1,800: regulators would look closely":"above 1,800: a merger would probably be challenged");return a.length+" firms, shares add to "+tot.toFixed(1)+"%"+(Math.abs(tot-100)>0.5?" (should be 100%)":"")+"\\nFour-firm concentration ratio: "+c.toFixed(1)+"\\nHHI: "+Math.round(h)+" ("+g+", under the older FTC guidelines)";'},
+ fx:{title:'Exchange-rate converter',tag:'Calculator 15.2',hint:'Defaults are the course example: a $25,000 Ford pickup and a £6 six-pack of British ale.',inputs:[['Dollars per pound','1.50'],['Price of U.S. good ($)','25000'],['Price of U.K. good (£)','6']],
+  fn:'var e=v[0],u=v[1],k=v[2];if(isNaN(e)||isNaN(u)||isNaN(k)||e<=0)return "Enter a positive exchange rate and two prices.";return "1 pound = $"+e.toFixed(2)+"; 1 dollar = £"+(1/e).toFixed(3)+"\\nThe U.S. good costs £"+(u/e).toFixed(2)+" in Britain\\nThe U.K. good costs $"+(k*e).toFixed(2)+" in the U.S.\\nRaise the dollars-per-pound rate (a weaker dollar): U.S. exports get cheaper abroad and imports get dearer at home.";'}};
+window.__CALCS=CALCS;
+$$('[data-calc]').forEach(box=>{const k=box.dataset.calc,c=CALCS[k],fn=new Function('v','s',c.fn);box.id='calc-'+k;
+ box.innerHTML=`<div class="lh"><span class="tag">${c.tag.split(' ')[0]}</span>${c.title}</div><div class="lb"><p class="hint">${c.hint}</p><div class="calc" style="grid-template-columns:repeat(${c.inputs.length>1?Math.min(c.inputs.length,4):1},1fr)">${c.inputs.map((x,i)=>`<label>${x[0]}<input type="text" inputmode="${k==='hhi'?'text':'decimal'}" data-i="${i}" value="${x[1]}"></label>`).join('')}</div><div class="readout calcres"></div></div>`;
+ $('.lh .tag',box).textContent=c.tag;
+ const run=()=>{const s=$$('input',box).map(i=>i.value),v=s.map(parseFloat);let res;try{res=fn(v,s)}catch(e){res='Check your inputs.'}$('.readout',box).textContent=res};
+ $$('input',box).forEach(i=>i.addEventListener('input',run));run()});
+
+/* ---------- quizzes ---------- */
+const QZ={
+1:[["Which is an example of economic capital?",["A bank account balance","A delivery van used by a bakery","The bakery owner's willingness to take risks","The land under the bakery"],1,"Capital is anything manufactured to produce other goods. Money (financial capital) isn't productive by itself; risk-taking is entrepreneurship; land is a natural resource."],
+ ["Adam Smith's pin factory shows that…",["Workers are lazy without supervision","Dividing tasks among specialized workers can multiply output","Machines replace workers","Small firms are more efficient"],1,"Ten specialized workers made about 48,000 pins a day, versus about 20 for one worker doing every step."],
+ ["A line passes through (2, 1) and (6, 3). Its slope is…",["2","1/2","−1/2","4"],1,"Rise = 2, run = 4, so slope = 2/4 = 1/2."]],
+2:[["Charlie has $10; burgers cost $2 and bus tickets $0.50. The opportunity cost of one burger is…",["$2","2 bus tickets","4 bus tickets","0.25 bus tickets"],2,"$2 ÷ $0.50 = 4 bus tickets given up per burger."],
+ ["You paid $8 for a movie that's terrible after 30 minutes. Economically, you should…",["Stay to get your money's worth","Decide based only on the value of the next 90 minutes","Always leave","Ask for a refund first"],1,"The $8 is a sunk cost. Only future costs and benefits matter."],
+ ["A point inside the PPF is…",["Allocatively efficient","Productively inefficient","Unattainable","A sign of economic growth"],1,"Inside the frontier, resources are wasted: you could have more of one good without less of the other."]],
+3:[["The price of tablets falls. Demand for laptops (a substitute)…",["Shifts right","Shifts left","Doesn't change","Becomes perfectly elastic"],1,"A cheaper substitute pulls buyers away, so laptop demand shifts left."],
+ ["In the gasoline table, at $1.80 there is…",["A shortage of 180 million gallons","A surplus of 180 million gallons","Equilibrium","A shortage of 150 million gallons"],1,"Qs = 680 and Qd = 500, so excess supply = 180."],
+ ["Postal workers get a raise AND email reduces demand for mail. We can be sure that…",["Price rises","Price falls","Quantity falls","Quantity rises"],2,"Both shifts reduce quantity; their effects on price conflict."]],
+4:[["A binding rent ceiling of $500 when the market rent would be $600 creates…",["A surplus of apartments","A shortage of apartments","More apartments rented","No effect"],1,"At $500, 19,000 apartments are wanted but only 15,000 are supplied."],
+ ["Demand starts at $25, supply at $5, and equilibrium is $10 with 3 units. Consumer surplus is…",["$7.50","$15","$22.50","$30"],2,"½ × 3 × ($25 − $10) = $22.50."],
+ ["Deadweight loss from a price floor represents…",["Revenue collected by the government","Surplus transferred from consumers to producers","Value from trades that no longer happen","Higher profits for producers"],2,"It's surplus lost to everyone because mutually beneficial trades are blocked."]],
+5:[["A permit price rises from $40 to $48 and sales fall from 12,800 to 11,520. Demand is…",["Elastic, so revenue falls","Inelastic, so revenue rises","Unit elastic","Perfectly elastic"],1,"Elasticity ≈ 0.58 < 1; revenue rises from $512,000 to $552,960."],
+ ["A negative cross-price elasticity between two goods means they are…",["Substitutes","Complements","Inferior goods","Normal goods"],1,"When one gets cheaper, people buy more of the other."],
+ ["Most of a cigarette tax is paid by smokers because…",["The law says so","Demand for cigarettes is inelastic","Supply is perfectly inelastic","Producers are elastic"],1,"The burden falls on the less elastic side of the market."]],
+6:[["José's T-shirt total utility goes 22, 43, 63. The marginal utility of the third shirt is…",["63","21","20","42"],2,"63 − 43 = 20."],
+ ["At consumer equilibrium…",["Marginal utilities are equal","MU per dollar is equal across goods","Total utility from each good is equal","Spending on each good is equal"],1,"MU₁/P₁ = MU₂/P₂, so the last dollar spent on each good adds the same utility."],
+ ["Losing $10 feeling worse than gaining $10 feels good is called…",["Mental accounting","Loss aversion","Fungibility","Bounded rationality"],1,"Losses weigh about 2.25 times as much as equal gains."]],
+7:[["Fred earns $200,000 revenue, pays $85,000 explicit costs, and gives up a $125,000 salary. His economic profit is…",["$115,000","$200,000","−$10,000","$75,000"],2,"$200,000 − $85,000 − $125,000 = −$10,000."],
+ ["Marginal cost crosses average total cost…",["At ATC's maximum","At ATC's minimum","Only in the long run","Never"],1,"Below the average, MC pulls ATC down; above it, MC pulls it up."],
+ ["Long-run average cost rising as output grows is called…",["Diminishing marginal product","Economies of scale","Diseconomies of scale","Constant returns"],2,"Very large organizations become hard to manage."]],
+8:[["For a price-taking firm, marginal revenue equals…",["Average total cost","The market price","Zero","Marginal cost always"],1,"MR = demand = average revenue = price (\"MR. DARP\")."],
+ ["The yoga studio's rent is $10,000 (fixed) and instructors cost $15,000. With $12,000 in revenue it should…",["Stay open","Shut down","Raise prices","Hire more instructors"],1,"Revenue doesn't cover variable cost ($15,000), so closing loses only the $10,000 rent instead of $13,000."],
+ ["In long-run equilibrium under perfect competition…",["Firms earn large profits","Price = minimum ATC and economic profit is zero","Price exceeds MC","Firms shut down"],1,"Entry and exit push price to the bottom of average cost."]],
+9:[["HealthPill's MR = MC at 5 units, where the demand curve shows a price of 800. It charges…",["400","800","1,000","MC"],1,"Find the quantity where MR = MC, then read the price from the demand curve."],
+ ["Five firms each have 20% of a market. The HHI is…",["100","400","2,000","10,000"],2,"5 × 20² = 2,000."],
+ ["Regulators most often set a natural monopoly's price at…",["Marginal cost, with no subsidy","Average cost, allowing a normal profit","The monopoly price","Zero"],1,"P = AC covers costs and avoids monopoly profit; P = MC would need a subsidy."]],
+10:[["In the long run, a monopolistically competitive firm earns…",["Monopoly profits","Zero economic profit, with price above MC","Losses forever","Zero profit at minimum ATC"],1,"Entry shifts its demand until it touches ATC, but price stays above MC and minimum ATC."],
+ ["In the duopoly game (both low $1,000; both expand $400; cheat $1,500 vs $200), the Nash equilibrium is…",["Both hold output low","Both expand output","One expands and one holds low","No equilibrium"],1,"Expanding is each firm's dominant strategy, so both end up at $400."],
+ ["A formal agreement among firms to act like a monopoly is a…",["Merger","Cartel","Price cap","Kinked demand curve"],1,"Cartels are illegal in the U.S. under antitrust law."]],
+11:[["A good that is non-rival and non-excludable is a…",["Private good","Common resource","Public good","Club good"],2,"National defense protects everyone, and one person's protection doesn't reduce another's."],
+ ["Without intervention, a good with a negative externality is…",["Underproduced","Overproduced","Produced efficiently","Not produced"],1,"Firms ignore the external cost, so output exceeds the efficient level."],
+ ["With a $1,000 charge per 10 lbs and abatement costs of $300, $500, $900, $1,500 and $2,500, the firm cuts…",["10 lbs","30 lbs","50 lbs","0 lbs"],1,"It cuts every increment cheaper than the charge: $300, $500 and $900."]],
+12:[["A worker's marginal product is 3 and the firm's marginal revenue is $3. Their MRP is…",["$3","$6","$9","$1"],2,"MRP = MP × MR = 3 × $3 = $9."],
+ ["Compared with a competitive labor market, a monopsony…",["Hires more and pays more","Hires fewer and pays less","Hires more and pays less","Hires the same number"],1,"It hires where MRP = marginal cost of labor, then pays the lowest wage that attracts that many workers."],
+ ["Why don't raw earnings gaps by themselves prove discrimination?",["Because laws forbid it","Because comparisons must control for education, experience and occupation","Because markets always eliminate it","Because data are unavailable"],1,"Discrimination means unequal treatment of equally productive workers."]],
+13:[["With an $18,000 guarantee reduced $1 for every $1 earned, working 1,000 hours at $8 gives total income of…",["$26,000","$18,000","$8,000","$10,000"],1,"Earnings $8,000 + support $10,000 = $18,000: the poverty trap."],
+ ["The further a Lorenz curve sags below the 45° line…",["The more equal the distribution","The more unequal the distribution","The higher average income","The lower the poverty rate"],1,"The 45° line is perfect equality."],
+ ["Which program rewards work by giving low-income workers a tax credit?",["TANF","SNAP","EITC","Medicaid"],2,"The Earned Income Tax Credit rises with earnings up to a point."]],
+14:[["The U.S. needs 4 workers per 1,000 shoes and 1 per 1,000 refrigerators; Mexico needs 5 and 4. The U.S. has a comparative advantage in…",["Shoes","Refrigerators","Both","Neither"],1,"A U.S. refrigerator costs 0.25 shoes versus 0.8 in Mexico."],
+ ["When the U.S. opens to cheaper sugar imports, U.S. sugar producers…",["Gain","Lose","Are unaffected","Gain only if they export"],1,"The price falls from 24¢ to 16¢ and they sell less, while U.S. consumers gain."],
+ ["Unlike a tariff, an import quota…",["Raises domestic prices","Usually raises no government revenue","Helps domestic producers","Reduces imports"],1,"Both raise prices and protect producers, but a quota collects no tax unless licenses are sold."]],
+15:[["If the dollar weakens from $1.50 to $2.00 per pound, a $25,000 U.S. pickup in Britain…",["Gets more expensive","Gets cheaper","Costs the same","Can't be sold"],1,"£16,667 becomes £12,500, so U.S. exports rise."],
+ ["Higher U.S. interest rates relative to other countries tend to…",["Depreciate the dollar","Appreciate the dollar","Leave it unchanged","Cause inflation"],1,"Foreign investors demand more dollars and fewer dollars are supplied."],
+ ["A country that adopts another country's currency has a…",["Floating rate","Soft peg","Hard peg","Merged currency"],3,"For example, Ecuador uses the U.S. dollar; it gives up independent monetary policy."]]};
+window.__QZ=QZ;
+let QS=store.get('quiz',{});
+function renderQuiz(el){const ch=el.dataset.ch,qs=QZ[ch];QS[ch]=QS[ch]||{};
+ el.innerHTML=`<div class="eyebrow">Check your understanding</div><h2>Module ${ch} quiz</h2><div class="score"></div>`+qs.map((q,i)=>`<div class="q" data-i="${i}"><div class="qt">${i+1}. ${q[0]}</div><div class="opts">${q[1].map((o,j)=>`<button class="o" data-j="${j}">${o}</button>`).join('')}</div><div class="ex"></div></div>`).join('')+`<p><button class="btn" data-retry>Retry quiz</button></p>`;
+ const paint=()=>{let right=0,done=0;$$('.q',el).forEach(qe=>{const i=+qe.dataset.i,a=QS[ch][i];qe.classList.toggle('done',a!==undefined);$$('.o',qe).forEach(b=>b.className='o');
+  if(a!==undefined){done++;const ok=a===qs[i][2];if(ok)right++;$$('.o',qe)[qs[i][2]].classList.add('right');if(!ok)$$('.o',qe)[a].classList.add('wrong');$('.ex',qe).innerHTML=(ok?'<b style="color:var(--c3)">Correct.</b> ':'<b style="color:var(--c5)">Not quite.</b> ')+qs[i][3]}});
+  $('.score',el).textContent=done?`Score: ${right} / ${qs.length}`+(done===qs.length?(right===qs.length?' 🎉 Perfect!':' · Module complete'):''):''};
+ el.addEventListener('click',e=>{if(e.target.matches('[data-retry]')){QS[ch]={};save();paint();return}const b=e.target.closest('.o');if(!b)return;const i=+b.closest('.q').dataset.i;if(QS[ch][i]!==undefined)return;QS[ch][i]=+b.dataset.j;save();paint()});
+ paint()}
+const complete=ch=>QS[ch]&&Object.keys(QS[ch]).length===QZ[ch].length;
+function save(){store.set('quiz',QS);progress()}
+function progress(){const n=Object.keys(QZ).reduce((a,k)=>a+Object.keys(QS[k]||{}).length,0),t=Object.values(QZ).reduce((a,v)=>a+v.length,0),pc=Math.round(n/t*100);$('#progBar').style.width=pc+'%';$('#progPct').textContent=pc+'%';$$('[data-ckc]').forEach(e=>e.textContent=complete(e.dataset.ckc)?'✓':'')}
+$$('.quiz').forEach(renderQuiz);
+
+/* ---------- glossary ---------- */
+const GL=[["Absolute advantage",14,"Producing a good with fewer resources than another producer."],["Accounting profit",7,"Total revenue minus explicit costs."],["Allocative efficiency",2,"Producing the mix of goods society most wants; in markets, where price equals marginal cost."],["Appreciate",15,"A currency rises in value relative to other currencies (strengthens)."],["Arbitrage",15,"Buying where something is cheap and selling where it's dear, which pushes prices together."],["Barriers to entry",9,"Legal, technological or market forces that keep new competitors out."],["Behavioral economics",6,"A branch of economics that uses psychology to explain how people actually decide."],["Bilateral monopoly",12,"A labor market with one buyer (a monopsony) and one seller (a union)."],["Break-even point",8,"Where MC crosses ATC at its minimum; at that price economic profit is zero."],["Budget constraint",2,"All combinations of goods a person can afford with a given income and prices."],["Cartel",10,"Firms that formally agree to act like a monopoly."],["Ceteris paribus",3,"\"Other things equal\": holding all other factors constant."],["Circular flow diagram",1,"A model of households and firms interacting in the goods-and-services market and the labor market."],["Coase theorem",11,"With clear property rights and low transaction costs, private bargaining can solve externalities."],["Collusion",10,"Firms acting together to reduce output and keep prices high."],["Command economy",3,"An economy where the government owns resources and decides what is produced and at what price."],["Common resource",11,"A good that is rival but non-excludable, such as ocean fish."],["Comparative advantage",14,"Producing a good at a lower opportunity cost than another producer."],["Complements",3,"Goods used together; a higher price for one lowers demand for the other."],["Consumer equilibrium",6,"The affordable bundle that gives a consumer the most utility."],["Consumer surplus",4,"Willingness to pay minus the price actually paid."],["Cross-price elasticity",5,"% change in quantity demanded of one good ÷ % change in the price of another."],["Deadweight loss",4,"The loss of social surplus when a market produces an inefficient quantity."],["Depreciate",15,"A currency falls in value relative to other currencies (weakens)."],["Derived demand",12,"Demand for an input that comes from demand for the product it makes."],["Differentiated product",10,"A product consumers see as distinct from rivals' products."],["Diminishing marginal product",7,"Each extra unit of a variable input adds less output when other inputs are fixed."],["Diminishing marginal utility",6,"Each extra unit consumed adds less utility than the one before."],["Diseconomies of scale",7,"Long-run average cost rises as output increases."],["Division of labor",1,"Splitting production into tasks done by different workers."],["Dominant strategy",10,"A strategy that is best no matter what the other player does."],["Economic profit",7,"Total revenue minus explicit and implicit costs."],["Economies of scale",7,"Long-run average cost falls as output increases."],["Effluent standard",11,"A legal limit on how much pollution a source may emit."],["Efficiency",3,"A situation where no one can be made better off without making someone else worse off."],["Elasticity",5,"How responsive one variable is to a change in another, in percentage terms."],["Equilibrium",3,"The price and quantity where quantity demanded equals quantity supplied."],["Exchange rate",15,"The price of one currency in terms of another."],["Explicit costs",7,"Out-of-pocket payments such as wages, rent and materials."],["Externality",11,"A cost or benefit that falls on people outside a transaction."],["Factors of production",1,"Land, capital, labor and entrepreneurship."],["Foreign direct investment",15,"Buying at least 10% of a foreign firm, or starting a business abroad."],["Free rider",11,"Someone who benefits from a good without paying for it."],["Game theory",10,"The study of decisions where each player's payoff depends on others' choices."],["Herfindahl-Hirschman Index",9,"The sum of the squared market shares of every firm in an industry."],["Implicit costs",7,"The opportunity costs of resources a firm already owns."],["Income effect",6,"A price change alters the buying power of income."],["Indifference curve",6,"Bundles of goods that give a consumer equal utility."],["Inferior good",3,"A good whose demand falls when income rises."],["Intra-industry trade",14,"Countries exporting and importing goods from the same industry."],["Law of diminishing returns",2,"Extra resources devoted to one purpose bring smaller and smaller gains."],["Long run",7,"A period long enough that all inputs can change."],["Lorenz curve",13,"A graph of cumulative population share against cumulative income share."],["Marginal analysis",2,"Comparing the costs and benefits of a little more or a little less."],["Marginal cost",7,"The change in total cost from producing one more unit."],["Marginal rate of substitution",6,"How much of one good a consumer would give up for one more of another, holding utility constant."],["Marginal revenue",8,"The extra revenue from selling one more unit."],["Marginal revenue product",12,"A worker's marginal product times the firm's marginal revenue."],["Marginal utility",6,"The extra utility from consuming one more unit."],["Marketable permits",11,"Tradable rights to emit a set amount of pollution under an overall cap."],["Market economy",3,"An economy where private owners make decisions through markets."],["Monopolistic competition",10,"Many firms selling differentiated products."],["Monopoly",9,"A single firm that produces all or nearly all of a market's output."],["Monopsony",12,"A labor market with a single employer."],["Nash equilibrium",10,"A set of strategies where no player can gain by changing on their own."],["Natural monopoly",9,"An industry where one firm can supply the whole market at the lowest cost."],["Normal good",3,"A good whose demand rises when income rises."],["Normative statement",2,"A claim about how things should be."],["Oligopoly",10,"A market dominated by a few large firms."],["Opportunity cost",2,"The value of the next-best alternative given up."],["Pollution charge",11,"A tax on each unit of pollution emitted."],["Positive statement",2,"A testable claim about how things are."],["Poverty line",13,"The income needed for a basic standard of living."],["Poverty trap",13,"When benefits fall so fast with earnings that working brings little gain."],["Predatory pricing",9,"Temporarily cutting prices to drive out a new competitor."],["Price ceiling",4,"A legal maximum price."],["Price discrimination",9,"Charging different customers different prices for the same product."],["Price elasticity of demand",5,"% change in quantity demanded ÷ % change in price."],["Price floor",4,"A legal minimum price."],["Price taker",8,"A firm that must accept the market price."],["Prisoner's dilemma",10,"A game where self-interest leads to an outcome worse for everyone."],["Producer surplus",4,"The price received minus the seller's minimum acceptable price."],["Production function",7,"The maximum output possible from given inputs."],["Production possibilities frontier",2,"The combinations of two goods an economy can produce with its resources."],["Productive efficiency",2,"Producing at lowest cost, so more of one good requires less of another."],["Progressive tax",13,"A tax that takes a higher percentage of income as income rises."],["Protectionism",14,"Policies that reduce or block imports."],["Public good",11,"A good that is non-rival and non-excludable."],["Purchasing power parity",15,"The exchange rate at which traded goods cost the same in each country."],["Quintile",13,"One fifth of households ranked by income."],["Scarcity",1,"Limited resources relative to wants."],["Short run",7,"A period in which at least one input is fixed."],["Shortage",3,"Quantity demanded exceeds quantity supplied (excess demand)."],["Shutdown point",8,"Where MC crosses AVC at its minimum; below it, the firm should shut down."],["Social surplus",4,"Consumer surplus plus producer surplus."],["Specialization",1,"Workers or firms focusing on the tasks they do best."],["Substitutes",3,"Goods that can replace each other; a higher price for one raises demand for the other."],["Substitution effect",6,"When a price changes, buying less of the relatively expensive good."],["Sunk costs",2,"Past costs that can't be recovered."],["Surplus",3,"Quantity supplied exceeds quantity demanded (excess supply)."],["Tariff",14,"A tax on imports."],["Tax incidence",5,"How the burden of a tax is split between buyers and sellers."],["Total revenue",5,"Price times quantity sold."],["Tragedy of the commons",11,"Overuse of a resource that no one owns."],["Utility",6,"The satisfaction from consuming goods and services."]];
+function gl(){const q=$('#glq').value.trim().toLowerCase();$('#gll').innerHTML=GL.filter(g=>!q||(g[0]+' '+g[2]).toLowerCase().includes(q)).map(g=>`<dt>${g[0]}</dt><dd>${g[2]} <a href="#m${g[1]}">Module ${g[1]} →</a></dd>`).join('')||'<dd>No matching terms.</dd>'}
+$('#glq').addEventListener('input',gl);gl();
+
+/* ---------- nav ---------- */
+$('#toc').innerHTML=`<h4>Start</h4><a href="#home" data-v="home"><span class="n">⌂</span>Cover &amp; contents</a><h4>Modules</h4>`+MODS.map((c,i)=>`<a href="#m${i+1}" data-v="m${i+1}"><span class="n">${i+1}</span>${c.t}<span class="ck" data-ckc="${i+1}"></span></a>`).join('')+`<h4>Reference</h4><a href="#glossary" data-v="glossary"><span class="n">A–Z</span>Glossary</a><a href="#about" data-v="about"><span class="n">©</span>About &amp; credits</a>`;
+$('#cards').innerHTML=MODS.map((c,i)=>`<a class="card" href="#m${i+1}"><span class="ck" data-ckc="${i+1}"></span><div class="cn">MODULE ${i+1}</div><div class="ct">${c.t}</div><div class="cd">${c.d}</div></a>`).join('');
+MODS.forEach((c,i)=>{const v=$('#v-m'+(i+1)),pg=document.createElement('div');pg.className='pager';
+ pg.innerHTML=(i?`<a href="#m${i}"><small>← Previous</small>${MODS[i-1].t}</a>`:`<a href="#home"><small>← Back</small>Contents</a>`)+(i<MODS.length-1?`<a class="nx" href="#m${i+2}"><small>Next →</small>${MODS[i+1].t}</a>`:`<a class="nx" href="#glossary"><small>Next →</small>Glossary</a>`);v.appendChild(pg)});
+function route(){let h=location.hash.slice(1)||'home';let v=document.getElementById('v-'+h);if(!v){h='home';v=$('#v-home')}
+ $$('.view').forEach(x=>x.hidden=x!==v);$$('#toc a').forEach(a=>a.classList.toggle('active',a.dataset.v===h));document.body.classList.remove('open');window.scrollTo(0,0);if(/^m\d+$/.test(h))store.set('last',h)}
+window.addEventListener('hashchange',route);
+$('#menuBtn').onclick=()=>document.body.classList.toggle('open');$('#scrim').onclick=()=>document.body.classList.remove('open');
+const last=store.get('last',null);if(last&&last!=='m1'){$('#startBtn').href='#'+last;$('#startBtn').textContent='Continue reading (Module '+last.slice(1)+') →'}
+$('#resetBtn').onclick=()=>{QS={};store.set('quiz',QS);store.set('last',null);$$('.quiz').forEach(q=>{const n=q.cloneNode(false);q.replaceWith(n);renderQuiz(n)});progress();$('#startBtn').href='#m1';$('#startBtn').textContent='Start reading →'};
+progress();route();
+})();
+
+</script>
+</body>
+</html>
