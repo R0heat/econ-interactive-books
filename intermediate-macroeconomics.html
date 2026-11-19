@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Intermediate Macroeconomics — An Interactive Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f2ea;--paper:#fffdf8;--ink:#1d2126;--muted:#5f6872;--line:#e2d9cb;--accent:#0f6e6e;--accent-ink:#fff;--soft:#e5f1ee;--warn:#fff4e0;
+--c1:#2563eb;--c2:#e8590c;--c3:#15924a;--c4:#8b3fd9;--c5:#d42a2a;--c6:#b98307;--ink2:#9aa1a9;
+--serif:"Source Serif 4",Georgia,serif;--sans:"IBM Plex Sans",system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#131518;--paper:#1b1e22;--ink:#e9e6e1;--muted:#9da6b0;--line:#2f343a;--accent:#4cc3b8;--accent-ink:#0b1515;--soft:#1b3331;--warn:#33291a;
+--c1:#6aa8ff;--c2:#ff9750;--c3:#4fd98a;--c4:#c48dff;--c5:#ff7070;--c6:#f3c94a;--ink2:#5d646c}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 var(--serif);-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+header.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;padding:10px 16px;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);font-family:var(--sans)}
+header.top .brand{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none;color:var(--ink)}
+header.top .bar{flex:1;max-width:220px;height:6px;border-radius:9px;background:var(--line);overflow:hidden;margin-left:auto}
+header.top .bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .4s}
+header.top .pct{font-size:13px;color:var(--muted);min-width:34px;text-align:right}
+.menu-btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:6px 10px;font:500 14px var(--sans);cursor:pointer}
+.layout{display:flex;max-width:1280px;margin:0 auto}
+nav.toc{width:280px;flex:none;position:sticky;top:53px;height:calc(100vh - 53px);overflow:auto;padding:22px 14px 40px;font-family:var(--sans);border-right:1px solid var(--line)}
+nav.toc h4{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:18px 10px 6px}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;text-decoration:none;color:var(--ink);font-size:14.5px;line-height:1.35}
+nav.toc a:hover{background:var(--soft)}
+nav.toc a.active{background:var(--accent);color:var(--accent-ink)}
+nav.toc a .n{font-size:12px;opacity:.65;min-width:18px}
+nav.toc a .ck{margin-left:auto;font-size:12px;color:var(--c3)}
+nav.toc a.active .ck{color:var(--accent-ink)}
+main{flex:1;min-width:0;padding:28px 22px 80px}
+.view{max-width:760px;margin:0 auto}
+.eyebrow{font:600 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(30px,5vw,42px);line-height:1.12;margin:.2em 0 .5em;letter-spacing:-.01em}
+h2{font-size:25px;line-height:1.25;margin:1.8em 0 .5em}
+h3{font:600 17px var(--sans);margin:1.4em 0 .4em}
+p{margin:0 0 1em}
+.lead{font-size:19.5px;color:var(--muted)}
+.box{border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:16px 20px;margin:1.4em 0}
+.box.obj{background:var(--soft);border-color:transparent}
+.box.obj h3,.box.take h3{margin-top:0}
+.box.obj ul,.box.take ul{margin:0;padding-left:1.2em}
+.box.take{border-left:4px solid var(--accent)}
+.box.ex{background:var(--warn);border-color:transparent}
+.formula{font:500 16px/1.5 var(--sans);background:var(--paper);border:1px dashed var(--line);border-radius:10px;padding:12px 16px;margin:1em 0;text-align:center;overflow-x:auto}
+.term{font-weight:700;color:var(--accent)}
+table.t{width:100%;border-collapse:collapse;font:14.5px/1.45 var(--sans);margin:1em 0}
+table.t th,table.t td{border-bottom:1px solid var(--line);padding:8px 8px;text-align:left;vertical-align:top}
+table.t th{font-weight:600;color:var(--muted);font-size:13px}
+.tscroll{overflow-x:auto}
+/* labs */
+.lab{border:1px solid var(--line);background:var(--paper);border-radius:16px;margin:1.8em 0;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.03),0 8px 24px -16px rgba(0,0,0,.18)}
+.lab .lh{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--line);font:600 14px var(--sans)}
+.lab .lh .tag{font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:var(--accent);color:var(--accent-ink);padding:3px 8px;border-radius:99px;white-space:nowrap}
+.lab .lb{padding:14px 18px 18px}
+.lab .hint{font:13.5px/1.5 var(--sans);color:var(--muted);margin:0 0 10px}
+.ctrls{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 18px;font:14px var(--sans);margin-bottom:8px}
+.ctrls label{display:flex;flex-direction:column;gap:4px}
+.ctrls label span{display:flex;justify-content:space-between;color:var(--muted)}
+.ctrls output{font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.ctrls label.chk{flex-direction:row;align-items:center;gap:8px;color:var(--ink)}
+.ctrls select{font:500 14px var(--sans);padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%}
+input[type=range]{width:100%;accent-color:var(--accent);height:26px}
+input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
+.pre{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.pre .btn{font-size:13px;padding:6px 11px}
+.plots{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.plots.one{grid-template-columns:1fr}
+@media (max-width:640px){.plots{grid-template-columns:1fr}}
+.plots canvas{width:100%;height:280px;display:block}
+.readout{font:14.5px/1.55 var(--sans);background:var(--bg);border-radius:10px;padding:10px 14px;margin-top:8px}
+.readout table{width:100%;border-collapse:collapse;margin:.2em 0 0}
+.readout td,.readout th{padding:5px 8px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+.readout td:first-child,.readout th:first-child{text-align:left}
+.readout tr:last-child td{border-bottom:0}
+.readout th{font-weight:600;color:var(--muted);font-size:12.5px}
+.readout .k{color:var(--muted)}.readout .v,.readout b{font-weight:600;font-variant-numeric:tabular-nums}
+.pos{color:var(--c3)}.neg{color:var(--c5)}
+.btn{font:500 14px var(--sans);border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:9px;padding:8px 14px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+details.wx{border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:10px 18px;margin:1.4em 0}
+details.wx summary{cursor:pointer;font:600 15px var(--sans);color:var(--accent);padding:2px 0}
+details.wx p{font:15px/1.6 var(--sans);margin:.6em 0 .2em}
+.debate{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:.6em 0 1em}
+.debate>div{border-radius:12px;padding:12px 14px;font:14.5px/1.55 var(--sans)}
+.debate .pro{background:color-mix(in srgb,var(--c3) 12%,var(--paper));border:1px solid color-mix(in srgb,var(--c3) 30%,var(--line))}
+.debate .con{background:var(--warn);border:1px solid var(--line)}
+@media (max-width:640px){.debate{grid-template-columns:1fr}}
+.res{font:15px/1.5 var(--sans)}
+.res ul{padding-left:1.2em;margin:.4em 0}.res li{margin:6px 0}
+.res .who{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-left:8px}
+.mod-sub{font:500 13px var(--sans);color:var(--muted);margin:-.6em 0 1em}
+/* quiz */
+.quiz{margin:2.2em 0 1em;border-top:2px solid var(--ink);padding-top:12px}
+.quiz h2{margin-top:.3em}
+.q{border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:14px 16px;margin:12px 0}
+.q .qt{font-weight:600;margin-bottom:10px}
+.q .opts{display:grid;gap:7px}
+.q button.o{all:unset;box-sizing:border-box;cursor:pointer;font:15px/1.45 var(--sans);padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.q button.o:hover{border-color:var(--accent)}
+.q button.o.right{border-color:var(--c3);background:color-mix(in srgb,var(--c3) 14%,var(--bg))}
+.q button.o.wrong{border-color:var(--c5);background:color-mix(in srgb,var(--c5) 12%,var(--bg))}
+.q .ex{font:14px/1.55 var(--sans);color:var(--muted);margin-top:10px;display:none}
+.q.done .ex{display:block}
+.q.done button.o{cursor:default}
+.score{font:600 15px var(--sans)}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:40px;font-family:var(--sans)}
+.pager a{flex:1;border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink);font-size:14px}
+.pager a small{display:block;color:var(--muted);font-size:12px}
+.pager a.nx{text-align:right}
+/* home */
+.cover{padding:40px 0 10px}
+.cover h1{font-size:clamp(36px,7vw,58px)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:20px 0}
+.card{display:block;border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:14px 16px;text-decoration:none;color:var(--ink);font-family:var(--sans);position:relative}
+.card:hover{border-color:var(--accent)}
+.card .cn{font-size:12px;color:var(--accent);font-weight:600;letter-spacing:.08em}
+.card .ct{font:600 18px/1.25 var(--serif);margin:4px 0}
+.card .cd{font-size:13px;color:var(--muted);line-height:1.45}
+.card .ck{position:absolute;top:12px;right:14px;color:var(--c3);font-size:13px;font-weight:600}
+.attr{font:14px/1.6 var(--sans)}.attr li{margin:4px 0}
+.scrim{display:none}
+@media (max-width:900px){
+ nav.toc{position:fixed;top:53px;left:0;bottom:0;height:auto;z-index:40;background:var(--paper);transform:translateX(-100%);transition:transform .25s;box-shadow:0 0 40px rgba(0,0,0,.25)}
+ body.open nav.toc{transform:none}
+ body.open .scrim{display:block;position:fixed;inset:53px 0 0 0;background:rgba(0,0,0,.3);z-index:35}
+ main{padding:20px 16px 70px}
+}
+@media (min-width:901px){.menu-btn{display:none}}
+@media print{header.top,nav,.pager,button{display:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+ <button class="menu-btn" id="menuBtn" aria-label="Contents">☰ Contents</button>
+ <a class="brand" href="#/">Intermediate Macroeconomics · Interactive Edition</a>
+ <div class="bar" title="Quiz progress"><i id="progBar"></i></div><span class="pct" id="progPct">0%</span>
+</header>
+<div class="scrim" id="scrim"></div>
+<div class="layout"><nav class="toc" id="nav"></nav><main id="main"></main></div>
+<script>
+
+/* ===== MODELS (pure functions, no DOM) ===== */
+const M = {};
+
+/* Solow with population growth n and technology growth g; variables per effective worker */
+M.solow = function (p) {
+  const a = p.alpha, d = p.delta + p.n + p.g;
+  const kss = Math.pow(p.s / d, 1 / (1 - a)), yss = Math.pow(kss, a);
+  const kg = Math.pow(a / d, 1 / (1 - a));
+  const css = (1 - p.s) * yss, cgold = Math.pow(kg, a) - d * kg;
+  const path = { t: [], k: [], y: [] };
+  let k = p.k0 * kss;
+  for (let t = 0; t <= 80; t++) { path.t.push(t); path.k.push(k); path.y.push(Math.pow(k, a)); k = k + p.s * Math.pow(k, a) - d * k; }
+  const kmax = Math.max(kss, kg) * 1.7, curve = { k: [], sy: [], dep: [] };
+  for (let i = 0; i <= 80; i++) { const kk = kmax * i / 80; curve.k.push(kk); curve.sy.push(p.s * Math.pow(kk, a)); curve.dep.push(d * kk); }
+  const lam = (1 - a) * d;
+  return { kss, yss, css, cgold, kg, sGold: a, path, curve, halfLife: Math.log(2) / lam, d };
+};
+
+/* Idea production A' = A + rho * L^lambda * A^phi, L grows at n */
+M.ideas = function (p) {
+  let A = 1, L = 1; const t = [], lnA = [], gA = [];
+  for (let i = 0; i <= 100; i++) {
+    t.push(i); lnA.push(Math.log(A));
+    const dA = p.rho * Math.pow(L, p.lambda) * Math.pow(A, p.phi);
+    gA.push(100 * dA / A);
+    A = A + dA; L *= 1 + p.n;
+    if (!isFinite(A) || A > 1e120) A = 1e120;
+  }
+  let regime, gstar = null;
+  if (p.phi < 0.999) { gstar = 100 * p.lambda * p.n / (1 - p.phi); regime = 'bgp'; }
+  else if (p.phi <= 1.001) regime = 'exp';
+  else regime = 'explosive';
+  return { t, lnA, gA, gstar, regime };
+};
+M.growthAcct = function (p) { return p.gY - p.alpha * p.gK - (1 - p.alpha) * p.gL; };
+
+/* Labor-market flows and Beveridge curve (matching function f = mu * theta^(1-eta)) */
+M.solveU = function (s, mu, v, eta) {
+  let lo = 1e-6, hi = 0.999;
+  for (let i = 0; i < 90; i++) {
+    const mid = (lo + hi) / 2, f = mu * Math.pow(v / mid, 1 - eta), g = s / (s + f);
+    if (mid < g) lo = mid; else hi = mid;
+  }
+  return (lo + hi) / 2;
+};
+M.labor = function (p) {
+  const eta = 0.5, u = M.solveU(p.s, p.mu, p.v, eta), theta = p.v / u, f = p.mu * Math.pow(theta, 1 - eta);
+  const bv = [], bu = [];
+  for (let v = 0.004; v <= 0.12; v += 0.002) { bv.push(v * 100); bu.push(100 * M.solveU(p.s, p.mu, v, eta)); }
+  return { u, theta, f, dur: 1 / f, bv, bu };
+};
+
+/* Money, inflation, Fisher, Cagan seigniorage (rates in decimals) */
+M.money = function (p) {
+  const pi = (1 + p.mg) * (1 + p.dv) / (1 + p.gy) - 1, i = (1 + p.r) * (1 + pi) - 1;
+  const xs = [], ys = [];
+  for (let x = 0; x <= 1.0001; x += 0.01) { xs.push(x * 100); ys.push(100 * x * p.m0 * Math.exp(-p.alpha * x)); }
+  const peakPi = 1 / p.alpha, peakRev = peakPi * p.m0 * Math.exp(-1);
+  const revNow = pi * p.m0 * Math.exp(-p.alpha * pi);
+  return { pi, i, xs, ys, peakPi, peakRev, revNow };
+};
+
+/* Two-period consumption with log utility */
+M.consumption = function (p) {
+  const T = p.T, r = p.r, b = p.beta;
+  const wealth = (T0, rica) => (p.y1 + T0) + (p.y2 - (rica ? T0 * (1 + r) : 0)) / (1 + r);
+  let base = wealth(0, true) / (1 + b);
+  if (p.liq) base = Math.min(base, p.y1);
+  const W = wealth(T, p.rica);
+  let c1 = W / (1 + b), constrained = false;
+  const cap = p.y1 + T;
+  if (p.liq && c1 > cap) { c1 = cap; constrained = true; }
+  const income2 = p.y2 - (p.rica ? T * (1 + r) : 0);
+  const c2 = constrained ? income2 + (1 + r) * (cap - c1) : (1 + r) * b * c1;
+  const U = Math.log(c1) + b * Math.log(c2);
+  const xs = [], bud = [], ind = [], xmax = W * 0.98;
+  for (let i = 1; i <= 100; i++) {
+    const x = xmax * i / 100; xs.push(x);
+    bud.push((1 + r) * (W - x));
+    ind.push(Math.exp((U - Math.log(x)) / b));
+  }
+  return { c1, c2, base, W, constrained, xs, bud, ind, dC1: c1 - base };
+};
+
+/* Investment: user cost of capital and Tobin's q (price of capital = 1) */
+M.invest = function (p) {
+  const uc = p.r + p.spread + p.delta, uc0 = 0.02 + 0.01 + p.delta;
+  const kstar = Math.pow(p.alpha * p.A / uc, 1 / (1 - p.alpha));
+  const k0 = Math.pow(p.alpha * p.A / uc0, 1 / (1 - p.alpha));
+  const mpk = K => p.alpha * p.A * Math.pow(K, p.alpha - 1);
+  const kmax = Math.max(kstar, k0) * 2, xs = [], ys = [];
+  for (let i = 1; i <= 100; i++) { const K = kmax * i / 100; xs.push(K); ys.push(100 * mpk(K)); }
+  const q = mpk(p.kinst) / uc;
+  return { uc, kstar, k0, xs, ys, q, pct: 100 * (kstar / k0 - 1), mpk };
+};
+
+/* IS-MP-Phillips short-run equilibrium */
+M.ismp = function (p) {
+  const y = (p.A - p.b * p.lam * (p.pe - 2) - p.b * p.m) / (1 + p.b * p.lam * p.kappa);
+  const pi = p.pe + p.kappa * y, r = 2 + p.lam * (pi - 2) + p.m;
+  const ys = [], isr = [], adp = [], pcp = [];
+  for (let x = -6; x <= 6.001; x += 0.25) {
+    ys.push(x); isr.push(2 + (p.A - x) / p.b);
+    adp.push(2 + (p.A - x - p.b * p.m) / (p.b * p.lam)); pcp.push(p.pe + p.kappa * x);
+  }
+  return { y, pi, r, ys, isr, adp, pcp };
+};
+
+/* Hybrid New-Keynesian-style model, quarterly, percent units. override(t) -> policy rate */
+M.nk = function (p, override) {
+  const T = p.T || 40, rbar = 2, ps = 2, sigma = p.sigma == null ? 0.4 : p.sigma, rhox = 0.6;
+  let x = 0, pi = ps, i = rbar + ps, dS = 0, sS = 0;
+  const out = { t: [], x: [], pi: [], i: [], loss: 0, zlbQuarters: 0 };
+  const sh = p.shock || { type: 'none', size: 0 };
+  for (let t = 0; t <= T; t++) {
+    if (t === 0) { out.t.push(0); out.x.push(0); out.pi.push(ps); out.i.push(i); continue; }
+    dS = 0.8 * dS; sS = 0.8 * sS;
+    if (t === 1) {
+      if (sh.type === 'demand' || sh.type === 'both') dS += sh.size;
+      if (sh.type === 'supply' || sh.type === 'both') sS += (sh.type === 'both' ? sh.size2 : sh.size);
+    }
+    const realPrev = i - pi - rbar;
+    x = rhox * x - sigma * realPrev + dS;
+    pi = p.theta * pi + (1 - p.theta) * ps + p.kappa * x + sS;
+    let rule = rbar + pi + p.phiPi * (pi - ps) + p.phiX * x;
+    if (override) { const o = override(t, { x, pi, rule }); if (o != null) rule = o; }
+    if (p.zlb && rule < 0) { rule = 0; out.zlbQuarters++; }
+    i = rule;
+    out.t.push(t); out.x.push(x); out.pi.push(pi); out.i.push(i);
+    out.loss += (pi - ps) * (pi - ps) + 0.5 * x * x;
+  }
+  return out;
+};
+M.taylor = function (p) {
+  const raw = p.rbar + p.pi + p.a * (p.pi - p.pistar) + p.b * p.x;
+  return { raw, rate: Math.max(0, raw) };
+};
+
+/* Fiscal multiplier and debt dynamics */
+M.fiscal = function (p) {
+  const k0 = 1 / (1 - p.c * (1 - p.t) + p.m), kf = phi => k0 / (1 + k0 * phi * 0.35);
+  const xs = [], ys = [];
+  for (let ph = 0; ph <= 1.5001; ph += 0.05) { xs.push(ph); ys.push(kf(ph)); }
+  return { k0, keff: kf(p.phi), xs, ys };
+};
+M.debt = function (p) {
+  const t = [], d = [], base = []; let dd = p.d0, bb = p.d0;
+  for (let i = 0; i <= 50; i++) { t.push(i); d.push(dd * 100); dd = dd * (1 + p.r) / (1 + p.g) - p.pb; base.push(bb * 100); }
+  const pbStar = p.d0 * (p.r - p.g) / (1 + p.g);
+  return { t, d, pbStar, final: d[d.length - 1] };
+};
+
+/* Mundell-Fleming small open economy, perfect capital mobility. Units: billions */
+M.MF = { c0: 50, c: 0.6, T: 100, I0: 200, b: 10, G: 150, x0: 105, chi: 20, mu: 0.15, k: 0.5, h: 20, rw: 3 };
+M.mf = function (p) {
+  const B = Object.assign({}, M.MF);
+  const solve = (st, regime, e0) => {
+    const rw = st.rw, m = st.m, G = st.G, x0 = st.x0;
+    const auto = B.c0 - B.c * B.T + B.I0 - B.b * rw + G + x0;
+    if (regime === 'float') {
+      const Y = (m + B.h * rw) / B.k;
+      const e = ((1 - B.c + B.mu) * Y - auto) / B.chi;
+      return { Y, e, NX: x0 + B.chi * e - B.mu * Y, m, auto, lmY: Y };
+    }
+    const e = e0, Y = (auto + B.chi * e) / (1 - B.c + B.mu);
+    return { Y, e, NX: x0 + B.chi * e - B.mu * Y, m: B.k * Y - B.h * rw, auto, lmY: null };
+  };
+  const m0 = B.k * 750 - B.h * B.rw;
+  const base0 = { rw: B.rw, m: m0, G: B.G, x0: B.x0 };
+  const st = Object.assign({}, base0);
+  if (p.shock === 'fiscal') st.G += p.size;
+  if (p.shock === 'money') st.m += p.size;
+  if (p.shock === 'trade') st.x0 += p.size;
+  if (p.shock === 'rate') st.rw += p.size;
+  const e0 = 1.0;
+  const before = solve(base0, p.regime, e0), after = solve(st, p.regime, e0);
+  return { before, after, B };
+};
+
+/* Balance-sheet channel: housing wealth shock with heterogeneous MPCs */
+M.crisis = function (p) {
+  const dC = (drop) => (p.mpcD * drop * p.W * p.shareD + p.mpcS * drop * p.W * (1 - p.shareD));
+  const flat = (drop) => p.mpcS * drop * p.W;
+  const xs = [], ya = [], yb = [];
+  for (let d = 0; d <= 0.4001; d += 0.01) { xs.push(d * 100); ya.push(100 * p.mult * dC(d)); yb.push(100 * p.mult * flat(d)); }
+  return { xs, ya, yb, cons: 100 * dC(p.drop), consFlat: 100 * flat(p.drop), demand: 100 * p.mult * dC(p.drop), demandFlat: 100 * p.mult * flat(p.drop), cutoff: 100 * (1 - p.ltv) };
+};
+
+/* HANK-flavoured multiplier on transfers: share lambdaH of hand-to-mouth households */
+M.hank = function (p) {
+  const mpc = p.lamH * 1 + (1 - p.lamH) * p.mpcPIH;
+  const xs = [], ys = [];
+  for (let l = 0; l <= 0.8001; l += 0.02) { xs.push(l * 100); ys.push(1 / (1 - (l + (1 - l) * p.mpcPIH))); }
+  return { mpc, mult: 1 / (1 - mpc), xs, ys };
+};
+
+
+
+/* ===== ENGINE: charts, widgets, quizzes, router ===== */
+const $ = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+const MODS = [];
+const fx = (n, d) => (n == null || !isFinite(n)) ? '–' : Number(n).toFixed(d == null ? 1 : d);
+const sg = (n, d) => (n > 0 ? '+' : '') + fx(n, d);
+const FONT = '"IBM Plex Sans",system-ui,sans-serif';
+const CMAP = { '#1f4e8c': '--c1', '#b5532f': '--c2', '#2e7d5b': '--c3', '#7a4fa3': '--c4', '#b3261e': '--c5', '#1b2430': '--ink', '#999': '--muted', '#aaa': '--muted', '#888': '--muted' };
+function theme() {
+  const cs = getComputedStyle(document.documentElement), V = n => cs.getPropertyValue(n).trim();
+  return { ink: V('--ink'), muted: V('--muted'), line: V('--line'), paper: V('--paper'), cols: [V('--c1'), V('--c2'), V('--c3'), V('--c4'), V('--ink2')], tc: c => c ? (CMAP[c] ? V(CMAP[c]) : c) : c };
+}
+
+/* ---- Chart library ---- */
+function niceStep(range, n) {
+  const raw = range / n, p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p;
+  return (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * p;
+}
+function drawChart(cv, o) {
+  const TH = theme(), tc = TH.tc, COL = TH.cols;
+  const dpr = window.devicePixelRatio || 1, W = cv.clientWidth || 400, H = cv.clientHeight || 270;
+  if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
+  const g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
+  const S = (o.series || []).filter(s => s.x && s.x.length);
+  let xs = [], ys = [];
+  S.forEach(s => { s.x.forEach(v => isFinite(v) && xs.push(v)); s.y.forEach(v => isFinite(v) && ys.push(v)); });
+  (o.pts || []).forEach(p => { xs.push(p.x); ys.push(p.y); });
+  (o.vl || []).forEach(v => xs.push(v.x)); (o.hl || []).forEach(h => ys.push(h.y));
+  let xmin = o.xmin != null ? o.xmin : Math.min(...xs), xmax = o.xmax != null ? o.xmax : Math.max(...xs);
+  let ymin = o.ymin != null ? o.ymin : Math.min(...ys), ymax = o.ymax != null ? o.ymax : Math.max(...ys);
+  if (!isFinite(xmin) || xmin === xmax) { xmin = 0; xmax = 1; }
+  if (!isFinite(ymin) || ymin === ymax) { ymin = (isFinite(ymin) ? ymin : 0) - 1; ymax = ymin + 2; }
+  if (o.ymin == null) { const pad = (ymax - ymin) * 0.08; ymin -= pad; }
+  if (o.ymax == null) { ymax += (ymax - ymin) * 0.08; }
+  const L = 52, R = 14, T = o.title ? 30 : 12, B = 42, pw = W - L - R, ph = H - T - B;
+  const X = v => L + (v - xmin) / (xmax - xmin) * pw, Y = v => T + ph - (v - ymin) / (ymax - ymin) * ph;
+  g.font = '12px ' + FONT; g.fillStyle = TH.muted; g.strokeStyle = TH.line; g.lineWidth = 1;
+  const sx = niceStep(xmax - xmin, 5), sy = niceStep(ymax - ymin, 5), dec = s => s >= 1 ? 0 : Math.min(3, Math.ceil(-Math.log10(s)));
+  g.textAlign = 'center'; g.textBaseline = 'top';
+  for (let v = Math.ceil(xmin / sx) * sx; v <= xmax + 1e-9; v += sx) { g.beginPath(); g.moveTo(X(v), T); g.lineTo(X(v), T + ph); g.stroke(); g.fillText(v.toFixed(dec(sx)), X(v), T + ph + 4); }
+  g.textAlign = 'right'; g.textBaseline = 'middle';
+  for (let v = Math.ceil(ymin / sy) * sy; v <= ymax + 1e-9; v += sy) { g.beginPath(); g.moveTo(L, Y(v)); g.lineTo(L + pw, Y(v)); g.stroke(); g.fillText(v.toFixed(dec(sy)), L - 6, Y(v)); }
+  g.strokeStyle = TH.muted; g.lineWidth = 1.2; g.strokeRect(L, T, pw, ph);
+  if (ymin < 0 && ymax > 0) { g.strokeStyle = TH.muted; g.beginPath(); g.moveTo(L, Y(0)); g.lineTo(L + pw, Y(0)); g.stroke(); }
+  g.save(); g.beginPath(); g.rect(L, T, pw, ph); g.clip();
+  (o.hl || []).forEach(h => { g.strokeStyle = tc(h.c) || TH.muted; g.setLineDash([5, 4]); g.lineWidth = 1.2; g.beginPath(); g.moveTo(L, Y(h.y)); g.lineTo(L + pw, Y(h.y)); g.stroke(); g.setLineDash([]); if (h.l) { g.fillStyle = tc(h.c) || TH.muted; g.textAlign = 'left'; g.textBaseline = 'bottom'; g.fillText(h.l, L + 5, Y(h.y) - 2); } });
+  (o.vl || []).forEach(v => { g.strokeStyle = tc(v.c) || TH.muted; g.setLineDash([5, 4]); g.lineWidth = 1.2; g.beginPath(); g.moveTo(X(v.x), T); g.lineTo(X(v.x), T + ph); g.stroke(); g.setLineDash([]); if (v.l) { g.fillStyle = tc(v.c) || TH.muted; g.textAlign = 'left'; g.textBaseline = 'top'; g.fillText(v.l, X(v.x) + 4, T + 4); } });
+  S.forEach((s, i) => {
+    g.strokeStyle = tc(s.c) || COL[i % COL.length]; g.lineWidth = s.w || 2.3; g.setLineDash(s.dash ? [6, 4] : []); g.beginPath();
+    let st = false; s.x.forEach((xv, j) => { const yv = s.y[j]; if (!isFinite(yv) || !isFinite(xv)) { st = false; return; } if (!st) { g.moveTo(X(xv), Y(yv)); st = true; } else g.lineTo(X(xv), Y(yv)); });
+    g.stroke(); g.setLineDash([]);
+  });
+  (o.pts || []).forEach(p => {
+    g.fillStyle = tc(p.c) || TH.ink; g.beginPath(); g.arc(X(p.x), Y(p.y), 5, 0, 7); g.fill(); g.strokeStyle = TH.paper; g.lineWidth = 1.5; g.stroke();
+    if (p.l) { g.font = 'bold 12px system-ui,sans-serif'; g.fillStyle = tc(p.c) || TH.ink; g.textAlign = X(p.x) > L + pw - 90 ? 'right' : 'left'; g.textBaseline = 'bottom'; g.fillText(p.l, X(p.x) + (g.textAlign === 'left' ? 8 : -8), Y(p.y) - 4); g.font = '12px ' + FONT; }
+  });
+  g.restore();
+  g.fillStyle = TH.ink; g.textAlign = 'center';
+  if (o.title) { g.font = 'bold 13.5px ' + FONT; g.textBaseline = 'top'; g.fillText(o.title, L + pw / 2, 7); }
+  g.font = '12px ' + FONT; g.fillStyle = TH.muted;
+  if (o.xlab) { g.textBaseline = 'bottom'; g.fillText(o.xlab, L + pw / 2, H - 3); }
+  if (o.ylab) { g.save(); g.translate(13, T + ph / 2); g.rotate(-Math.PI / 2); g.textBaseline = 'top'; g.fillText(o.ylab, 0, 0); g.restore(); }
+  const named = S.filter(s => s.name);
+  if (named.length) {
+    g.font = '12px ' + FONT; let lx = L + 8, ly = T + 8; g.textAlign = 'left'; g.textBaseline = 'middle';
+    const wTot = named.reduce((a, s) => a + g.measureText(s.name).width + 34, 0);
+    if (wTot > pw) { /* stack */
+      named.forEach((s, i) => { const k = S.indexOf(s); g.strokeStyle = tc(s.c) || COL[k % COL.length]; g.lineWidth = 3; g.setLineDash(s.dash ? [5, 3] : []); g.beginPath(); g.moveTo(lx, ly + 8 + i * 15); g.lineTo(lx + 16, ly + 8 + i * 15); g.stroke(); g.setLineDash([]); g.fillStyle = TH.ink; g.fillText(s.name, lx + 21, ly + 8 + i * 15); });
+    } else {
+      g.fillStyle = TH.paper; g.fillRect(lx - 4, ly - 2, wTot, 20);
+      named.forEach(s => { const k = S.indexOf(s); g.strokeStyle = tc(s.c) || COL[k % COL.length]; g.lineWidth = 3; g.setLineDash(s.dash ? [5, 3] : []); g.beginPath(); g.moveTo(lx, ly + 8); g.lineTo(lx + 16, ly + 8); g.stroke(); g.setLineDash([]); g.fillStyle = TH.ink; g.fillText(s.name, lx + 21, ly + 8); lx += g.measureText(s.name).width + 34; });
+    }
+  }
+}
+
+/* ---- Widget engine (Lab cards) ---- */
+function makeWidget(host, spec, tag) {
+  const state = {};
+  const card = document.createElement('div'); card.className = 'lab';
+  let h = '<div class="lh"><span class="tag">' + tag + '</span>' + spec.title + '</div><div class="lb">' + (spec.sub ? '<p class="hint">' + spec.sub + '</p>' : '');
+  if (spec.presets) h += '<div class="pre">' + spec.presets.map((p, i) => '<button class="btn" data-pre="' + i + '">' + p.label + '</button>').join('') + '</div>';
+  h += '<div class="ctrls">';
+  (spec.ctrls || []).forEach(c => {
+    state[c.id] = c.val;
+    if (c.type === 'select') h += '<label><span>' + c.label + '</span><select data-c="' + c.id + '">' + c.opts.map(o => '<option value="' + o[0] + '"' + (o[0] === c.val ? ' selected' : '') + '>' + o[1] + '</option>').join('') + '</select></label>';
+    else if (c.type === 'check') h += '<label class="chk"><input type="checkbox" data-c="' + c.id + '"' + (c.val ? ' checked' : '') + '> ' + c.label + '</label>';
+    else h += '<label><span>' + c.label + '<output data-o="' + c.id + '"></output></span><input type="range" data-c="' + c.id + '" min="' + c.min + '" max="' + c.max + '" step="' + c.step + '" value="' + c.val + '"></label>';
+  });
+  const nch = (spec.charts || []).length;
+  h += '</div>' + (nch ? '<div class="plots' + (nch === 1 ? ' one' : '') + '">' + spec.charts.map((_, i) => '<canvas data-ch="' + i + '"></canvas>').join('') + '</div>' : '') + '<div class="readout" data-ro></div></div>';
+  card.innerHTML = h; host.appendChild(card);
+  const upd = () => {
+    (spec.ctrls || []).forEach(c => { const o = $('[data-o="' + c.id + '"]', card); if (o) o.textContent = c.fmt ? c.fmt(state[c.id]) : state[c.id]; });
+    const out = spec.compute(state);
+    $$('canvas', card).forEach((cv, i) => { try { drawChart(cv, spec.charts[i](out, state)); } catch (e) { console.error(e); } });
+    $('[data-ro]', card).innerHTML = spec.read ? spec.read(out, state) : '';
+  };
+  const sync = () => { (spec.ctrls || []).forEach(c => { const el = $('[data-c="' + c.id + '"]', card); if (!el) return; if (el.type === 'checkbox') el.checked = !!state[c.id]; else el.value = state[c.id]; }); };
+  card.addEventListener('input', e => {
+    const k = e.target.getAttribute('data-c'); if (!k) return;
+    state[k] = e.target.type === 'checkbox' ? e.target.checked : e.target.tagName === 'SELECT' ? e.target.value : parseFloat(e.target.value);
+    sync(); upd();
+  });
+  card.addEventListener('click', e => {
+    const b = e.target.closest('[data-pre]'); if (!b) return;
+    Object.assign(state, spec.presets[+b.getAttribute('data-pre')].set); sync(); upd();
+  });
+  upd(); card._upd = upd;
+  if (window.ResizeObserver) new ResizeObserver(() => upd()).observe(card);
+  return card;
+}
+
+/* ---- Storage + progress ---- */
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('imacro.' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('imacro.' + k, JSON.stringify(v)); } catch (e) { } }
+};
+function doneSet() { return new Set(store.get('done', [])); }
+function markDone(id) { const s = doneSet(); s.add(id); store.set('done', Array.from(s)); buildNav(); refreshProgress(); }
+function refreshProgress() { const n = doneSet().size, p = Math.round(100 * n / MODS.length); $('#progBar').style.width = p + '%'; $('#progPct').textContent = p + '%'; }
+
+/* ---- Quiz (same look as the other course books) ---- */
+function makeQuiz(host, m) {
+  const qs = m.quiz || []; if (!qs.length) return;
+  const box = document.createElement('div'); box.className = 'quiz';
+  let ans = 0, right = 0;
+  const orders = qs.map(q => { const idx = q.o.map((_, j) => j); for (let i = idx.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [idx[i], idx[j]] = [idx[j], idx[i]]; } return idx; });
+  let h = '<h2>Check your understanding</h2>';
+  qs.forEach((q, i) => {
+    h += '<div class="q" data-q="' + i + '"><div class="qt">' + (i + 1) + '. ' + q.q + '</div><div class="opts">' + orders[i].map(j => '<button class="o" data-j="' + j + '">' + q.o[j] + '</button>').join('') + '</div><div class="ex"><b data-v></b> ' + q.w + '</div></div>';
+  });
+  h += '<p><button class="btn" data-reset>Retake quiz</button> <span class="score" data-sc></span></p>';
+  box.innerHTML = h; host.appendChild(box);
+  const bestTxt = () => { const b = store.get('best.' + m.id, null); return b != null ? 'Best: ' + b + ' / ' + qs.length : ''; };
+  $('[data-sc]', box).textContent = bestTxt();
+  box.addEventListener('click', e => {
+    if (e.target.closest('[data-reset]')) { ans = 0; right = 0; $$('.q', box).forEach(q => { q.classList.remove('done'); $$('button.o', q).forEach(l => l.classList.remove('right', 'wrong')); }); $('[data-sc]', box).textContent = bestTxt(); return; }
+    const lab = e.target.closest('button.o'); if (!lab) return;
+    const qd = lab.closest('.q'); if (qd.classList.contains('done')) return;
+    const qi = +qd.getAttribute('data-q'), j = +lab.getAttribute('data-j'), ok = j === qs[qi].a;
+    qd.classList.add('done'); ans++; if (ok) right++;
+    lab.classList.add(ok ? 'right' : 'wrong'); if (!ok) $$('button.o', qd).find(l => +l.getAttribute('data-j') === qs[qi].a).classList.add('right');
+    $('[data-v]', qd).textContent = ok ? 'Correct.' : 'Not quite.';
+    $('[data-sc]', box).textContent = 'Score: ' + right + ' / ' + qs.length + (ans === qs.length ? (right === qs.length ? ' 🎉 Perfect!' : ' — finished') : '');
+    if (ans === qs.length) { const b = store.get('best.' + m.id, -1); if (right > b) store.set('best.' + m.id, right); if (right >= Math.ceil(qs.length * 0.6)) markDone(m.id); }
+  });
+}
+
+/* ---- Nav + router ---- */
+function cur() { const m = location.hash.match(/#\/m\/([\w-]+)/); return m ? m[1] : location.hash === '#/about' ? 'about' : ''; }
+function buildNav() {
+  const d = doneSet(), c = cur(); let h = '<a href="#/" class="' + (c === '' ? 'active' : '') + '"><span class="n">⌂</span>Course home</a>', part = '';
+  MODS.forEach((m, i) => {
+    if (m.part !== part) { part = m.part; h += '<h4>' + part + '</h4>'; }
+    h += '<a href="#/m/' + m.id + '" class="' + (c === m.id ? 'active' : '') + '"><span class="n">' + (i + 1) + '</span><span>' + m.title + '</span>' + (d.has(m.id) ? '<span class="ck">✓</span>' : '') + '</a>';
+  });
+  h += '<h4>Reference</h4><a href="#/about" class="' + (c === 'about' ? 'active' : '') + '"><span class="n">ⓘ</span>About &amp; credits</a>';
+  $('#nav').innerHTML = h;
+}
+function renderRes(host, m) {
+  if (!m.res || !m.res.length) return;
+  const c = document.createElement('div'); c.className = 'box res';
+  c.innerHTML = '<h3 style="margin-top:0">Go deeper: free, public sources</h3><ul>' + m.res.map(r => '<li><a href="' + r.u + '" target="_blank" rel="noopener">' + r.t + '</a><span class="who">' + r.who + '</span>' + (r.n ? ' · ' + r.n : '') + '</li>').join('') + '</ul>';
+  host.appendChild(c);
+}
+function render() {
+  const id = cur(), main = $('#main'); document.body.classList.remove('open'); buildNav();
+  if (id === '') { main.innerHTML = '<section class="view">' + homeHTML() + '</section>'; document.title = 'Intermediate Macroeconomics — An Interactive Edition'; window.scrollTo(0, 0); return; }
+  if (id === 'about') { main.innerHTML = '<section class="view"><div class="eyebrow">Reference</div><h1>About &amp; credits</h1>' + COURSE.about + '</section>'; window.scrollTo(0, 0); return; }
+  const i = MODS.findIndex(m => m.id === id), m = MODS[i]; if (!m) { location.hash = '#/'; return; }
+  document.title = m.title + ' · Intermediate Macroeconomics';
+  const pv = MODS[i - 1], nx = MODS[i + 1];
+  main.innerHTML = '<section class="view"><div class="eyebrow">Module ' + (i + 1) + ' · ' + m.part + '</div><h1>' + m.title + '</h1><div class="mod-sub">About ' + (m.mins || 45) + ' min · ' + m.blurb + '</div>' +
+    (m.obj ? '<div class="box obj"><h3>You will learn to</h3><ul>' + m.obj.map(o => '<li>' + o + '</li>').join('') + '</ul></div>' : '') + m.html + '<div class="qz"></div><div class="rs"></div><div class="pager">' +
+    (pv ? '<a href="#/m/' + pv.id + '"><small>← Previous</small>' + pv.title + '</a>' : '<a href="#/"><small>← Back</small>Course home</a>') + (nx ? '<a class="nx" href="#/m/' + nx.id + '"><small>Next →</small>' + nx.title + '</a>' : '<a class="nx" href="#/about"><small>Finished →</small>About &amp; credits</a>') + '</div></section>';
+  let k = 0;
+  $$('[data-w]', main).forEach(hh => { const sp = m.widgets && m.widgets[hh.getAttribute('data-w')]; if (!sp) { hh.textContent = '[missing widget ' + hh.getAttribute('data-w') + ']'; return; } k++; makeWidget(hh, sp, 'Lab ' + (i + 1) + '.' + k); });
+  makeQuiz($('.qz', main), m); renderRes($('.rs', main), m);
+  window.scrollTo(0, 0);
+}
+function homeHTML() {
+  const d = doneSet();
+  let cards = MODS.map((m, i) => '<a class="card" href="#/m/' + m.id + '">' + (d.has(m.id) ? '<span class="ck">✓ done</span>' : '') + '<div class="cn">MODULE ' + (i + 1) + '</div><div class="ct">' + m.title + '</div><div class="cd">' + m.blurb + '</div></a>').join('');
+  const parts = []; MODS.forEach((m, i) => { let p = parts.find(x => x.n === m.part); if (!p) { p = { n: m.part, a: i + 1, b: i + 1 }; parts.push(p); } p.b = i + 1; });
+  const rows = parts.map(p => '<tr><td><b>' + p.n + '</b></td><td>' + (p.a === p.b ? p.a : p.a + '–' + p.b) + '</td><td>' + (COURSE.partQ[p.n] || '') + '</td></tr>').join('');
+  return '<div class="cover"><div class="eyebrow">An interactive textbook</div><h1>Intermediate Macroeconomics</h1><p style="font:500 16px var(--sans);margin:-.3em 0 1em">By <b>Rohit Pandit</b> · <span style="color:var(--muted)">Delaware</span></p><p class="lead">' + COURSE.pitch + '</p><p style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn pri" href="#/m/' + MODS[0].id + '">Start reading →</a><a class="btn" href="#/about">About &amp; credits</a></p><p style="font:13px/1.5 var(--sans);color:var(--muted)">' + COURSE.short + '</p></div>' +
+    '<h2>Modules</h2><div class="cards">' + cards + '</div><div class="box"><h3 style="margin-top:0">How to use this book</h3><p style="margin:0;font-family:var(--sans);font-size:15px">' + COURSE.how + '</p></div>' +
+    '<div class="box"><h3 style="margin-top:0">A suggested path</h3><div class="tscroll"><table class="t"><tr><th>Part</th><th>Modules</th><th>Question it answers</th></tr>' + rows + '</table></div></div>';
+}
+function redrawAll() { $$('.lab').forEach(c => c._upd && c._upd()); }
+window.addEventListener('hashchange', render);
+window.addEventListener('resize', redrawAll);
+if (window.matchMedia) { const mq = matchMedia('(prefers-color-scheme: dark)'); (mq.addEventListener ? mq.addEventListener('change', redrawAll) : mq.addListener(redrawAll)); }
+document.addEventListener('DOMContentLoaded', () => {
+  $('#menuBtn').onclick = () => document.body.classList.toggle('open');
+  $('#scrim').onclick = () => document.body.classList.remove('open');
+  refreshProgress(); render();
+});
+
+/* ===== MODULES 1–5 ===== */
+const pc = v => fx(v * 100, 1) + '%';
+
+MODS.push({
+  id: 'measure', part: 'I. Foundations', title: 'Measuring the Macroeconomy', mins: 40,
+  blurb: 'GDP, prices, jobs: what the headline numbers actually capture.',
+  html: `
+<div class="box take"><h3>The big idea</h3>Macroeconomics starts with measurement. Every model later in the course is built to explain three numbers: how fast real output grows, how fast prices rise, and how many people who want work have it.</div>
+<h2>GDP: one number, three ways</h2>
+<p>Gross domestic product is the market value of final goods and services produced inside a country in a period. Because every sale is someone's purchase <i>and</i> someone's income, you can add it up three ways and get the same total: spending, production (value added) or income.</p>
+<div class="formula">Y = C + I + G + NX</div>
+<p>Consumption (C), private investment (I: new equipment, buildings, housing, inventories), government purchases (G), and net exports (NX = exports − imports). Transfers like Social Security are <i>not</i> in G, since nothing is produced when they are paid.</p>
+<h2>Nominal versus real</h2>
+<p>Nominal GDP uses today's prices, so it rises whenever prices or quantities rise. Real GDP values each year's quantities at fixed base-year prices (statistical agencies now use chain-weighting, which updates the weights) so it moves only with quantities. The <b>GDP deflator</b> is the ratio of the two and measures the average price of <i>what is produced</i>. The <b>CPI</b> instead prices a fixed basket of <i>what households buy</i>, so it includes imports and ignores investment goods.</p>
+<div data-w="nominal"></div>
+<div class="box ex"><b>Why two price indexes disagree.</b> A fixed-basket index (Laspeyres) overstates inflation when people shift toward goods that got cheaper; a current-weights index (Paasche) understates it. Try making one good's price rise much faster than the other's and watch the gap open up.</div>
+<h2>Unemployment and the labor force</h2>
+<p>The unemployment rate is the share of the <i>labor force</i> (employed + unemployed) that is jobless <i>and actively searching</i>. Discouraged workers who stop searching leave the labor force, so the rate can fall for bad reasons. That is why economists also track the employment-to-population ratio.</p>
+<details class="wx"><summary>Work it out: is GDP a measure of welfare?</summary><p>GDP leaves out unpaid work, leisure, environmental damage and distribution. It still correlates strongly with life expectancy, schooling and measured happiness across countries, which is why it stays the workhorse. Use it for what it is: a measure of market production, not well-being.</p></details>`,
+  widgets: {
+    nominal: {
+      title: 'Two-good economy: nominal GDP, real GDP, deflator and CPI',
+      sub: 'Year 0 prices and quantities are 100 each for both goods (half of spending on each). Move the growth rates and compare year 10.',
+      ctrls: [
+        { id: 'pa', label: 'Price growth, good A (%/yr)', min: 0, max: 15, step: 0.5, val: 2, fmt: v => v + '%' },
+        { id: 'pb', label: 'Price growth, good B (%/yr)', min: -5, max: 15, step: 0.5, val: 2, fmt: v => v + '%' },
+        { id: 'qa', label: 'Quantity growth, good A (%/yr)', min: -3, max: 8, step: 0.5, val: 2, fmt: v => v + '%' },
+        { id: 'qb', label: 'Quantity growth, good B (%/yr)', min: -3, max: 8, step: 0.5, val: 2, fmt: v => v + '%' }
+      ],
+      presets: [
+        { label: 'Balanced 2% / 2%', set: { pa: 2, pb: 2, qa: 2, qb: 2 } },
+        { label: 'Tech goods get cheaper', set: { pa: 4, pb: -4, qa: 1, qb: 9 } }
+      ],
+      compute: s => {
+        const t = [], nom = [], real = [], defl = [], cpi = [];
+        for (let i = 0; i <= 10; i++) {
+          const PA = 100 * Math.pow(1 + s.pa / 100, i), PB = 100 * Math.pow(1 + s.pb / 100, i), QA = 100 * Math.pow(1 + s.qa / 100, i), QB = 100 * Math.pow(1 + s.qb / 100, i);
+          const N = PA * QA + PB * QB, R = 100 * QA + 100 * QB;
+          t.push(i); nom.push(N / 200 * 100); real.push(R / 200 * 100); defl.push(N / R * 100);
+          cpi.push((PA * 100 + PB * 100) / 200 / 100 * 100);
+        }
+        return { t, nom, real, defl, cpi };
+      },
+      charts: [o => ({ title: 'Indexes (year 0 = 100)', xlab: 'year', series: [{ x: o.t, y: o.nom, name: 'Nominal GDP' }, { x: o.t, y: o.real, name: 'Real GDP' }]  }),
+      o => ({ title: 'Two price indexes', xlab: 'year', series: [{ x: o.t, y: o.defl, name: 'Deflator (current weights)' }, { x: o.t, y: o.cpi, name: 'CPI (fixed basket)', dash: 1 }] })],
+      read: (o) => { const n = 10, ci = Math.pow(o.cpi[n] / 100, 0.1) - 1, di = Math.pow(o.defl[n] / 100, 0.1) - 1, rg = Math.pow(o.real[n] / 100, 0.1) - 1;
+        return '<table><tr><th></th><th>Average annual rate, 10 yrs</th></tr><tr><td>Real GDP growth</td><td class="v">' + pc(rg) + '</td></tr><tr><td>Inflation, GDP deflator</td><td class="v">' + pc(di) + '</td></tr><tr><td>Inflation, fixed-basket CPI</td><td class="v">' + pc(ci) + '</td></tr><tr><td>Gap (CPI − deflator)</td><td class="v">' + fx((ci - di) * 100, 2) + ' pts</td></tr></table>'; }
+    }
+  },
+  quiz: [
+    { q: 'A retiree receives a larger Social Security check. What happens to GDP?', o: ['It rises, because G rises', 'It rises, because C rises immediately', 'Nothing directly: transfers are not production', 'It falls, because taxes rise'], a: 2, w: 'GDP counts production. Transfers move purchasing power around; GDP changes only when the recipient spends it (that shows up in C).' },
+    { q: 'Nominal GDP grows 5% while real GDP grows 2%. The deflator rose about:', o: ['7%', '3%', '2.5%', '10%'], a: 1, w: 'Nominal growth ≈ real growth + inflation, so inflation ≈ 5 − 2 = 3%.' },
+    { q: 'When consumers shift toward goods whose prices are falling, a fixed-basket CPI will tend to:', o: ['Understate inflation', 'Overstate inflation', 'Be exact', 'Fall below zero'], a: 1, w: 'The fixed basket keeps weighting the items people are abandoning (relatively expensive ones), so it overstates the true cost-of-living rise (substitution bias).' },
+    { q: 'The unemployment rate falls because many jobless people stop searching. This shows:', o: ['A stronger job market', 'A lower labor-force participation rate', 'Higher productivity', 'Lower inflation'], a: 1, w: 'People who stop searching are no longer counted in the labor force, so the rate can fall while employment does not rise.' }
+  ],
+  res: [
+    { t: 'FRED: Federal Reserve Bank of St. Louis economic data', u: 'https://fred.stlouisfed.org/', who: 'Data', n: 'Download GDP, CPI and unemployment and compare them yourself' },
+    { t: 'U.S. Bureau of Economic Analysis: GDP', u: 'https://www.bea.gov/data/gdp/gross-domestic-product', who: 'Data', n: 'The official national accounts' },
+    { t: 'U.S. Bureau of Labor Statistics', u: 'https://www.bls.gov/', who: 'Data', n: 'CPI and the jobs report' },
+    { t: 'Khan Academy: Macroeconomics', u: 'https://www.khanacademy.org/economics-finance-domain/macroeconomics', who: 'Videos', n: 'Free lectures on GDP and inflation' },
+    { t: 'YouTube: "how is GDP calculated" lectures', u: 'https://www.youtube.com/results?search_query=how+is+GDP+calculated+macroeconomics+lecture', who: 'Search', n: 'Pick any university lecture' }
+  ]
+});
+
+MODS.push({
+  id: 'solow', part: 'II. The Long Run', title: 'Economic Growth I: The Solow Model', mins: 55,
+  blurb: 'Saving, depreciation and why poor countries can catch up.',
+  html: `
+<div class="box take"><h3>The big idea</h3>Over decades, differences in growth swamp everything else. In the Solow model, an economy that saves and invests settles at a steady-state level of capital per worker where new investment exactly offsets depreciation and dilution from population and technology growth.</div>
+<h2>The model in one paragraph</h2>
+<p>Output per effective worker is y = k<sup>α</sup>, with diminishing returns to capital. Households save a fixed fraction s of income. Capital per effective worker evolves as</p>
+<div class="formula">Δk = s·k<sup>α</sup> − (δ + n + g)·k</div>
+<p>where δ is depreciation, n is population growth and g is technology growth. When saving per worker exceeds the amount needed to keep k constant, k rises; when it falls short, k falls. The steady state sets Δk = 0:</p>
+<div class="formula">k* = ( s / (δ+n+g) )<sup>1/(1−α)</sup></div>
+<div data-w="solow"></div>
+<h2>What to notice</h2>
+<ul>
+<li><b>Level effects, not growth effects.</b> A higher saving rate raises the <i>level</i> of income per worker in the long run but only temporarily raises its growth rate. Raise s and watch the path flatten out.</li>
+<li><b>Convergence.</b> Start k below its steady state and growth is fast; start above and it is negative. The speed (the half-life in the readout) is slower than most people expect, which is why catch-up takes generations.</li>
+<li><b>The golden rule.</b> Consumption per worker is maximized when the saving rate equals capital's share α. Saving more than that is dynamically inefficient: the economy could consume more today <i>and</i> forever by saving less.</li>
+<li><b>Long-run growth needs technology.</b> With g = 0 and n = 0 growth ends in the steady state. Sustained per-capita growth must come from g, which Solow takes as given. That gap motivates the next module.</li>
+</ul>
+<div class="box ex"><b>Does it fit the data?</b> Mankiw, Romer and Weil (1992) showed that an augmented Solow model with human capital explains a large share of cross-country income differences. Later work shows large unexplained gaps in productivity, and that "catch-up" is conditional: it happens for countries with similar institutions and policies, not for everyone.</div>
+<details class="wx"><summary>Work it out: steady state by hand</summary><p>Take α = 0.33, s = 0.25, δ = 0.05, n = 0.01, g = 0.02. Then δ+n+g = 0.08 and k* = (0.25/0.08)<sup>1/0.67</sup> = 3.125<sup>1.4925</sup> ≈ 5.5, so y* = k*<sup>0.33</sup> ≈ 1.75. Set the sliders and check.</p></details>`,
+  widgets: {
+    solow: {
+      title: 'Solow steady state and transition',
+      sub: 'Everything is per effective worker. The dashed vertical line marks the steady state.',
+      ctrls: [
+        { id: 's', label: 'Saving rate s', min: 0.05, max: 0.6, step: 0.01, val: 0.25, fmt: v => fx(v * 100, 0) + '%' },
+        { id: 'delta', label: 'Depreciation δ', min: 0.01, max: 0.15, step: 0.005, val: 0.05, fmt: v => fx(v * 100, 1) + '%' },
+        { id: 'n', label: 'Population growth n', min: 0, max: 0.04, step: 0.001, val: 0.01, fmt: v => fx(v * 100, 1) + '%' },
+        { id: 'g', label: 'Technology growth g', min: 0, max: 0.05, step: 0.001, val: 0.02, fmt: v => fx(v * 100, 1) + '%' },
+        { id: 'alpha', label: 'Capital share α', min: 0.2, max: 0.5, step: 0.01, val: 0.33, fmt: v => v },
+        { id: 'k0', label: 'Starting capital (× steady state)', min: 0.1, max: 2, step: 0.05, val: 0.3, fmt: v => v + '×' }
+      ],
+      presets: [{ label: 'Poor country (starts at 30%)', set: { k0: 0.3 } }, { label: 'Saving boom (s = 40%)', set: { s: 0.4, k0: 1 } }, { label: 'Golden rule (s = α)', set: { s: 0.33, k0: 1 } }],
+      compute: s => M.solow(s),
+      charts: [(o, s) => ({ title: 'Investment vs break-even', xlab: 'capital per effective worker k', ylab: 'per effective worker', series: [{ x: o.curve.k, y: o.curve.sy, name: 's·k^α (investment)' }, { x: o.curve.k, y: o.curve.dep, name: '(δ+n+g)·k (break-even)' }], vl: [{ x: o.kss, c: '#2e7d5b', l: 'k*' }], xmin: 0 }),
+      (o, s) => ({ title: 'Output per effective worker over time', xlab: 'years', ylab: 'y', series: [{ x: o.path.t, y: o.path.y }], hl: [{ y: o.yss, c: '#2e7d5b', l: 'y*' }], xmin: 0 })],
+      read: (o, s) => '<table><tr><td class="k">Steady-state k*</td><td class="v">' + fx(o.kss, 2) + '</td><td class="k">Steady-state y*</td><td class="v">' + fx(o.yss, 2) + '</td></tr><tr><td class="k">Consumption c*</td><td class="v">' + fx(o.css, 3) + '</td><td class="k">Max possible (golden rule)</td><td class="v">' + fx(o.cgold, 3) + '</td></tr><tr><td class="k">Half-life of the gap</td><td class="v">' + fx(o.halfLife, 0) + ' years</td><td class="k">Saving rate vs golden (' + pc(s.alpha) + ')</td><td class="v ' + (s.s > s.alpha + 0.005 ? 'neg' : 'pos') + '">' + (s.s > s.alpha + 0.005 ? 'too high' : 'at or below') + '</td></tr></table>'
+    }
+  },
+  quiz: [
+    { q: 'In the basic Solow model, a permanent rise in the saving rate leads to:', o: ['A permanently higher growth rate', 'A permanently higher level of income per worker, with only a temporary growth boost', 'No change in anything', 'Lower capital per worker'], a: 1, w: 'Diminishing returns mean growth fades back to g; the economy ends up on a higher level path.' },
+    { q: 'Which change lowers steady-state capital per worker?', o: ['Higher saving', 'Higher depreciation', 'Lower population growth', 'Lower depreciation'], a: 1, w: 'Higher δ raises the break-even investment needed, so k* = (s/(δ+n+g))^(1/(1−α)) falls.' },
+    { q: 'Two countries are identical except one starts with less capital. The Solow model predicts that the poorer one:', o: ['Grows faster for a while', 'Grows slower forever', 'Never converges', 'Has a higher steady state'], a: 0, w: 'With diminishing returns the marginal product of capital is higher when capital is scarce, so growth is faster during catch-up (conditional convergence).' },
+    { q: 'An economy saves more than the golden-rule rate. Reducing saving would:', o: ['Reduce consumption in every period', 'Raise consumption today and in the long run', 'Raise consumption only in the long run', 'Have no effect'], a: 1, w: 'Dynamic inefficiency: capital is so abundant that its return is below the growth rate; cutting saving lets you consume the extra output in all periods.' }
+  ],
+  res: [
+    { t: 'Mankiw, Romer and Weil (1992): "A Contribution to the Empirics of Economic Growth"', u: 'https://www.nber.org/papers', who: 'Harvard / NBER', n: 'Search the NBER working paper archive by title' },
+    { t: 'Penn World Table', u: 'https://www.rug.nl/ggdc/productivity/pwt/', who: 'Data', n: 'Cross-country income, capital and productivity data' },
+    { t: 'Our World in Data (search: economic growth)', u: 'https://ourworldindata.org/', who: 'Data', n: 'Charts on income and growth across countries' },
+    { t: 'The Solow growth model: lecture search', u: 'https://www.youtube.com/results?search_query=Solow+growth+model+lecture+intermediate+macroeconomics', who: 'YouTube', n: 'Many full university lectures' },
+    { t: 'Marginal Revolution University: Macroeconomics', u: 'https://mru.org/', who: 'Videos', n: 'Short free video courses (Tabarrok and Cowen)' }
+  ]
+});
+
+MODS.push({
+  id: 'ideas', part: 'II. The Long Run', title: 'Economic Growth II: Ideas and Growth Accounting', mins: 50,
+  blurb: 'Where technology comes from, and how to split growth into its sources.',
+  html: `
+<div class="box take"><h3>The big idea</h3>Ideas are different from ordinary goods: they are <b>non-rival</b> (my using a formula does not stop you using it) and have high fixed costs but low marginal costs. If ideas are non-rival, the economy as a whole earns increasing returns, and long-run growth can be driven from inside the model.</div>
+<h2>Growth accounting: where did growth come from?</h2>
+<p>Assume Y = A·K<sup>α</sup>L<sup>1−α</sup>. Taking growth rates gives the Solow decomposition:</p>
+<div class="formula">g<sub>Y</sub> = g<sub>A</sub> + α·g<sub>K</sub> + (1−α)·g<sub>L</sub></div>
+<p>The residual g<sub>A</sub> is called <b>total factor productivity</b> (TFP). Solow called it "a measure of our ignorance," since it is whatever input growth cannot explain.</p>
+<div data-w="acct"></div>
+<h2>A simple idea-production function</h2>
+<p>In the style of Romer (1990) and Jones, new ideas come from researchers and from the existing stock of ideas:</p>
+<div class="formula">ΔA = ρ · L<sup>λ</sup> · A<sup>φ</sup></div>
+<ul>
+<li>φ &lt; 1 ("fishing out"): ideas get harder to find. Long-run growth is g<sub>A</sub> = λn/(1−φ), so it depends on <i>population</i> growth. This is the semi-endogenous result (Jones).</li>
+<li>φ = 1 ("standing on shoulders"): growth rises as the research population rises.</li>
+<li>φ &gt; 1: growth explodes. No economy has ever shown that.</li>
+</ul>
+<div data-w="ideas"></div>
+<div class="box ex"><b>Why this matters for policy.</b> If there are positive spillovers from research (my discovery helps you), the market under-invests. That is the standard case for research subsidies, public science funding, and open immigration of talented people. The counterpoint is empirical: Bloom, Jones, Van Reenen and Webb argue that research effort has risen sharply while productivity growth has not, i.e. ideas are getting harder to find.</div>
+<details class="wx"><summary>Work it out: the productivity slowdown puzzle</summary><p>Suppose GDP grows 2%, capital grows 3%, labor grows 0.5%, α = 0.35. Then TFP growth = 2 − 0.35×3 − 0.65×0.5 = 0.625%. Use the first widget to check, then change α and notice how sensitive the residual is to the capital share assumption.</p></details>`,
+  widgets: {
+    acct: {
+      title: 'Growth accounting calculator',
+      sub: 'Enter growth rates (percent per year) and the capital share; TFP is the residual.',
+      ctrls: [
+        { id: 'gY', label: 'Output growth', min: -2, max: 10, step: 0.1, val: 2.5, fmt: v => v + '%' },
+        { id: 'gK', label: 'Capital growth', min: -2, max: 12, step: 0.1, val: 3, fmt: v => v + '%' },
+        { id: 'gL', label: 'Labor growth', min: -2, max: 5, step: 0.1, val: 0.5, fmt: v => v + '%' },
+        { id: 'alpha', label: 'Capital share α', min: 0.2, max: 0.6, step: 0.01, val: 0.35, fmt: v => v }
+      ],
+      compute: s => ({ tfp: M.growthAcct(s), kc: s.alpha * s.gK, lc: (1 - s.alpha) * s.gL }),
+      charts: [],
+      read: (o, s) => '<table><tr><th>Source</th><th>Contribution (pts/yr)</th><th>Share of growth</th></tr><tr><td>Capital deepening</td><td class="v">' + fx(o.kc, 2) + '</td><td>' + fx(100 * o.kc / s.gY, 0) + '%</td></tr><tr><td>Labor</td><td class="v">' + fx(o.lc, 2) + '</td><td>' + fx(100 * o.lc / s.gY, 0) + '%</td></tr><tr><td>TFP (residual)</td><td class="v">' + fx(o.tfp, 2) + '</td><td>' + fx(100 * o.tfp / s.gY, 0) + '%</td></tr></table>'
+    },
+    ideas: {
+      title: 'Idea production: how fast does technology grow?',
+      sub: 'ΔA = ρ·L^λ·A^φ with the population L growing at rate n. Chart 2 shows the growth rate of technology; the dashed line is the long-run rate λn/(1−φ).',
+      ctrls: [
+        { id: 'rho', label: 'Research productivity ρ', min: 0.005, max: 0.08, step: 0.005, val: 0.03, fmt: v => v },
+        { id: 'lambda', label: 'Duplication λ', min: 0.2, max: 1, step: 0.05, val: 1, fmt: v => v },
+        { id: 'phi', label: 'Standing-on-shoulders φ', min: -1, max: 1.1, step: 0.05, val: 0.5, fmt: v => v },
+        { id: 'n', label: 'Research-population growth n', min: 0, max: 0.03, step: 0.001, val: 0.01, fmt: v => fx(v * 100, 1) + '%' }
+      ],
+      presets: [{ label: 'Ideas get harder (φ = 0.5)', set: { phi: 0.5, n: 0.01 } }, { label: 'No population growth', set: { phi: 0.5, n: 0 } }, { label: 'Explosive (φ > 1)', set: { phi: 1.1, n: 0.01 } }],
+      compute: s => M.ideas(s),
+      charts: [o => ({ title: 'Log of technology A', xlab: 'years', series: [{ x: o.t, y: o.lnA }], xmin: 0 }),
+      (o, s) => ({ title: 'Growth rate of A (%)', xlab: 'years', series: [{ x: o.t, y: o.gA }], hl: o.gstar != null ? [{ y: o.gstar, c: '#2e7d5b', l: 'long-run ' + fx(o.gstar, 2) + '%' }] : [], xmin: 0, ymin: 0 })],
+      read: (o, s) => '<span class="k">Regime:</span> <b>' + (o.regime === 'bgp' ? 'Stable long-run growth rate' : o.regime === 'exp' ? 'Knife-edge: growth rises with the population' : 'Explosive: growth accelerates without limit') + '</b>' + (o.gstar != null ? ' · long-run growth ' + fx(o.gstar, 2) + '%. Try n = 0 and see it go to zero.' : '')
+    }
+  },
+  quiz: [
+    { q: 'Why are ideas non-rival?', o: ['They are free to produce', 'One person using an idea does not prevent others from using it', 'They are protected by patents', 'They depreciate'], a: 1, w: 'Non-rivalry means the idea can be copied at near-zero cost, which is the source of increasing returns at the level of the whole economy.' },
+    { q: 'GDP grows 3%, capital 4%, labor 1%, α = 0.3. TFP growth is about:', o: ['0.4%', '1.1%', '1.9%', '3%'], a: 1, w: '3 − 0.3×4 − 0.7×1 = 3 − 1.2 − 0.7 = 1.1%.' },
+    { q: 'With φ < 1 in the idea function, long-run growth of technology depends on:', o: ['The saving rate', 'Population growth', 'The depreciation rate', 'Nothing'], a: 1, w: 'g_A* = λn/(1−φ). With no growth in researchers, growth in ideas eventually fades (the semi-endogenous result).' },
+    { q: 'Why might the market produce too little research?', o: ['Researchers are lazy', 'Positive spillovers: others benefit from my discoveries', 'Ideas are rival', 'Capital is scarce'], a: 1, w: 'The innovator captures only part of the social benefit, so private returns fall short of social returns.' }
+  ],
+  res: [
+    { t: 'Bloom, Jones, Van Reenen, Webb: "Are Ideas Getting Harder to Find?"', u: 'https://web.stanford.edu/~chadj/', who: 'Stanford', n: 'Chad Jones\'s page: look for the paper and his growth lecture notes' },
+    { t: 'Nobel Prize in Economic Sciences 2018: Paul Romer and William Nordhaus', u: 'https://www.nobelprize.org/prizes/economic-sciences/2018/summary/', who: 'Nobel', n: 'Popular and advanced information on endogenous growth' },
+    { t: 'Our World in Data (search: productivity)', u: 'https://ourworldindata.org/', who: 'Data', n: '' },
+    { t: 'YouTube: endogenous growth theory lecture', u: 'https://www.youtube.com/results?search_query=endogenous+growth+theory+Romer+lecture', who: 'YouTube', n: '' }
+  ]
+});
+
+MODS.push({
+  id: 'labor', part: 'II. The Long Run', title: 'Unemployment and the Labor Market', mins: 45,
+  blurb: 'Flows into and out of jobs, matching, and the Beveridge curve.',
+  html: `
+<div class="box take"><h3>The big idea</h3>Unemployment is not a pool of idle people but a set of <b>flows</b>. Each month some employed workers lose or leave jobs (separations) and some jobless people find jobs. The steady-state unemployment rate is set by the balance of those flows.</div>
+<h2>Steady-state unemployment</h2>
+<p>With a monthly separation rate s and job-finding rate f, flows out of employment (s·E) equal flows out of unemployment (f·U) in the steady state, so</p>
+<div class="formula">u = s / (s + f)</div>
+<p>A job-finding rate of 0.30 and a separation rate of 0.015 give u = 0.015/0.315 ≈ 4.8%. The average spell of unemployment is about 1/f months.</p>
+<h2>Matching, vacancies and the Beveridge curve</h2>
+<p>Firms post vacancies and workers search. Matches follow a matching function. Here the job-finding rate is f = μ·θ<sup>0.5</sup>, where θ = v/u is labor-market "tightness" (vacancies per unemployed worker) and μ is matching efficiency. Solving the steady state gives a downward-sloping <b>Beveridge curve</b>: more vacancies go with lower unemployment. The curve <i>shifts out</i> when matching gets worse (skills mismatch, geography) or separations rise.</p>
+<div data-w="labor"></div>
+<div class="box ex"><b>Types of unemployment.</b> Frictional (normal search), structural (skills or location mismatch, or wages above the market-clearing level) and cyclical (too little demand). Efficiency-wage theory explains why firms may pay above market-clearing wages: higher pay raises effort and cuts quits, so some unemployment persists even in good times.</div>
+<details class="wx"><summary>Work it out: the 2020s experience</summary><p>After the pandemic recession, vacancies per unemployed worker reached unusually high levels and unemployment stayed low: movement <i>along</i> the Beveridge curve. A rise in unemployment with no fall in vacancies would be a <i>shift</i> of the curve. Use the Beveridge chart on FRED to see which has dominated recent data.</p></details>`,
+  widgets: {
+    labor: {
+      title: 'Matching model: unemployment, tightness and the Beveridge curve',
+      sub: 'Monthly rates. Move the dot along the curve by changing vacancies, or shift the curve by changing s or μ.',
+      ctrls: [
+        { id: 's', label: 'Separation rate s (monthly)', min: 0.005, max: 0.05, step: 0.001, val: 0.02, fmt: v => fx(v * 100, 1) + '%' },
+        { id: 'mu', label: 'Matching efficiency μ', min: 0.15, max: 1, step: 0.01, val: 0.5, fmt: v => v },
+        { id: 'v', label: 'Vacancy rate v (share of labor force)', min: 0.01, max: 0.1, step: 0.002, val: 0.04, fmt: v => fx(v * 100, 1) + '%' }
+      ],
+      presets: [{ label: 'Normal times', set: { s: 0.02, mu: 0.5, v: 0.04 } }, { label: 'Recession: few vacancies', set: { s: 0.03, mu: 0.5, v: 0.015 } }, { label: 'Mismatch: curve shifts out', set: { s: 0.02, mu: 0.3, v: 0.04 } }],
+      compute: s => M.labor(s),
+      charts: [(o, s) => ({ title: 'Beveridge curve', xlab: 'vacancy rate (%)', ylab: 'unemployment rate (%)', series: [{ x: o.bv, y: o.bu }], pts: [{ x: s.v * 100, y: o.u * 100, c: '#b5532f', l: 'now' }] })],
+      read: (o, s) => '<table><tr><td class="k">Unemployment rate</td><td class="v">' + pc(o.u) + '</td><td class="k">Job-finding rate (monthly)</td><td class="v">' + pc(o.f) + '</td></tr><tr><td class="k">Vacancies per unemployed (θ)</td><td class="v">' + fx(o.theta, 2) + '</td><td class="k">Average spell</td><td class="v">' + fx(o.dur, 1) + ' months</td></tr></table>'
+    }
+  },
+  quiz: [
+    { q: 'If the monthly separation rate is 2% and the job-finding rate is 38%, steady-state unemployment is about:', o: ['2%', '5%', '10%', '38%'], a: 1, w: 'u = s/(s+f) = 0.02/0.40 = 5%.' },
+    { q: 'A movement along the Beveridge curve toward lower vacancies and higher unemployment indicates:', o: ['Weaker labor demand', 'Better matching', 'A shift in the curve', 'Higher productivity'], a: 0, w: 'Falling vacancies with rising unemployment is the cyclical (demand) movement along a stable curve.' },
+    { q: 'Which would shift the Beveridge curve outward?', o: ['Higher vacancies', 'Worse matching efficiency (skills mismatch)', 'Lower separations', 'A boom'], a: 1, w: 'Worse matching means any given number of vacancies coexists with more unemployment.' },
+    { q: 'Efficiency-wage theory explains:', o: ['Why wages equal marginal product', 'Why firms may pay above market-clearing wages', 'Why unemployment is zero', 'Why prices are flexible'], a: 1, w: 'Higher wages raise effort, lower turnover or help hire better workers, so paying above the clearing wage can be profit-maximizing.' }
+  ],
+  res: [
+    { t: 'BLS: JOLTS (Job Openings and Labor Turnover Survey)', u: 'https://www.bls.gov/jlt/', who: 'Data', n: 'Vacancies, hires and separations' },
+    { t: 'FRED: Unemployment rate', u: 'https://fred.stlouisfed.org/series/UNRATE', who: 'Data', n: '' },
+    { t: 'Nobel Prize 2010: Diamond, Mortensen and Pissarides', u: 'https://www.nobelprize.org/prizes/economic-sciences/2010/summary/', who: 'Nobel', n: 'Search and matching theory behind this module' },
+    { t: 'YouTube: Beveridge curve explained', u: 'https://www.youtube.com/results?search_query=Beveridge+curve+explained+labor+market', who: 'YouTube', n: '' }
+  ]
+});
+
+MODS.push({
+  id: 'money', part: 'II. The Long Run', title: 'Money, Inflation and Interest Rates', mins: 50,
+  blurb: 'The quantity theory, the Fisher effect and inflation as a tax.',
+  html: `
+<div class="box take"><h3>The big idea</h3>In the long run, <b>inflation is a monetary phenomenon</b>: it is determined by how fast money grows relative to output. Real variables (output, the real interest rate) are determined by real forces such as saving and technology. This "classical dichotomy" is the benchmark for everything that follows.</div>
+<h2>The quantity theory</h2>
+<div class="formula">M·V = P·Y &nbsp;⇒&nbsp; %ΔM + %ΔV = %ΔP + %ΔY</div>
+<p>If velocity V is stable and Y grows at its natural rate, inflation ≈ money growth − real growth. Velocity does move, especially when interest rates change or the financial system changes, which is why central banks today target interest rates and inflation, not money-growth rates.</p>
+<h2>The Fisher equation</h2>
+<div class="formula">i ≈ r + π<sup>e</sup></div>
+<p>The nominal interest rate equals the real rate (set by saving and investment) plus expected inflation. A permanent rise in expected inflation passes one-for-one into nominal rates, but not into real returns.</p>
+<h2>Costs of inflation, and inflation as a tax</h2>
+<p>Inflation is a tax on holders of money. A government that prints money collects <b>seigniorage</b>: revenue = π × (real money balances). But people respond by holding less money when inflation rises (Cagan's money-demand function: real balances fall as e<sup>−απ</sup>). Past a point, higher inflation <i>reduces</i> revenue: a Laffer curve. Hyperinflations typically begin with a government that cannot finance deficits any other way.</p>
+<div data-w="money"></div>
+<div class="box ex"><b>Costs of moderate inflation:</b> relative-price distortions, "menu costs," tax distortions when systems are not indexed, arbitrary redistribution between debtors and creditors, and shoe-leather costs of economizing on cash. <b>Unanticipated</b> inflation redistributes wealth from lenders to borrowers; <b>anticipated</b> inflation is mostly absorbed in nominal rates.</div>
+<details class="wx"><summary>Work it out: the inflation tax</summary><p>With m<sub>0</sub> = 25% of GDP and α = 4, the revenue-maximizing annual inflation rate is 1/α = 25%, raising about 0.25 × 0.25 × e<sup>−1</sup> ≈ 2.3% of GDP. Past 25% the base shrinks faster than the rate rises, so revenue falls. Move α and see how a country with more elastic money demand loses the base faster.</p></details>`,
+  widgets: {
+    money: {
+      title: 'Inflation from money growth, the Fisher effect and the seigniorage Laffer curve',
+      sub: 'Annual rates. Stylized: real money balances = m₀·e^(−α·π).',
+      ctrls: [
+        { id: 'mg', label: 'Money growth', min: 0, max: 0.6, step: 0.01, val: 0.06, fmt: v => fx(v * 100, 0) + '%' },
+        { id: 'dv', label: 'Change in velocity', min: -0.05, max: 0.1, step: 0.005, val: 0, fmt: v => fx(v * 100, 1) + '%' },
+        { id: 'gy', label: 'Real growth', min: 0, max: 0.06, step: 0.005, val: 0.02, fmt: v => fx(v * 100, 1) + '%' },
+        { id: 'r', label: 'Real interest rate', min: 0, max: 0.06, step: 0.005, val: 0.02, fmt: v => fx(v * 100, 1) + '%' },
+        { id: 'alpha', label: 'Money-demand sensitivity α', min: 1, max: 8, step: 0.5, val: 4, fmt: v => v },
+        { id: 'm0', label: 'Money demand at zero inflation (% of GDP)', min: 0.1, max: 0.5, step: 0.01, val: 0.25, fmt: v => fx(v * 100, 0) + '%' }
+      ],
+      presets: [{ label: 'Stable prices', set: { mg: 0.04, dv: 0 } }, { label: 'Printing money', set: { mg: 0.5, dv: 0.05 } }],
+      compute: s => M.money(s),
+      charts: [(o, s) => ({ title: 'Seigniorage revenue (% of GDP)', xlab: 'annual inflation (%)', ylab: '% of GDP', series: [{ x: o.xs, y: o.ys }], pts: o.pi >= 0 && o.pi <= 1 ? [{ x: o.pi * 100, y: o.revNow * 100, c: '#b5532f', l: 'you are here' }] : [], vl: [{ x: Math.min(100, o.peakPi * 100), c: '#2e7d5b', l: 'peak' }], xmin: 0, ymin: 0 }),
+      (o, s) => { const x = [], y1 = [], y2 = []; for (let p = 0; p <= 0.5001; p += 0.01) { x.push(p * 100); y1.push(100 * ((1 + s.r) * (1 + p) - 1)); y2.push(p * 100); } return { title: 'Fisher effect: nominal rate vs inflation', xlab: 'inflation (%)', ylab: 'nominal interest rate (%)', series: [{ x, y: y1, name: 'nominal rate' }, { x, y: y2, name: 'inflation', dash: 1 }], pts: [{ x: Math.min(50, o.pi * 100), y: Math.min(100 * ((1 + s.r) * (1 + Math.min(0.5, o.pi)) - 1), 200), c: '#b5532f' }], xmin: 0 }; }],
+      read: (o, s) => '<table><tr><td class="k">Inflation</td><td class="v">' + pc(o.pi) + '</td><td class="k">Nominal interest rate</td><td class="v">' + pc(o.i) + '</td></tr><tr><td class="k">Seigniorage now</td><td class="v">' + fx(o.revNow * 100, 2) + '% of GDP</td><td class="k">Revenue-maximizing inflation</td><td class="v">' + pc(o.peakPi) + '</td></tr></table>'
+    }
+  },
+  quiz: [
+    { q: 'Money grows 8%, velocity is constant, real output grows 3%. Inflation is about:', o: ['3%', '5%', '8%', '11%'], a: 1, w: '%ΔM + %ΔV = %ΔP + %ΔY ⇒ %ΔP = 8 + 0 − 3 = 5%.' },
+    { q: 'Expected inflation rises 4 points permanently. By the Fisher equation, the nominal interest rate:', o: ['Rises about 4 points', 'Falls 4 points', 'Is unchanged', 'Rises 8 points'], a: 0, w: 'i = r + π^e with r determined by real forces.' },
+    { q: 'Which best describes seigniorage?', o: ['Interest paid on reserves', 'Revenue the government raises by creating money', 'A tax on exports', 'The profit of commercial banks'], a: 1, w: 'It is revenue from money creation, equal to the real value of new money issued, paid for by the inflation tax on money holders.' },
+    { q: 'Anticipated inflation mainly causes:', o: ['Big redistribution from lenders to borrowers', 'Menu and shoe-leather costs', 'Lower real interest rates', 'Higher unemployment'], a: 1, w: 'If anticipated, nominal rates adjust, so the main costs are the resources spent adjusting prices and economizing on cash.' }
+  ],
+  res: [
+    { t: 'FRED: Consumer Price Index', u: 'https://fred.stlouisfed.org/series/CPIAUCSL', who: 'Data', n: '' },
+    { t: 'Federal Reserve: Monetary policy overview', u: 'https://www.federalreserve.gov/monetarypolicy.htm', who: 'Fed', n: 'Official explanations of goals and tools' },
+    { t: 'Our World in Data (search: inflation)', u: 'https://ourworldindata.org/', who: 'Data', n: 'Cross-country inflation history' },
+    { t: 'YouTube: quantity theory of money lecture', u: 'https://www.youtube.com/results?search_query=quantity+theory+of+money+lecture+macroeconomics', who: 'YouTube', n: '' }
+  ]
+});
+
+/* ===== MODULES 6–10 ===== */
+MODS.push({
+  id: 'consumption', part: 'III. Households and Firms', title: 'Consumption and Saving', mins: 50,
+  blurb: 'Smoothing, permanent income, Ricardian equivalence and borrowing limits.',
+  html: `
+<div class="box take"><h3>The big idea</h3>People care about their whole lifetime, not just this month's paycheck. Households try to <b>smooth consumption</b> over time: borrow when income is low, save when it is high. That is why a one-time tax rebate often moves spending less than the Keynesian cross suggests.</div>
+<h2>The two-period model</h2>
+<p>A household earns y<sub>1</sub> now and y<sub>2</sub> later and chooses c<sub>1</sub>, c<sub>2</sub> to maximize ln c<sub>1</sub> + β ln c<sub>2</sub>. Saving or borrowing at real interest rate r means the budget is</p>
+<div class="formula">c<sub>1</sub> + c<sub>2</sub>/(1+r) = y<sub>1</sub> + y<sub>2</sub>/(1+r)</div>
+<p>The household picks the point on this line where an indifference curve is tangent. With log utility, c<sub>1</sub> = lifetime wealth/(1+β). Notice what matters: <i>lifetime</i> resources, not current income. Friedman's <b>permanent income</b> hypothesis and Modigliani's <b>life-cycle</b> hypothesis say the same thing.</p>
+<h2>A tax cut: Ricardian equivalence versus borrowing constraints</h2>
+<p>If the government cuts taxes today by T and the debt is repaid with future taxes of T(1+r), lifetime wealth is <i>unchanged</i> and a forward-looking household saves the whole cut. That is Barro's <b>Ricardian equivalence</b>. It fails if households cannot borrow (they would like to consume more now but cannot), or are myopic, or if the future taxes fall on someone else (other generations). Evidence shows a substantial share of households spend a large fraction of temporary payments, especially those with little liquid wealth.</p>
+<div data-w="cons"></div>
+<div class="box ex"><b>Evidence.</b> Spending responds more to a stimulus payment for households that are liquidity-constrained, and the average marginal propensity to consume out of a one-time payment is well above what the textbook smoothing model predicts. This is the starting point for the heterogeneous-agent models in Module 15.</div>
+<details class="wx"><summary>Work it out: the borrowing constraint</summary><p>Set y<sub>1</sub> = 100, y<sub>2</sub> = 105, r = 3%. Wealth is 202. An unconstrained household wants c<sub>1</sub> ≈ 103.6, above its income, so a constrained household consumes exactly 100. A 20 tax cut then lets it consume more even if Ricardian: the cut relaxes the limit.</p></details>`,
+  widgets: {
+    cons: {
+      title: 'Two-period consumption choice and a tax cut',
+      sub: 'Budget line (blue) and indifference curve (orange) through the chosen point. The tax cut T is financed by taxes in period 2 if "Ricardian" is on.',
+      ctrls: [
+        { id: 'y1', label: 'Income today y₁', min: 60, max: 140, step: 1, val: 100, fmt: v => v },
+        { id: 'y2', label: 'Income later y₂', min: 60, max: 160, step: 1, val: 105, fmt: v => v },
+        { id: 'r', label: 'Real interest rate', min: 0, max: 0.1, step: 0.005, val: 0.03, fmt: v => fx(v * 100, 1) + '%' },
+        { id: 'beta', label: 'Patience β', min: 0.7, max: 1, step: 0.01, val: 0.95, fmt: v => v },
+        { id: 'T', label: 'Tax cut today T', min: 0, max: 40, step: 1, val: 20, fmt: v => v },
+        { id: 'rica', label: 'Ricardian: future taxes repay the cut', type: 'check', val: true },
+        { id: 'liq', label: 'Borrowing constraint (c₁ ≤ income + cut)', type: 'check', val: false }
+      ],
+      presets: [{ label: 'Textbook Keynesian', set: { rica: false, liq: false } }, { label: 'Ricardian', set: { rica: true, liq: false } }, { label: 'Constrained household', set: { rica: false, liq: true } }],
+      compute: s => M.consumption(s),
+      charts: [(o, s) => ({ title: 'Budget line and indifference curve', xlab: 'consumption today c₁', ylab: 'consumption later c₂', series: [{ x: o.xs, y: o.bud, name: 'budget' }, { x: o.xs, y: o.ind, name: 'indifference', c: '#b5532f' }], pts: [{ x: o.c1, y: o.c2, c: '#1b2430', l: 'choice' }], vl: s.liq ? [{ x: s.y1 + s.T, c: '#b3261e', l: 'borrowing limit' }] : [], xmin: 0, ymin: 0, ymax: Math.max(o.c2 * 2, 100) })],
+      read: (o, s) => '<table><tr><td class="k">Consumption today before the cut</td><td class="v">' + fx(o.base, 1) + '</td><td class="k">After the cut</td><td class="v">' + fx(o.c1, 1) + '</td></tr><tr><td class="k">Change in c₁</td><td class="v ' + (o.dC1 > 0.05 ? 'pos' : '') + '">' + sg(o.dC1, 1) + '</td><td class="k">Share of the cut spent now (MPC)</td><td class="v">' + (s.T > 0 ? fx(100 * o.dC1 / s.T, 0) + '%' : '–') + '</td></tr><tr><td class="k">Constrained?</td><td class="v">' + (o.constrained ? 'yes' : 'no') + '</td><td class="k">Lifetime wealth</td><td class="v">' + fx(o.W, 1) + '</td></tr></table>'
+    }
+  },
+  quiz: [
+    { q: 'According to the permanent-income hypothesis, a one-time bonus (temporary income) will mostly be:', o: ['Spent immediately', 'Spread over many years of consumption', 'Ignored', 'Taxed away'], a: 1, w: 'Consumption tracks permanent income, so a temporary windfall is smoothed over the remaining lifetime.' },
+    { q: 'Ricardian equivalence says that a debt-financed tax cut:', o: ['Raises consumption one-for-one', 'Leaves consumption unchanged because households save to pay future taxes', 'Always lowers interest rates', 'Raises investment'], a: 1, w: 'The present value of taxes is unchanged, so lifetime wealth and consumption are unchanged.' },
+    { q: 'Which household is LEAST likely to behave in a Ricardian way?', o: ['One with ample savings', 'A liquidity-constrained household that would like to borrow', 'A forward-looking household', 'A household with a bequest motive'], a: 1, w: 'A binding borrowing limit makes current income, not lifetime wealth, determine spending.' },
+    { q: 'A higher real interest rate in the two-period model, holding wealth fixed, makes the substitution effect favor:', o: ['More consumption today', 'More saving (less consumption today)', 'No change', 'More borrowing'], a: 1, w: 'A higher r makes current consumption more expensive relative to future consumption. With log utility the income and substitution effects exactly cancel, but the substitution effect alone favors saving.' }
+  ],
+  res: [
+    { t: 'Opportunity Insights (Harvard): economic data from tax and bank records', u: 'https://opportunityinsights.org/', who: 'Harvard', n: 'Real-time spending data (Chetty and coauthors)' },
+    { t: 'FRED: Personal saving rate', u: 'https://fred.stlouisfed.org/series/PSAVERT', who: 'Data', n: '' },
+    { t: 'YouTube: permanent income hypothesis lecture', u: 'https://www.youtube.com/results?search_query=permanent+income+hypothesis+life+cycle+consumption+lecture', who: 'YouTube', n: '' },
+    { t: 'Khan Academy: Macroeconomics', u: 'https://www.khanacademy.org/economics-finance-domain/macroeconomics', who: 'Videos', n: '' }
+  ]
+});
+
+MODS.push({
+  id: 'investment', part: 'III. Households and Firms', title: 'Investment and the Cost of Capital', mins: 45,
+  blurb: "Why interest rates move building and equipment spending; Tobin's q.",
+  html: `
+<div class="box take"><h3>The big idea</h3>Firms invest until the marginal product of capital equals the <b>user cost of capital</b>: the interest rate they pay, plus the risk premium on financing, plus depreciation. Investment is the most volatile part of GDP, and it is the channel through which monetary policy mostly works.</div>
+<h2>The neoclassical investment rule</h2>
+<p>With production Y = A·K<sup>α</sup>, the marginal product of capital is MPK = αA·K<sup>α−1</sup>, falling in K. A firm adds capital until</p>
+<div class="formula">MPK = r + spread + δ</div>
+<p>The credit spread is the extra cost over the safe rate that lenders charge because of default risk; in a financial crisis it widens and investment collapses even if the safe rate is near zero.</p>
+<h2>Tobin's q</h2>
+<p>Tobin's q is the market value of installed capital divided by its replacement cost. When q &gt; 1, the market values capital above its cost, so firms invest; when q &lt; 1, they hold back. In the simple model here q = MPK / user cost at current capital: it is above 1 when capital is below its desired level.</p>
+<div data-w="invest"></div>
+<div class="box ex"><b>Why investment is volatile.</b> Capital goods last for years, so firms can delay purchases cheaply when demand or financing conditions worsen. Adjustment costs, uncertainty (a "wait and see" option value), and financial constraints all amplify swings. Tax policy (depreciation allowances, investment tax credits) works through the user cost.</div>
+<details class="wx"><summary>Work it out: how big is the effect?</summary><p>With α = 0.33, a rise in the user cost from 13% to 15% (a 2-point rise in the interest rate) lowers desired capital by (0.13/0.15)<sup>1/0.67</sup> − 1 ≈ −19%. That is a large effect on the <i>level</i> of desired capital; it works out over several years, which is part of why monetary policy acts with long lags.</p></details>`,
+  widgets: {
+    invest: {
+      title: 'Desired capital, user cost and q',
+      sub: 'The curve is the marginal product of capital (%). Where it crosses the user cost is desired capital K*. Dashed marker shows the starting point (r = 2%, spread = 1%).',
+      ctrls: [
+        { id: 'r', label: 'Real interest rate', min: 0, max: 0.1, step: 0.0025, val: 0.02, fmt: v => fx(v * 100, 2) + '%' },
+        { id: 'spread', label: 'Credit spread', min: 0, max: 0.08, step: 0.0025, val: 0.01, fmt: v => fx(v * 100, 2) + '%' },
+        { id: 'delta', label: 'Depreciation δ', min: 0.03, max: 0.2, step: 0.005, val: 0.1, fmt: v => fx(v * 100, 1) + '%' },
+        { id: 'alpha', label: 'Capital share α', min: 0.2, max: 0.5, step: 0.01, val: 0.33, fmt: v => v },
+        { id: 'A', label: 'Productivity A', min: 0.5, max: 1.5, step: 0.05, val: 1, fmt: v => v },
+        { id: 'kinst', label: 'Installed capital K', min: 1, max: 10, step: 0.1, val: 4, fmt: v => v }
+      ],
+      presets: [{ label: 'Rate hike +3 pts', set: { r: 0.05 } }, { label: 'Financial crisis: spread to 6%', set: { spread: 0.06 } }, { label: 'Back to baseline', set: { r: 0.02, spread: 0.01 } }],
+      compute: s => M.invest(s),
+      charts: [(o, s) => ({ title: 'Marginal product of capital vs user cost', xlab: 'capital stock K', ylab: '% per year', series: [{ x: o.xs, y: o.ys, name: 'MPK' }], hl: [{ y: o.uc * 100, c: '#b5532f', l: 'user cost' }], vl: [{ x: o.kstar, c: '#2e7d5b', l: 'K*' }], pts: [{ x: s.kinst, y: o.mpk(s.kinst) * 100, c: '#1b2430', l: 'installed K' }], xmin: 0, ymax: Math.max(40, o.uc * 100 * 2) })],
+      read: (o, s) => '<table><tr><td class="k">User cost</td><td class="v">' + pc(o.uc) + '</td><td class="k">Desired capital K*</td><td class="v">' + fx(o.kstar, 2) + '</td></tr><tr><td class="k">Change in desired capital vs baseline</td><td class="v ' + (o.pct < 0 ? 'neg' : 'pos') + '">' + sg(o.pct, 1) + '%</td><td class="k">Tobin\'s q (at installed K)</td><td class="v">' + fx(o.q, 2) + (o.q > 1 ? ' → invest' : ' → shrink') + '</td></tr></table>'
+    }
+  },
+  quiz: [
+    { q: 'The user cost of capital includes:', o: ['Only the interest rate', 'Interest, risk premium and depreciation', 'Wages and rent', 'Only taxes'], a: 1, w: 'Owning capital means paying for funds (incl. risk premium) and for the wear and tear of the capital.' },
+    { q: 'A financial crisis widens credit spreads. All else equal, investment:', o: ['Rises', 'Falls', 'Is unchanged', 'Depends only on the policy rate'], a: 1, w: 'A higher spread raises the user cost even if the safe rate is unchanged.' },
+    { q: "If Tobin's q is above 1, firms should:", o: ['Sell capital', 'Invest more', 'Do nothing', 'Pay more dividends'], a: 1, w: 'Capital is worth more installed than it costs to build, so expanding adds value.' },
+    { q: 'Why is investment so much more volatile than consumption?', o: ['Capital is cheap', 'Capital lasts long, so purchases can be delayed cheaply when conditions worsen', 'Government controls it', 'Firms are irrational'], a: 1, w: 'Durability makes the timing of purchases flexible; plus uncertainty and financing frictions amplify swings.' }
+  ],
+  res: [
+    { t: 'FRED: Gross private domestic investment', u: 'https://fred.stlouisfed.org/series/GPDI', who: 'Data', n: '' },
+    { t: 'Federal Reserve: Financial Stability Report and credit conditions', u: 'https://www.federalreserve.gov/publications/financial-stability-report.htm', who: 'Fed', n: '' },
+    { t: 'YouTube: Tobin\'s q explained', u: 'https://www.youtube.com/results?search_query=Tobin%27s+q+investment+explained+macroeconomics', who: 'YouTube', n: '' }
+  ]
+});
+
+MODS.push({
+  id: 'ismp', part: 'IV. Short-Run Fluctuations', title: 'The IS–MP Model and Demand-Driven Recessions', mins: 60,
+  blurb: 'Interest rates, demand and output in the short run.',
+  html: `
+<div class="box take"><h3>The big idea</h3>In the long run, supply sets output. In the short run, when prices are sticky, <b>demand</b> can move output away from potential. The IS–MP model (the version taught by David Romer and many textbooks today) shows how the central bank's interest-rate choice shifts spending.</div>
+<h2>Three equations</h2>
+<ul>
+<li><b>IS curve (demand):</b> output rises when the real interest rate falls or when spending shocks (A) rise. Written as gap from potential: y = A − b(r − r̄).</li>
+<li><b>MP rule (policy):</b> the central bank sets the real interest rate. A Taylor-type rule raises it when inflation is above target: r = r̄ + λ(π − π*) + m, where m is a policy "stance" shift.</li>
+<li><b>Phillips curve (supply):</b> π = π<sup>e</sup> + κ·y. Output above potential puts upward pressure on inflation.</li>
+</ul>
+<p>Combining them gives an <b>aggregate demand</b> curve (inflation against output): when inflation rises the central bank raises rates and output falls, so AD slopes down. Equilibrium is where AD meets the Phillips curve.</p>
+<div data-w="ismp"></div>
+<h2>Reading the two charts</h2>
+<p>The left chart is the IS curve; the dot shows the real interest rate the central bank delivers at the equilibrium output. The right chart is the AD / Phillips diagram. A <b>negative demand shock</b> (A down) shifts both IS and AD left: output falls and inflation falls. A <b>tighter policy stance</b> (m up) does the same. A <b>higher expected-inflation anchor</b> shifts the Phillips curve up: inflation is higher at any output.</p>
+<div class="box ex"><b>What the model leaves out.</b> There is no financial sector, no zero lower bound, no forward-looking expectations. The next modules add those pieces. The model is still the right first tool for the question "what does a rate cut do?"</div>
+<details class="wx"><summary>Work it out: size of the policy response</summary><p>With b = 1.5, λ = 1.0 and κ = 0.3, a −2 demand shock lowers output by about 2/(1 + 1.5×1×0.3) = 1.4 points. The central bank's rate rule offsets part of it automatically: inflation falls, and the rate it sets falls too.</p></details>`,
+  widgets: {
+    ismp: {
+      title: 'IS–MP–Phillips equilibrium',
+      sub: 'Units: percent. Potential output is at 0, inflation target and neutral real rate are both 2%.',
+      ctrls: [
+        { id: 'A', label: 'Demand shock A', min: -4, max: 4, step: 0.25, val: 0, fmt: v => sg(v, 2) },
+        { id: 'm', label: 'Policy stance m (+ = tighter)', min: -2, max: 2, step: 0.25, val: 0, fmt: v => sg(v, 2) },
+        { id: 'pe', label: 'Expected inflation', min: 0, max: 5, step: 0.25, val: 2, fmt: v => v + '%' },
+        { id: 'lam', label: 'Policy response to inflation λ', min: 0.3, max: 2.5, step: 0.1, val: 1, fmt: v => v },
+        { id: 'b', label: 'Interest sensitivity of demand b', min: 0.5, max: 3, step: 0.1, val: 1.5, fmt: v => v },
+        { id: 'kappa', label: 'Slope of Phillips curve κ', min: 0.05, max: 1, step: 0.05, val: 0.3, fmt: v => v }
+      ],
+      presets: [{ label: 'Recession (A = −3)', set: { A: -3, m: 0, pe: 2 } }, { label: 'Recession + rate cut (m = −1.5)', set: { A: -3, m: -1.5, pe: 2 } }, { label: 'Overheating (A = +3)', set: { A: 3, m: 0, pe: 2 } }, { label: 'Reset', set: { A: 0, m: 0, pe: 2 } }],
+      compute: s => M.ismp(s),
+      charts: [(o, s) => ({ title: 'IS curve', xlab: 'output gap y (%)', ylab: 'real interest rate (%)', series: [{ x: o.ys, y: o.isr }], pts: [{ x: o.y, y: o.r, c: '#b5532f', l: 'equilibrium' }], hl: [{ y: 2, c: '#999', l: 'neutral rate' }], xmin: -6, xmax: 6, ymin: -2, ymax: 8 }),
+      (o, s) => ({ title: 'AD and Phillips curve', xlab: 'output gap y (%)', ylab: 'inflation (%)', series: [{ x: o.ys, y: o.adp, name: 'AD (policy rule)' }, { x: o.ys, y: o.pcp, name: 'Phillips curve', c: '#b5532f' }], pts: [{ x: o.y, y: o.pi, c: '#1b2430', l: 'equilibrium' }], hl: [{ y: 2, c: '#999', l: 'target' }], xmin: -6, xmax: 6, ymin: -2, ymax: 8 })],
+      read: (o, s) => '<table><tr><td class="k">Output gap</td><td class="v ' + (o.y < -0.05 ? 'neg' : o.y > 0.05 ? 'pos' : '') + '">' + sg(o.y, 2) + '%</td></tr><tr><td class="k">Inflation</td><td class="v">' + fx(o.pi, 2) + '%</td></tr><tr><td class="k">Real interest rate</td><td class="v">' + fx(o.r, 2) + '%</td></tr></table>'
+    }
+  },
+  quiz: [
+    { q: 'In IS–MP, a central bank that cuts the real interest rate should see:', o: ['Lower output', 'Higher output', 'No change', 'Lower inflation'], a: 1, w: 'A lower real rate raises investment and durable consumption, shifting output above where it otherwise would be.' },
+    { q: 'The AD curve in the inflation–output plane slopes down because:', o: ['Prices fall', 'The central bank raises real rates when inflation rises, reducing demand', 'Wages are sticky', 'Imports rise'], a: 1, w: 'The policy rule links higher inflation to higher real interest rates, which depresses demand.' },
+    { q: 'An upward shift in expected inflation shifts:', o: ['The IS curve left', 'The Phillips curve up', 'The AD curve down', 'Nothing'], a: 1, w: 'Inflation expectations are an intercept of the Phillips curve.' },
+    { q: 'Which is an advantage of IS–MP over the older IS–LM model?', o: ['It ignores inflation', 'It takes the interest rate, not the money supply, as the policy instrument', 'It has no policy rule', 'It is dynamic'], a: 1, w: 'Modern central banks set a short-term interest rate rather than the quantity of money.' }
+  ],
+  res: [
+    { t: 'David Romer: "Keynesian Macroeconomics without the LM Curve" (JEP 2000)', u: 'https://www.aeaweb.org/journals/jep', who: 'Berkeley', n: 'Search the title on the American Economic Association site' },
+    { t: 'Federal Reserve: How monetary policy affects the economy', u: 'https://www.federalreserve.gov/monetarypolicy.htm', who: 'Fed', n: '' },
+    { t: 'Paul Krugman: New York Times column archive', u: 'https://www.nytimes.com/column/paul-krugman', who: 'Princeton / CUNY', n: 'Applied Keynesian reasoning on current events' },
+    { t: 'Mankiw: Observations (blog)', u: 'https://gregmankiw.blogspot.com/', who: 'Harvard', n: '' },
+    { t: 'YouTube: IS-MP model explained', u: 'https://www.youtube.com/results?search_query=IS-MP+model+explained+macroeconomics', who: 'YouTube', n: '' }
+  ]
+});
+
+MODS.push({
+  id: 'phillips', part: 'IV. Short-Run Fluctuations', title: 'Aggregate Supply, the Phillips Curve and Expectations', mins: 50,
+  blurb: 'Why inflation persists, and the cost of bringing it down.',
+  html: `
+<div class="box take"><h3>The big idea</h3>Inflation has <b>momentum</b>. The Phillips curve links inflation to the output gap <i>and to what people expect</i>. If expectations adapt to past inflation, running the economy hot makes inflation ratchet up each period; if expectations are <b>anchored</b> by a credible central bank, the same boom raises inflation only a little.</div>
+<h2>The expectations-augmented Phillips curve</h2>
+<div class="formula">π<sub>t</sub> = π<sup>e</sup><sub>t</sub> + κ·y<sub>t</sub> + supply shock,&nbsp; π<sup>e</sup><sub>t</sub> = a·π<sub>t−1</sub> + (1−a)·π*</div>
+<p>Weight a on lagged inflation measures how "backward-looking" expectations are. With a = 1 inflation is a unit-root process and a permanent gap y &gt; 0 gives ever-accelerating inflation (Friedman and Phelps, 1968: there is no permanent trade-off). With a = 0, expectations are fixed at the target and a gap raises inflation only one-for-one with κ.</p>
+<h2>Disinflation and the sacrifice ratio</h2>
+<p>To bring high inflation down you must hold output below potential for a while. The <b>sacrifice ratio</b> is the cumulative loss of output per point of inflation removed. It is lower when expectations are anchored and policy is credible. This is the issue behind the Volcker disinflation in the early 1980s.</p>
+<div data-w="phil"></div>
+<div class="box ex"><b>The post-2021 episode.</b> Inflation rose quickly after the pandemic reopening and supply shocks, then fell with relatively little unemployment cost. Economists disagree on why: anchored expectations and a flatter-than-feared Phillips curve (Bernanke and Blanchard emphasize supply shocks and vacancies falling) versus a lucky unwinding of supply problems. Read the primary sources and decide.</div>`,
+  widgets: {
+    phil: {
+      title: 'Phillips curve simulator: hot economy or disinflation',
+      sub: 'Policy holds the output gap at the chosen level for N years, then returns to potential. Start inflation is set below.',
+      ctrls: [
+        { id: 'gap', label: 'Output gap held (%)', min: -4, max: 4, step: 0.25, val: 1.5, fmt: v => sg(v, 2) },
+        { id: 'N', label: 'Years held', min: 1, max: 12, step: 1, val: 6, fmt: v => v },
+        { id: 'a', label: 'Backward-looking weight a', min: 0, max: 1, step: 0.05, val: 0.8, fmt: v => v },
+        { id: 'k', label: 'Slope κ', min: 0.05, max: 0.6, step: 0.01, val: 0.25, fmt: v => v },
+        { id: 'p0', label: 'Starting inflation (%)', min: 0, max: 10, step: 0.5, val: 2, fmt: v => v + '%' }
+      ],
+      presets: [{ label: 'Run hot, expectations adapt', set: { gap: 1.5, N: 6, a: 0.8, k: 0.25, p0: 2 } }, { label: 'Run hot, anchored', set: { gap: 1.5, N: 6, a: 0.1, k: 0.25, p0: 2 } }, { label: 'Disinflate from 8%', set: { gap: -2, N: 5, a: 0.8, k: 0.25, p0: 8 } }, { label: 'Disinflate, credible', set: { gap: -2, N: 5, a: 0.2, k: 0.25, p0: 8 } }],
+      compute: s => { const t = [0], pi = [s.p0]; for (let i = 1; i <= 20; i++) { const y = i <= s.N ? s.gap : 0, pe = s.a * pi[i - 1] + (1 - s.a) * 2; t.push(i); pi.push(pe + s.k * y); } const cum = s.gap * s.N, drop = s.p0 - pi[pi.length - 1]; return { t, pi, cum, drop, peak: Math.max(...pi), end: pi[pi.length - 1] }; },
+      charts: [o => ({ title: 'Inflation path (%)', xlab: 'years', series: [{ x: o.t, y: o.pi }], hl: [{ y: 2, c: '#999', l: 'target 2%' }], xmin: 0 })],
+      read: (o, s) => '<table><tr><td class="k">Peak inflation</td><td class="v">' + fx(o.peak, 1) + '%</td><td class="k">Inflation after 20 years</td><td class="v">' + fx(o.end, 1) + '%</td></tr><tr><td class="k">Cumulative output gap (point-years)</td><td class="v">' + sg(o.cum, 1) + '</td><td class="k">Sacrifice ratio (output given up per point of disinflation)</td><td class="v">' + (s.gap < 0 && o.drop > 0.1 ? fx(-o.cum / o.drop, 2) : '–') + '</td></tr></table>'
+    }
+  },
+  quiz: [
+    { q: 'According to Friedman and Phelps, if the central bank tries to keep unemployment permanently below its natural rate:', o: ['Inflation stays low', 'Inflation keeps accelerating', 'Output falls', 'Nothing changes'], a: 1, w: 'If expectations adapt, every period of unemployment below the natural rate pushes inflation higher than before.' },
+    { q: 'Anchored inflation expectations imply:', o: ['A steeper Phillips curve', 'A lower sacrifice ratio', 'No Phillips curve', 'Higher unemployment'], a: 1, w: 'Firms and workers do not build past inflation into wages and prices, so disinflating costs less output.' },
+    { q: 'The sacrifice ratio is:', o: ['Output lost per point of inflation removed', 'The slope of the AD curve', 'The ratio of wages to prices', 'The central bank budget'], a: 0, w: 'It measures the cumulative output cost of reducing inflation by one percentage point.' },
+    { q: 'A supply shock such as an oil price rise shifts the Phillips curve:', o: ['Down', 'Up, raising inflation at each output level', 'Not at all', 'Flatter'], a: 1, w: 'It adds a term to inflation independent of demand, creating stagflation: higher inflation and lower output.' }
+  ],
+  res: [
+    { t: 'Bernanke and Blanchard: "What Caused the U.S. Pandemic-Era Inflation?"', u: 'https://www.brookings.edu/', who: 'Brookings Hutchins Center / NBER', n: 'Search the title: a free paper on supply shocks and labor-market tightness' },
+    { t: 'Federal Reserve Bank of San Francisco: Economic Letters', u: 'https://www.frbsf.org/research-and-insights/', who: 'Fed', n: 'Accessible research on inflation' },
+    { t: 'FRED: PCE inflation', u: 'https://fred.stlouisfed.org/series/PCEPI', who: 'Data', n: '' },
+    { t: 'YouTube: Phillips curve and expectations lecture', u: 'https://www.youtube.com/results?search_query=expectations+augmented+Phillips+curve+lecture', who: 'YouTube', n: '' }
+  ]
+});
+
+MODS.push({
+  id: 'nk', part: 'IV. Short-Run Fluctuations', title: 'The New Keynesian Model and Monetary Policy', mins: 60,
+  blurb: 'Dynamic demand and supply, policy rules and the zero lower bound.',
+  html: `
+<div class="box take"><h3>The big idea</h3>The modern workhorse of central banks is the <b>New Keynesian</b> model. It keeps sticky prices and a Phillips curve, adds forward- and backward-looking dynamics, and lets us compare monetary-policy <i>rules</i> over time rather than one-period equilibria.</div>
+<h2>A three-equation dynamic system (hybrid form)</h2>
+<ul>
+<li><b>Dynamic IS:</b> x<sub>t</sub> = ρ·x<sub>t−1</sub> − σ(i<sub>t−1</sub> − π<sub>t−1</sub> − r̄) + d<sub>t</sub> (output gap depends on last quarter's real rate and a demand shock).</li>
+<li><b>Phillips curve:</b> π<sub>t</sub> = θ·π<sub>t−1</sub> + (1−θ)·π* + κ·x<sub>t</sub> + s<sub>t</sub> (inflation has inertia θ and is pushed by the gap and a supply shock).</li>
+<li><b>Policy rule (Taylor):</b> i<sub>t</sub> = r̄ + π<sub>t</sub> + φ<sub>π</sub>(π<sub>t</sub> − π*) + φ<sub>x</sub>·x<sub>t</sub>.</li>
+</ul>
+<p>This is a simplified backward-looking version for teaching. The full New Keynesian model has forward-looking expectations (Clarida, Galí and Gertler 1999; Woodford's <i>Interest and Prices</i>; Galí's textbook). The lessons carry over: the central bank must respond <i>more than one-for-one</i> to inflation (the <b>Taylor principle</b>: φ<sub>π</sub> &gt; 0 here), or inflation spirals.</p>
+<div data-w="nk"></div>
+<h2>Demand shocks versus supply shocks: the policy dilemma</h2>
+<p>After a <b>demand</b> shock, output and inflation move together, and one instrument (the rate) can stabilize both: "divine coincidence." After a <b>supply</b> shock they move in opposite directions, and the central bank must trade off output losses against inflation: a higher φ<sub>x</sub> stabilizes output at the cost of more inflation, and vice versa. Try both shocks with different φ values and look at the loss in the readout.</p>
+<div class="box ex"><b>The zero lower bound.</b> Nominal rates cannot fall (far) below zero. After a big negative demand shock the rule may call for negative rates; the bank is stuck. Switch on "zero lower bound" and compare output and inflation paths. Krugman (1998) emphasized that in a liquidity trap, conventional policy loses traction, and that a credible commitment to higher future inflation or fiscal policy can help. After 2008 central banks used <b>forward guidance</b> and <b>quantitative easing</b> (large-scale asset purchases) to push down long-term rates when the policy rate was stuck.</div>
+<details class="wx"><summary>Work it out: the Taylor principle</summary><p>Set φ<sub>π</sub> = 0 and add a supply shock: inflation persists much longer because the real rate does not rise enough. Raise φ<sub>π</sub> to 1.5 and the same shock dies out faster, at the cost of a deeper short-run output loss.</p></details>`,
+  widgets: {
+    nk: {
+      title: 'Quarterly simulation: shock, policy rule and the zero lower bound',
+      sub: 'Percent units. Target inflation 2%, neutral real rate 2%. The shock hits in quarter 1 and decays 20% per quarter.',
+      ctrls: [
+        { id: 'type', label: 'Shock type', type: 'select', val: 'demand', opts: [['demand', 'Demand'], ['supply', 'Supply (cost-push)'], ['none', 'None']] },
+        { id: 'size', label: 'Shock size (+ raises x or π)', min: -4, max: 4, step: 0.25, val: -2, fmt: v => sg(v, 2) },
+        { id: 'phiPi', label: 'Policy response to inflation φπ', min: 0, max: 3, step: 0.1, val: 0.5, fmt: v => v },
+        { id: 'phiX', label: 'Policy response to output φx', min: 0, max: 2, step: 0.1, val: 0.5, fmt: v => v },
+        { id: 'theta', label: 'Inflation inertia θ', min: 0.2, max: 0.9, step: 0.05, val: 0.6, fmt: v => v },
+        { id: 'kappa', label: 'Phillips slope κ', min: 0.05, max: 0.4, step: 0.01, val: 0.15, fmt: v => v },
+        { id: 'zlb', label: 'Zero lower bound on the policy rate', type: 'check', val: false }
+      ],
+      presets: [{ label: 'Big demand slump + ZLB', set: { type: 'demand', size: -4, phiPi: 1, phiX: 1.5, zlb: true } }, { label: 'Same slump, no ZLB', set: { type: 'demand', size: -4, phiPi: 1, phiX: 1.5, zlb: false } }, { label: 'Cost-push shock', set: { type: 'supply', size: 1.5, phiPi: 0.5, phiX: 0.5, zlb: false } }],
+      compute: s => M.nk({ T: 40, shock: { type: s.type, size: s.size }, theta: s.theta, kappa: s.kappa, phiPi: s.phiPi, phiX: s.phiX, zlb: s.zlb }),
+      charts: [o => ({ title: 'Output gap and inflation', xlab: 'quarters', series: [{ x: o.t, y: o.x, name: 'output gap x' }, { x: o.t, y: o.pi, name: 'inflation π', c: '#b5532f' }], hl: [{ y: 2, c: '#aaa', l: '' }], xmin: 0 }),
+      o => ({ title: 'Policy rate', xlab: 'quarters', ylab: '%', series: [{ x: o.t, y: o.i }], hl: [{ y: 0, c: '#b3261e', l: 'zero' }], xmin: 0 })],
+      read: (o, s) => '<table><tr><td class="k">Peak output gap</td><td class="v">' + sg(o.x.reduce((a, b) => Math.abs(b) > Math.abs(a) ? b : a, 0), 2) + '%</td><td class="k">Peak inflation deviation</td><td class="v">' + sg(o.pi.reduce((a, b) => Math.abs(b - 2) > Math.abs(a - 2) ? b : a, 2) - 2, 2) + ' pts</td></tr><tr><td class="k">Quarters stuck at zero</td><td class="v">' + o.zlbQuarters + '</td><td class="k">Total loss (lower is better)</td><td class="v">' + fx(o.loss, 1) + '</td></tr></table>'
+    }
+  },
+  quiz: [
+    { q: 'The Taylor principle says the central bank should:', o: ['Raise the nominal rate more than one-for-one when inflation rises', 'Keep rates constant', 'Fix the money supply', 'Target the exchange rate'], a: 0, w: 'A real-rate increase is needed to cool demand; raising the nominal rate by less than the rise in inflation lowers the real rate and feeds the spiral.' },
+    { q: 'After a negative DEMAND shock, the central bank can stabilize inflation and output with one instrument because:', o: ['They move in the same direction', 'They move in opposite directions', 'Shocks do not matter', 'Expectations are fixed'], a: 0, w: 'Output and inflation fall together, so a rate cut helps both: "divine coincidence."' },
+    { q: 'At the zero lower bound a central bank can still:', o: ['Do nothing', 'Use forward guidance and large-scale asset purchases', 'Cut the rate to −10%', 'Print no money'], a: 1, w: 'Both act on expected future rates and long-term yields when the short-term policy rate is stuck.' },
+    { q: 'After a cost-push supply shock, the central bank faces:', o: ['No trade-off', 'A trade-off between inflation and output stabilization', 'A free lunch', 'A zero lower bound'], a: 1, w: 'Fighting the inflation requires holding output below potential; accommodating the shock lets inflation rise.' }
+  ],
+  res: [
+    { t: 'Krugman (1998): "It\'s Baaack: Japan\'s Slump and the Return of the Liquidity Trap"', u: 'https://www.brookings.edu/', who: 'Princeton / Brookings', n: 'Search the title: a free Brookings Papers article' },
+    { t: 'Federal Reserve: FOMC calendars, statements and minutes', u: 'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm', who: 'Fed', n: 'Primary documents' },
+    { t: 'Clarida, Galí, Gertler (1999): "The Science of Monetary Policy"', u: 'https://www.nber.org/papers', who: 'NBER', n: 'Search by title in the NBER archive' },
+    { t: 'Ben Bernanke: Brookings author page', u: 'https://www.brookings.edu/people/ben-s-bernanke/', who: 'Brookings (Princeton alum)', n: 'Essays on policy and the financial crisis' },
+    { t: 'YouTube: New Keynesian model lecture', u: 'https://www.youtube.com/results?search_query=New+Keynesian+model+monetary+policy+lecture+intermediate', who: 'YouTube', n: '' }
+  ]
+});
+
+/* ===== MODULES 11–16 ===== */
+MODS.push({
+  id: 'policy', part: 'IV. Short-Run Fluctuations', title: 'Monetary Policy in Practice: Rules, QE and Communication', mins: 45,
+  blurb: 'The Taylor rule, the limits of the policy rate, and balance-sheet tools.',
+  html: `
+<div class="box take"><h3>The big idea</h3>Central banks today steer short-term interest rates to hit an inflation target and support employment. Rules of thumb such as the <b>Taylor rule</b> summarize their behavior, and tell us when conventional policy runs out of room.</div>
+<h2>The Taylor rule</h2>
+<p>John Taylor (Stanford) showed in 1993 that the Fed's behavior in the late 1980s and early 1990s was well described by</p>
+<div class="formula">i = r̄ + π + a(π − π*) + b·x</div>
+<p>with r̄ ≈ 2%, π* = 2%, a = b = 0.5, where x is the output gap in percent. It makes two points: respond more than one-for-one to inflation, and lean against the output gap. Real central banks do not follow it mechanically. It serves as a benchmark, and large departures from it are what people argue about.</p>
+<div data-w="taylor"></div>
+<h2>When the rule says "below zero"</h2>
+<p>If the prescribed rate is negative, the central bank is constrained. Tools beyond the policy rate include:</p>
+<ul>
+<li><b>Forward guidance:</b> commit to keep rates low for longer, which lowers long-term yields today.</li>
+<li><b>Quantitative easing (QE):</b> buy long-term government and mortgage bonds with newly created reserves, lowering term premia and spreads.</li>
+<li><b>Yield-curve control</b> and <b>negative rates</b> (used modestly by some central banks).</li>
+</ul>
+<p>QE shrinks again when the central bank sells assets or lets them mature (<b>quantitative tightening</b>). Evidence suggests QE lowers long yields meaningfully but with more uncertainty about its effect on output and inflation.</p>
+<div class="box ex"><b>Independence and commitment.</b> Kydland and Prescott (1977) and Barro and Gordon (1983) showed that discretionary policy makers face a temptation to inflate for short-run gains, and that people, anticipating it, produce an inflation bias. Independent central banks, explicit targets and transparency are institutional answers. Do you see how that connects to the anchoring of expectations in Module 9?</div>`,
+  widgets: {
+    taylor: {
+      title: 'Taylor rule calculator',
+      sub: 'Policy rate prescribed by the rule at different output gaps. The red line at 0 is the zero lower bound.',
+      ctrls: [
+        { id: 'pi', label: 'Inflation π (%)', min: 0, max: 9, step: 0.1, val: 2.5, fmt: v => v + '%' },
+        { id: 'x', label: 'Output gap (%)', min: -8, max: 5, step: 0.1, val: 0, fmt: v => sg(v, 1) },
+        { id: 'a', label: 'Weight on inflation gap a', min: 0, max: 2, step: 0.1, val: 0.5, fmt: v => v },
+        { id: 'b', label: 'Weight on output gap b', min: 0, max: 2, step: 0.1, val: 0.5, fmt: v => v },
+        { id: 'rbar', label: 'Neutral real rate (%)', min: 0, max: 3, step: 0.25, val: 1, fmt: v => v + '%' },
+        { id: 'pistar', label: 'Inflation target (%)', min: 1, max: 4, step: 0.5, val: 2, fmt: v => v + '%' }
+      ],
+      presets: [{ label: '1993 Taylor (r̄ = 2)', set: { a: 0.5, b: 0.5, rbar: 2, pistar: 2, x: 0, pi: 2 } }, { label: 'Deep recession', set: { x: -7, pi: 1, a: 0.5, b: 1 } }, { label: 'Inflation scare', set: { x: 1.5, pi: 6, a: 1.5, b: 0.5 } }],
+      compute: s => { const rule = M.taylor(s); const xs = [], cur = [], rec = [], boom = []; for (let p = 0; p <= 9.001; p += 0.25) { xs.push(p); cur.push(M.taylor(Object.assign({}, s, { pi: p })).raw); rec.push(M.taylor(Object.assign({}, s, { pi: p, x: -4 })).raw); boom.push(M.taylor(Object.assign({}, s, { pi: p, x: 3 })).raw); } return { rule, xs, cur, rec, boom }; },
+      charts: [(o, s) => ({ title: 'Rule-implied policy rate', xlab: 'inflation (%)', ylab: 'policy rate (%)', series: [{ x: o.xs, y: o.cur, name: 'your output gap' }, { x: o.xs, y: o.rec, name: 'gap = −4', dash: 1, c: '#b5532f' }, { x: o.xs, y: o.boom, name: 'gap = +3', dash: 1, c: '#2e7d5b' }], pts: [{ x: s.pi, y: o.rule.raw, c: '#1b2430', l: 'now' }], hl: [{ y: 0, c: '#b3261e', l: 'zero lower bound' }], xmin: 0, ymin: -4 })],
+      read: (o, s) => '<table><tr><td class="k">Rule prescribes</td><td class="v">' + fx(o.rule.raw, 2) + '%</td><td class="k">Feasible rate</td><td class="v">' + fx(o.rule.rate, 2) + '%</td></tr>' + (o.rule.raw < 0 ? '<tr><td colspan="4" class="neg">The rule calls for ' + fx(-o.rule.raw, 1) + ' points of easing beyond the zero bound. That gap is what forward guidance and QE try to fill.</td></tr>' : '') + '</table>'
+    }
+  },
+  quiz: [
+    { q: 'With a = b = 0.5, r̄ = 2, π* = 2, π = 4 and x = −2, the Taylor rule gives:', o: ['3%', '5%', '6%', '7%'], a: 2, w: 'i = 2 + 4 + 0.5(4 − 2) + 0.5(−2) = 6 + 1 − 1 = 6%.' },
+    { q: 'Quantitative easing works mainly by:', o: ['Raising the policy rate', 'Lowering long-term interest rates and spreads', 'Increasing taxes', 'Fixing the exchange rate'], a: 1, w: 'Purchases of long-term bonds reduce term premia and spreads, and signal commitment to low rates.' },
+    { q: 'Time inconsistency means:', o: ['Policy makers are tempted to deviate from an announced low-inflation plan', 'Data arrives late', 'Rates cannot change', 'Output is cyclical'], a: 0, w: 'Once expectations are set, a surprise inflation lowers unemployment temporarily, so the plan lacks credibility without commitment.' },
+    { q: 'Why do many economists favor central-bank independence?', o: ['It raises taxes', 'It reduces the temptation to inflate for short-term political gain', 'It eliminates recessions', 'It lowers growth'], a: 1, w: 'Insulating decisions from election cycles supports credibility and anchored expectations.' }
+  ],
+  res: [
+    { t: 'Federal Reserve: FOMC statements, minutes and projections', u: 'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm', who: 'Fed', n: '' },
+    { t: 'Atlanta Fed: Taylor Rule Utility', u: 'https://www.atlantafed.org/cqer/research/taylor-rule', who: 'Fed', n: 'Compare many versions of the rule with the actual policy rate' },
+    { t: 'Federal Reserve History: essays on the crisis and QE', u: 'https://www.federalreservehistory.org/', who: 'Fed', n: 'Short essays by Fed staff' },
+    { t: 'YouTube: Taylor rule and quantitative easing explained', u: 'https://www.youtube.com/results?search_query=Taylor+rule+quantitative+easing+explained+macroeconomics', who: 'YouTube', n: '' }
+  ]
+});
+
+MODS.push({
+  id: 'fiscal', part: 'V. Fiscal Policy and the Open Economy', title: 'Fiscal Policy, Multipliers and Government Debt', mins: 55,
+  blurb: 'How much does a dollar of spending add, and when does debt become unsustainable?',
+  html: `
+<div class="box take"><h3>The big idea</h3>Fiscal policy has two jobs: stabilize demand (short run) and fund public goods without letting debt run away (long run). Both come down to arithmetic with a few key parameters.</div>
+<h2>The Keynesian multiplier</h2>
+<p>An extra dollar of government spending is someone's income; they spend a fraction on goods made at home. With marginal propensity to consume c, tax rate t and import share m, the simple multiplier is</p>
+<div class="formula">k = 1 / (1 − c(1−t) + m)</div>
+<p>Larger when households consume more of each dollar, smaller when taxes and imports leak away demand. In the real world the multiplier also depends on the <b>monetary response</b>: if the central bank raises interest rates to offset the stimulus, k shrinks ("crowding out"); if the bank holds rates down (at the zero lower bound, say), k is larger. Empirical estimates range from about 0.5 to 2 depending on circumstances.</p>
+<div data-w="fiscal"></div>
+<h2>Debt dynamics</h2>
+<p>The debt-to-GDP ratio d evolves as</p>
+<div class="formula">d<sub>t+1</sub> = d<sub>t</sub>·(1+r)/(1+g) − pb</div>
+<p>where r is the interest rate on debt, g is nominal-adjusted growth and pb is the primary budget surplus (as a share of GDP). If r &gt; g, debt rises unless the government runs a primary surplus. If r &lt; g, debt can fall even with deficits. The primary surplus that holds d constant is pb* = d·(r−g)/(1+g). Olivier Blanchard (2019 AEA presidential address) argued that when r is below g, the fiscal costs of debt are lower than conventional wisdom assumes, but that debt can still impose welfare costs and risks. Others (including many central-bank and Congressional Budget Office analysts) stress that r−g can turn around and that high debt limits the room to respond to future crises.</p>
+<div data-w="debt"></div>
+<div class="box ex"><b>Sovereign borrowing in a country's own currency</b> is different from borrowing in foreign currency or inside a currency union: a government that issues its own currency cannot be forced into default on those bonds, but it can face inflation and loss of confidence. Reinhart and Rogoff (Harvard) documented many debt crises; their results on a "90% threshold" were contested on technical grounds, so treat any single threshold with caution.</div>`,
+  widgets: {
+    fiscal: {
+      title: 'Spending multiplier and monetary offset',
+      sub: 'φ measures how strongly the central bank raises interest rates in response to extra output (0 = rates held fixed).',
+      ctrls: [
+        { id: 'c', label: 'Marginal propensity to consume c', min: 0.4, max: 0.95, step: 0.01, val: 0.75, fmt: v => v },
+        { id: 't', label: 'Tax rate t', min: 0, max: 0.5, step: 0.01, val: 0.25, fmt: v => fx(v * 100, 0) + '%' },
+        { id: 'm', label: 'Import share m', min: 0, max: 0.5, step: 0.01, val: 0.15, fmt: v => fx(v * 100, 0) + '%' },
+        { id: 'phi', label: 'Monetary offset φ', min: 0, max: 1.5, step: 0.05, val: 0, fmt: v => v }
+      ],
+      presets: [{ label: 'At the zero bound (φ = 0)', set: { phi: 0 } }, { label: 'Active central bank (φ = 1)', set: { phi: 1 } }, { label: 'Small open economy', set: { m: 0.4, phi: 0 } }],
+      compute: s => M.fiscal(s),
+      charts: [(o, s) => ({ title: 'Multiplier vs monetary offset', xlab: 'monetary offset φ', ylab: 'multiplier', series: [{ x: o.xs, y: o.ys }], pts: [{ x: s.phi, y: o.keff, c: '#b5532f', l: fx(o.keff, 2) }], xmin: 0, ymin: 0 })],
+      read: (o, s) => '<table><tr><td class="k">Simple multiplier (no monetary offset)</td><td class="v">' + fx(o.k0, 2) + '</td><td class="k">With monetary offset</td><td class="v">' + fx(o.keff, 2) + '</td></tr><tr><td class="k">GDP gain from 1% of GDP in extra spending</td><td class="v">' + fx(o.keff, 2) + '% of GDP</td><td></td><td></td></tr></table>'
+    },
+    debt: {
+      title: 'Debt-to-GDP path',
+      sub: 'Dashed line: the starting debt ratio. A primary surplus above pb* brings debt down.',
+      ctrls: [
+        { id: 'd0', label: 'Starting debt / GDP', min: 0.2, max: 2, step: 0.05, val: 1, fmt: v => fx(v * 100, 0) + '%' },
+        { id: 'r', label: 'Interest rate r', min: 0, max: 0.08, step: 0.0025, val: 0.035, fmt: v => fx(v * 100, 2) + '%' },
+        { id: 'g', label: 'Nominal GDP growth g', min: 0, max: 0.08, step: 0.0025, val: 0.04, fmt: v => fx(v * 100, 2) + '%' },
+        { id: 'pb', label: 'Primary surplus (% of GDP; negative = deficit)', min: -0.08, max: 0.06, step: 0.0025, val: -0.03, fmt: v => fx(v * 100, 2) + '%' }
+      ],
+      presets: [{ label: 'r below g, deficit', set: { r: 0.03, g: 0.045, pb: -0.03 } }, { label: 'r above g, same deficit', set: { r: 0.055, g: 0.035, pb: -0.03 } }, { label: 'Stabilizing surplus', set: { r: 0.045, g: 0.035, pb: 0.01 } }],
+      compute: s => M.debt(s),
+      charts: [(o, s) => ({ title: 'Debt / GDP (%) over 50 years', xlab: 'years', series: [{ x: o.t, y: o.d }], hl: [{ y: s.d0 * 100, c: '#999', l: 'start' }], xmin: 0 })],
+      read: (o, s) => '<table><tr><td class="k">Debt after 50 years</td><td class="v ' + (o.final > s.d0 * 100 ? 'neg' : 'pos') + '">' + fx(o.final, 0) + '% of GDP</td><td class="k">Debt-stabilizing primary surplus</td><td class="v">' + fx(o.pbStar * 100, 2) + '% of GDP</td></tr><tr><td class="k">r − g</td><td class="v">' + fx((s.r - s.g) * 100, 2) + ' pts</td><td class="k">Your primary balance</td><td class="v">' + fx(s.pb * 100, 2) + '%</td></tr></table>'
+    }
+  },
+  quiz: [
+    { q: 'MPC = 0.8, t = 0.25, m = 0.2. The simple multiplier is about:', o: ['1.0', '1.67', '2.5', '5'], a: 1, w: '1/(1 − 0.8×0.75 + 0.2) = 1/(1 − 0.6 + 0.2) = 1/0.6 = 1.67.' },
+    { q: 'The fiscal multiplier is generally larger when:', o: ['The central bank raises rates in response', 'Interest rates are stuck at the zero bound', 'Imports are a large share of spending', 'Taxes are high'], a: 1, w: 'No monetary offset means no crowding out: demand rises more.' },
+    { q: 'If r > g and the government runs a primary deficit, the debt ratio:', o: ['Falls', 'Rises, and at an accelerating pace', 'Stays constant', 'Equals zero'], a: 1, w: 'Both the interest-growth gap and the deficit push the ratio up.' },
+    { q: 'The debt-stabilizing primary surplus equals approximately:', o: ['d × (r − g)', 'g − r', 'r × g', 'd + r'], a: 0, w: 'Setting d_{t+1} = d_t gives pb* = d(r−g)/(1+g).' }
+  ],
+  res: [
+    { t: 'Congressional Budget Office: budget and economic outlook', u: 'https://www.cbo.gov/', who: 'CBO', n: 'Official long-term debt projections' },
+    { t: 'U.S. Treasury Fiscal Data', u: 'https://fiscaldata.treasury.gov/', who: 'Treasury', n: 'Debt, deficits and interest costs' },
+    { t: 'Blanchard (2019): "Public Debt and Low Interest Rates" (AEA Presidential Address)', u: 'https://www.aeaweb.org/', who: 'MIT / PIIE', n: 'Search the title on the AEA site' },
+    { t: 'IMF Fiscal Monitor', u: 'https://www.imf.org/en/Publications/FM', who: 'IMF', n: 'Debt across countries' },
+    { t: 'YouTube: fiscal multiplier and debt dynamics lecture', u: 'https://www.youtube.com/results?search_query=fiscal+multiplier+debt+dynamics+lecture+macroeconomics', who: 'YouTube', n: '' }
+  ]
+});
+
+MODS.push({
+  id: 'open', part: 'V. Fiscal Policy and the Open Economy', title: 'The Open Economy: Mundell–Fleming', mins: 55,
+  blurb: 'Exchange rates, capital flows and why the regime changes what policy can do.',
+  html: `
+<div class="box take"><h3>The big idea</h3>In a small open economy with free capital flows, the domestic interest rate is tied to the world rate. Then the exchange-rate regime decides which policies work: <b>fiscal policy works under fixed rates, monetary policy works under floating rates</b> (Mundell 1963; Fleming 1962).</div>
+<h2>The policy trilemma</h2>
+<p>A country cannot have all three of: (1) a fixed exchange rate, (2) free capital movement, (3) independent monetary policy. Pick two. The euro area members gave up the third; China has historically limited the second; the U.S. floats.</p>
+<h2>How the model works</h2>
+<ul>
+<li><b>Goods market (IS/BP):</b> output Y = C + I + G + NX, where net exports depend on the real exchange rate e (higher e = cheaper home goods) and on home income (imports rise with Y).</li>
+<li><b>Money market (LM):</b> money demand rises with income and falls with the interest rate, which here equals the world rate rw.</li>
+</ul>
+<p><b>Floating regime:</b> the LM curve fixes output: Y = (M + h·rw)/k. The exchange rate adjusts to clear the goods market. Fiscal expansion raises demand for home goods, appreciates the currency (lowers e), and crowds out net exports one-for-one, so output is unchanged. Monetary expansion shifts LM right: output rises and the currency depreciates.</p>
+<p><b>Fixed regime:</b> the central bank must supply any money needed to hold the exchange rate. Fiscal expansion raises output (money supply expands passively); monetary policy is ineffective since the money supply is endogenous.</p>
+<div data-w="mf"></div>
+<div class="box ex"><b>Realism check.</b> The model assumes perfect capital mobility and a small economy. Large economies, imperfect substitutability of assets, and balance-sheet effects of exchange rates (emerging markets with dollar debt) matter in practice. Gopinath and coauthors (Harvard) document the "dominant currency paradigm": prices of many traded goods are sticky in dollars, which weakens the textbook expenditure-switching channel.</div>
+<details class="wx"><summary>Work it out: reading the chart</summary><p>Choose "floating" and a fiscal shock. The vertical LM line does not move, and the IS curve shifts right but meets LM at the same output, with a currency appreciation. Choose "fixed" and the same shock moves output right with the exchange rate pinned by a horizontal line.</p></details>`,
+  widgets: {
+    mf: {
+      title: 'Mundell–Fleming: shocks under floating and fixed exchange rates',
+      sub: 'Billions of home currency (stylized). Solid lines = after the shock, dashed = before. Vertical line = LM (floating); horizontal line = peg (fixed).',
+      ctrls: [
+        { id: 'regime', label: 'Exchange-rate regime', type: 'select', val: 'float', opts: [['float', 'Floating'], ['fixed', 'Fixed (peg)']] },
+        { id: 'shock', label: 'Shock', type: 'select', val: 'fiscal', opts: [['fiscal', 'Fiscal expansion (more G)'], ['money', 'Monetary expansion (more money)'], ['trade', 'Trade shock (foreign demand up)'], ['rate', 'World interest rate rises']] },
+        { id: 'size', label: 'Shock size (−1 to +1)', min: -1, max: 1, step: 0.25, val: 1, fmt: v => sg(v, 2) }
+      ],
+      compute: s => {
+        const scale = { fiscal: 40, money: 40, trade: 25, rate: 2 }[s.shock];
+        const R = M.mf({ regime: s.regime, shock: s.shock, size: s.size * scale });
+        const B = R.B, curve = (st) => { const ys = [], es = []; for (let Y = 650; Y <= 900; Y += 10) { ys.push(Y); es.push(((1 - B.c + B.mu) * Y - st.auto) / B.chi); } return { ys, es }; };
+        return { R, c0: curve(R.before), c1: curve(R.after) };
+      },
+      charts: [(o, s) => {
+        const ser = [{ x: o.c0.ys, y: o.c0.es, dash: 1, name: 'IS/BP before', c: '#1f4e8c' }, { x: o.c1.ys, y: o.c1.es, name: 'IS/BP after', c: '#1f4e8c' }];
+        const b = o.R.before, a = o.R.after, vl = [], hl = [];
+        if (s.regime === 'float') { vl.push({ x: b.Y, c: '#999', l: '' }, { x: a.Y, c: '#b5532f', l: 'LM' }); } else { hl.push({ y: 1, c: '#b5532f', l: 'peg' }); }
+        return { title: 'Output (Y) and the real exchange rate (e)', xlab: 'output Y', ylab: 'real exchange rate e', series: ser, pts: [{ x: b.Y, y: b.e, c: '#999', l: 'before' }, { x: a.Y, y: a.e, c: '#b5532f', l: 'after' }], vl, hl, xmin: 650, xmax: 900 };
+      }],
+      read: (o, s) => { const b = o.R.before, a = o.R.after; return '<table><tr><th></th><th>Output Y</th><th>Exchange rate e</th><th>Net exports</th><th>Money supply</th></tr><tr><td>Before</td><td>' + fx(b.Y, 0) + '</td><td>' + fx(b.e, 2) + '</td><td>' + fx(b.NX, 0) + '</td><td>' + fx(b.m, 0) + '</td></tr><tr><td>After</td><td class="v">' + fx(a.Y, 0) + '</td><td class="v">' + fx(a.e, 2) + '</td><td class="v">' + fx(a.NX, 0) + '</td><td class="v">' + fx(a.m, 0) + '</td></tr><tr><td>Change</td><td class="v">' + sg(a.Y - b.Y, 0) + '</td><td class="v">' + sg(a.e - b.e, 2) + '</td><td class="v">' + sg(a.NX - b.NX, 0) + '</td><td class="v">' + sg(a.m - b.m, 0) + '</td></tr></table><div class="k" style="margin-top:6px">Higher e means a weaker (depreciated) home currency. Under the peg the central bank passively supplies whatever money is needed.</div>'; }
+    }
+  },
+  quiz: [
+    { q: 'Under floating exchange rates and perfect capital mobility, fiscal expansion:', o: ['Raises output', 'Leaves output unchanged and appreciates the currency', 'Depreciates the currency', 'Lowers prices'], a: 1, w: 'The currency appreciation lowers net exports by as much as the fiscal impulse raises demand.' },
+    { q: 'Under a fixed exchange rate, monetary expansion by the central bank:', o: ['Raises output permanently', 'Cannot be sustained: the bank must reverse it to defend the peg', 'Raises the exchange rate', 'Lowers taxes'], a: 1, w: 'Capital flows out, forcing the central bank to sell reserves and contract the money supply.' },
+    { q: 'The "impossible trinity" says a country cannot simultaneously have:', o: ['A fixed rate, free capital mobility and independent monetary policy', 'Low inflation, low unemployment and growth', 'Free trade, democracy and growth', 'Taxes, spending and debt'], a: 0, w: 'Choose two of the three.' },
+    { q: 'A depreciation of the home currency (higher e) tends to:', o: ['Raise net exports', 'Lower net exports', 'Have no effect', 'Lower imports only'], a: 0, w: 'Home goods become cheaper abroad and foreign goods more expensive at home.' }
+  ],
+  res: [
+    { t: 'IMF: Exchange rate arrangements and the data on them', u: 'https://www.imf.org/en/Publications', who: 'IMF', n: '' },
+    { t: 'FRED: Trade-weighted U.S. dollar index', u: 'https://fred.stlouisfed.org/series/DTWEXBGS', who: 'Data', n: '' },
+    { t: 'Gopinath et al., "Dominant Currency Paradigm" (AER 2020)', u: 'https://www.aeaweb.org/journals/aer', who: 'Harvard', n: 'Search the title on the AEA site' },
+    { t: 'Our World in Data (search: trade)', u: 'https://ourworldindata.org/', who: 'Data', n: '' },
+    { t: 'YouTube: Mundell-Fleming model lecture', u: 'https://www.youtube.com/results?search_query=Mundell-Fleming+model+lecture+macroeconomics', who: 'YouTube', n: '' }
+  ]
+});
+
+MODS.push({
+  id: 'crisis', part: 'VI. Crises and the Frontier', title: 'Financial Crises and Balance-Sheet Channels', mins: 50,
+  blurb: 'Leverage, fire sales and why housing busts hurt more than stock busts.',
+  html: `
+<div class="box take"><h3>The big idea</h3>Recessions that follow financial crises are deeper and slower to recover from. The reason is on the <b>balance sheets</b> of households, firms and banks: when asset prices fall, leveraged borrowers must cut spending sharply, and lenders pull back credit.</div>
+<h2>Three amplification channels</h2>
+<ul>
+<li><b>Household leverage (Mian and Sufi):</b> the 2007–09 housing bust hurt most in places with the most mortgage debt. Leveraged households have a high marginal propensity to consume out of wealth because they are near borrowing limits, so each dollar of lost housing wealth cuts spending by more than the same dollar of lost stock wealth held by wealthy savers.</li>
+<li><b>Financial accelerator (Bernanke and Gertler 1989):</b> falling collateral values raise the cost of external finance, which cuts investment, which lowers asset prices further.</li>
+<li><b>Bank balance sheets and runs (Diamond and Dybvig 1983; Gertler and Kiyotaki):</b> short-term funding backed by illiquid assets is fragile. Fire sales push prices down and spread losses.</li>
+</ul>
+<div data-w="crisis"></div>
+<h2>Policy responses</h2>
+<p>Lender-of-last-resort lending (Bagehot), deposit insurance, capital and liquidity regulation, stress tests, bank recapitalization, and debt restructuring or mortgage modification. Reinhart and Rogoff's historical comparison suggests recoveries from financial crises take years because deleveraging is slow. Policy that repairs balance sheets directly can speed it up.</p>
+<div class="box ex"><b>Fed Chair Bernanke's research</b> on the Great Depression (a Princeton professor before becoming Chair) argued that the collapse of the banking system, not just the money supply, deepened the slump, since the loss of credit intermediation raised the cost of credit for many borrowers.</div>`,
+  widgets: {
+    crisis: {
+      title: 'How much does a house-price drop reduce demand?',
+      sub: 'Comparing an economy where much of the lost wealth falls on leveraged households (high MPC) with one where losses fall on wealthy savers (low MPC).',
+      ctrls: [
+        { id: 'W', label: 'Housing wealth (× GDP)', min: 0.5, max: 3, step: 0.1, val: 1.5, fmt: v => v + '×' },
+        { id: 'drop', label: 'House-price drop', min: 0, max: 0.4, step: 0.01, val: 0.25, fmt: v => fx(v * 100, 0) + '%' },
+        { id: 'shareD', label: 'Share of housing wealth held by leveraged households', min: 0, max: 1, step: 0.05, val: 0.5, fmt: v => fx(v * 100, 0) + '%' },
+        { id: 'mpcD', label: 'MPC out of wealth: leveraged', min: 0.03, max: 0.25, step: 0.01, val: 0.1, fmt: v => v },
+        { id: 'mpcS', label: 'MPC out of wealth: others', min: 0.01, max: 0.1, step: 0.005, val: 0.03, fmt: v => v },
+        { id: 'mult', label: 'Multiplier on lost spending', min: 1, max: 2.5, step: 0.1, val: 1.3, fmt: v => v },
+        { id: 'ltv', label: 'Typical loan-to-value ratio', min: 0.5, max: 1, step: 0.05, val: 0.8, fmt: v => fx(v * 100, 0) + '%' }
+      ],
+      presets: [{ label: 'Housing bust, leveraged', set: { drop: 0.25, shareD: 0.5, mpcD: 0.1 } }, { label: 'Stock-like bust, rich savers', set: { drop: 0.25, shareD: 0.05, mpcD: 0.1 } }],
+      compute: s => M.crisis(s),
+      charts: [(o, s) => ({ title: 'Fall in demand (% of GDP)', xlab: 'house-price drop (%)', ylab: '% of GDP', series: [{ x: o.xs, y: o.ya, name: 'leveraged households matter' }, { x: o.xs, y: o.yb, name: 'only low-MPC savers', c: '#2e7d5b' }], vl: [{ x: o.cutoff, c: '#b3261e', l: 'underwater' }], pts: [{ x: s.drop * 100, y: o.demand, c: '#1b2430', l: fx(o.demand, 1) + '%' }], xmin: 0, ymin: 0 })],
+      read: (o, s) => '<table><tr><td class="k">Consumption falls by</td><td class="v">' + fx(o.cons, 1) + '% of GDP</td><td class="k">Total demand falls by (with multiplier)</td><td class="v neg">' + fx(o.demand, 1) + '% of GDP</td></tr><tr><td class="k">If losses only hit low-MPC savers</td><td class="v">' + fx(o.demandFlat, 1) + '% of GDP</td><td class="k">Price drop at which a typical borrower is underwater</td><td class="v">' + fx(o.cutoff, 0) + '%</td></tr></table>'
+    }
+  },
+  quiz: [
+    { q: 'The financial accelerator refers to:', o: ['A stock price rising', 'A feedback where falling collateral values raise borrowing costs and cut investment, lowering asset values further', 'Faster payments', 'A tax'], a: 1, w: 'Bernanke and Gertler (1989): financial conditions amplify shocks.' },
+    { q: 'Why can a housing bust cut spending more than an equal-sized stock-market fall?', o: ['Houses are bigger', 'Housing wealth is held with high leverage by households with high MPCs', 'Stocks are riskier', 'Housing is taxed'], a: 1, w: 'Leveraged households with little liquid savings cut consumption sharply.' },
+    { q: 'A bank run in the Diamond–Dybvig model arises because:', o: ['Banks are inefficient', 'Short-term deposits fund illiquid assets, so withdrawals can be self-fulfilling', 'Deposits are insured', 'Interest is high'], a: 1, w: 'If many depositors expect others to withdraw, each rationally joins, forcing liquidation.' },
+    { q: 'Deposit insurance works mainly by:', o: ['Raising interest rates', 'Removing the incentive for depositors to run', 'Lowering taxes', 'Banning loans'], a: 1, w: 'If depositors are protected, they have no reason to run.' }
+  ],
+  res: [
+    { t: 'Mian and Sufi, "House of Debt" (companion site)', u: 'https://houseofdebt.org/', who: 'Princeton', n: 'Data and blog for the book and papers' },
+    { t: 'Federal Reserve History: The Great Recession and its aftermath', u: 'https://www.federalreservehistory.org/essays/great-recession-and-its-aftermath', who: 'Fed', n: '' },
+    { t: 'Federal Reserve History: Essays on the financial crisis', u: 'https://www.federalreservehistory.org/', who: 'Fed', n: '' },
+    { t: 'FRED: Household debt service ratio', u: 'https://fred.stlouisfed.org/series/TDSP', who: 'Data', n: '' },
+    { t: 'YouTube: 2008 financial crisis explained', u: 'https://www.youtube.com/results?search_query=2008+financial+crisis+explained+macroeconomics+lecture', who: 'YouTube', n: '' }
+  ]
+});
+
+MODS.push({
+  id: 'hank', part: 'VI. Crises and the Frontier', title: 'Heterogeneity: HANK Models and Who Gets the Money', mins: 45,
+  blurb: 'Why distribution changes the size of the multiplier.',
+  html: `
+<div class="box take"><h3>The big idea</h3>The old "representative household" hides who holds the wealth. In <b>Heterogeneous-Agent New Keynesian (HANK)</b> models (Kaplan, Moll and Violante 2018) some households are hand-to-mouth and spend nearly every dollar they receive, while others smooth consumption. Then <b>who</b> receives a transfer or tax cut matters for aggregate demand.</div>
+<h2>A simple Keynesian cross with two types</h2>
+<p>If a share λ of households are hand-to-mouth (MPC = 1) and the rest follow permanent income (MPC close to 0.05 on a one-time transfer), the aggregate MPC is</p>
+<div class="formula">MPC = λ + (1 − λ)·MPC<sub>PIH</sub> &nbsp;&nbsp; multiplier = 1 / (1 − MPC)</div>
+<p>This is a stripped-down illustration, not the full model: in the real HANK model the monetary-policy transmission also changes, since much of the effect of an interest-rate cut comes indirectly through income and employment, and not just through the intertemporal substitution that the representative agent model stresses.</p>
+<div data-w="hank"></div>
+<h2>Why this changes policy debates</h2>
+<ul>
+<li><b>Targeted transfers</b> to hand-to-mouth households give more stimulus per dollar.</li>
+<li><b>Automatic stabilizers</b> (unemployment insurance, progressive taxes) matter more, since they put resources in constrained households' hands quickly.</li>
+<li><b>Monetary policy</b> works partly through labor income and employment, so it also redistributes.</li>
+<li>Inequality and macro stability are linked: more households near borrowing limits means stronger amplification of shocks.</li>
+</ul>
+<div class="box ex"><b>Evidence.</b> Chetty and coauthors at Harvard's Opportunity Insights track spending by income group using real-time bank and card data; their work after 2020 showed spending responses concentrated among households with lower liquid balances, and that stimulus payments were spent unevenly across income groups. See the links below.</div>`,
+  widgets: {
+    hank: {
+      title: 'Aggregate MPC and multiplier with hand-to-mouth households',
+      sub: 'Move the share of constrained households and see how the multiplier on a transfer changes.',
+      ctrls: [
+        { id: 'lamH', label: 'Share of hand-to-mouth households λ', min: 0, max: 0.8, step: 0.02, val: 0.25, fmt: v => fx(v * 100, 0) + '%' },
+        { id: 'mpcPIH', label: 'MPC of unconstrained households', min: 0.02, max: 0.3, step: 0.01, val: 0.08, fmt: v => v }
+      ],
+      presets: [{ label: 'Few constrained (10%)', set: { lamH: 0.1 } }, { label: 'Many constrained (40%)', set: { lamH: 0.4 } }],
+      compute: s => M.hank(s),
+      charts: [(o, s) => ({ title: 'Multiplier vs share hand-to-mouth', xlab: 'share of hand-to-mouth households (%)', ylab: 'multiplier', series: [{ x: o.xs, y: o.ys }], pts: [{ x: s.lamH * 100, y: o.mult, c: '#b5532f', l: fx(o.mult, 2) }], xmin: 0, ymin: 1 })],
+      read: (o, s) => '<table><tr><td class="k">Aggregate MPC</td><td class="v">' + fx(o.mpc, 2) + '</td><td class="k">Multiplier</td><td class="v">' + fx(o.mult, 2) + '</td></tr><tr><td colspan="4" class="k">A $100 transfer raises first-round spending by $' + fx(100 * o.mpc, 0) + ' and total demand by about $' + fx(100 * o.mult * 1, 0) + ' (before any monetary offset).</td></tr></table>'
+    }
+  },
+  quiz: [
+    { q: 'In a HANK model, a transfer to hand-to-mouth households has a larger effect on demand because:', o: ['They save a lot', 'They spend most of what they receive', 'They pay lower taxes', 'They own capital'], a: 1, w: 'High MPC means more of the transfer is spent immediately.' },
+    { q: 'Compared to the representative-agent model, in HANK the share of monetary policy that works through labor income is:', o: ['Smaller', 'Larger', 'Zero', 'The same'], a: 1, w: 'With hand-to-mouth households, indirect (income and employment) effects dominate the direct interest-rate effect on saving.' },
+    { q: 'Automatic stabilizers matter more in a world with many constrained households because:', o: ['They raise taxes', 'They quickly put money in the hands of people who spend it', 'They lower inflation', 'They are ignored'], a: 1, w: 'They deliver purchasing power to people with high MPCs when incomes fall.' },
+    { q: 'If the aggregate MPC is 0.5, the simple multiplier is:', o: ['1', '2', '0.5', '5'], a: 1, w: '1/(1 − 0.5) = 2.' }
+  ],
+  res: [
+    { t: 'Opportunity Insights Economic Tracker (Harvard)', u: 'https://opportunityinsights.org/', who: 'Harvard', n: 'Real-time spending and employment by income group' },
+    { t: 'Kaplan, Moll and Violante, "Monetary Policy According to HANK" (AER 2018)', u: 'https://www.aeaweb.org/journals/aer', who: 'Chicago / LSE / Princeton', n: 'Search the title on the AEA site' },
+    { t: 'Federal Reserve: Survey of Consumer Finances', u: 'https://www.federalreserve.gov/econres/scfindex.htm', who: 'Fed', n: 'Data on wealth and liquid assets by group' },
+    { t: 'YouTube: HANK models explained', u: 'https://www.youtube.com/results?search_query=HANK+heterogeneous+agent+New+Keynesian+explained', who: 'YouTube', n: '' }
+  ]
+});
+
+MODS.push({
+  id: 'capstone', part: 'VI. Crises and the Frontier', title: 'Capstone: Reading the Economy Today', mins: 60,
+  blurb: 'Put the tools together and form your own view with real data.',
+  html: `
+<div class="box take"><h3>The big idea</h3>The point of the course is to let you read a central-bank statement, a jobs report or a budget forecast and know which model, and which assumptions, are doing the work. This last module is a <b>procedure</b>, not new theory.</div>
+<h2>A five-question checklist</h2>
+<ol>
+<li><b>What is the shock?</b> Demand (output and inflation move together) or supply (they move apart)? (Modules 8–10)</li>
+<li><b>What is the gap?</b> Look at the unemployment rate against estimates of the natural rate, and at vacancies (Module 4).</li>
+<li><b>How firm are expectations?</b> Survey and market-based inflation expectations anchor how costly disinflation is (Module 9).</li>
+<li><b>What does the policy rule say?</b> Compute a Taylor-rule benchmark and compare with the actual rate (Module 11).</li>
+<li><b>What are the long-run constraints?</b> Productivity growth and the real interest rate set where r−g sits, and thus the debt picture (Modules 2, 3, 12).</li>
+</ol>
+<h2>Try it: your own Taylor-rule meeting</h2>
+<p>Pull the latest inflation rate and unemployment data from FRED (links below), convert the unemployment gap to an output gap using Okun's rule of thumb (about 2 points of output per 1 point of unemployment gap), and compare the rule to the Fed's actual policy rate range.</p>
+<div data-w="cap"></div>
+<div class="box ex"><b>Snapshot, as of Oct 28, 2026:</b> at its October meeting the FOMC left the federal funds target range at 3¾–4%. Read the official statement and the vote on the Federal Reserve's site before using any of the figures: <a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm" target="_blank" rel="noopener">federalreserve.gov FOMC calendar</a>. This is a dated reference point only; check for later decisions.</div>
+<h2>Three debates to argue both sides</h2>
+<h3>1. Should the central bank keep a 2% inflation target?</h3>
+<div class="debate"><div class="pro"><b>Keep 2%</b><br>A clear, credible anchor has kept expectations stable for decades; changing it risks unmooring them. Moving to 3–4% would raise the costs of inflation for little gain.</div><div class="con"><b>Raise it</b><br>A higher target (Blanchard, Dell\'Ariccia and Mauro floated 4% in 2010) gives more room above the zero bound, so fewer episodes where policy is stuck.</div></div>
+<h3>2. Is the national debt on a dangerous path?</h3>
+<div class="debate"><div class="pro"><b>Yes, act soon</b><br>If r exceeds g for long, interest costs crowd out other spending and limit room to respond to crises. Uncertainty about r−g is large.</div><div class="con"><b>Not urgent</b><br>When r is below g, debt-to-GDP can stabilize at a high level; good public investment can pay for itself. Austerity can do harm.</div></div>
+<h3>3. Does inequality matter for macro policy?</h3>
+<div class="debate"><div class="pro"><b>Yes</b><br>Heterogeneous MPCs change multipliers, the transmission of monetary policy, and the strength of automatic stabilizers.</div><div class="con"><b>Not first-order</b><br>For aggregate stabilization the representative-agent models still do well; distribution is better addressed through tax and transfer policy.</div></div>
+<h2>Where to go next</h2>
+<p>Graduate-level paths: dynamic stochastic general equilibrium (DSGE) models, heterogeneous-agent models (HANK), search and matching, financial frictions, and structural estimation. The Nobel Prize web pages for each of Solow, Lucas, Sargent and Sims, Romer, and Bernanke, Diamond and Dybvig offer excellent "advanced information" write-ups for free.</p>`,
+  widgets: {
+    cap: {
+      title: 'Taylor-rule benchmark with your own inputs',
+      sub: 'Enter the latest data. The dashed line is the midpoint of the October 2026 federal funds target range (3.875%): a reference for comparison only.',
+      ctrls: [
+        { id: 'pi', label: 'Inflation (core PCE, %)', min: 0, max: 8, step: 0.1, val: 2.8, fmt: v => v + '%' },
+        { id: 'ugap', label: 'Unemployment minus natural rate (pts)', min: -2, max: 4, step: 0.1, val: 0, fmt: v => sg(v, 1) },
+        { id: 'a', label: 'Weight on inflation gap a', min: 0, max: 2, step: 0.1, val: 0.5, fmt: v => v },
+        { id: 'b', label: 'Weight on output gap b', min: 0, max: 2, step: 0.1, val: 0.5, fmt: v => v },
+        { id: 'rbar', label: 'Neutral real rate (%)', min: 0, max: 3, step: 0.25, val: 1, fmt: v => v + '%' }
+      ],
+      presets: [{ label: 'Gap = 0, inflation 2.8%', set: { pi: 2.8, ugap: 0 } }, { label: 'Slack: unemployment +1 pt', set: { pi: 2.4, ugap: 1 } }, { label: 'Tight: unemployment −1 pt', set: { pi: 3.5, ugap: -1 } }],
+      compute: s => { const x = -2 * s.ugap, r = M.taylor({ rbar: s.rbar, pi: s.pi, pistar: 2, x, a: s.a, b: s.b }), xs = [], ys = []; for (let p = 1; p <= 6.001; p += 0.25) { xs.push(p); ys.push(M.taylor({ rbar: s.rbar, pi: p, pistar: 2, x, a: s.a, b: s.b }).raw); } return { x, r, xs, ys }; },
+      charts: [(o, s) => ({ title: 'Rule-implied policy rate', xlab: 'inflation (%)', ylab: 'policy rate (%)', series: [{ x: o.xs, y: o.ys }], pts: [{ x: s.pi, y: o.r.raw, c: '#b5532f', l: 'rule' }], hl: [{ y: 3.875, c: '#2e7d5b', l: 'Oct 2026 target midpoint' }], xmin: 1, ymin: 0 })],
+      read: (o, s) => '<table><tr><td class="k">Implied output gap (Okun)</td><td class="v">' + sg(o.x, 1) + '%</td><td class="k">Rule-implied policy rate</td><td class="v">' + fx(o.r.raw, 2) + '%</td></tr><tr><td class="k">Gap to Oct 2026 midpoint (3.875%)</td><td class="v ' + (o.r.raw > 3.875 ? 'neg' : 'pos') + '">' + sg(o.r.raw - 3.875, 2) + ' pts</td><td colspan="2" class="k">Positive: the rule says rates should be higher.</td></tr></table>'
+    }
+  },
+  quiz: [
+    { q: 'Output and inflation both fall. The most likely shock is:', o: ['Supply', 'Demand', 'Technology boom', 'None'], a: 1, w: 'Demand shocks move them together; supply shocks move them in opposite directions.' },
+    { q: 'Anchored inflation expectations make disinflation:', o: ['More costly', 'Less costly', 'Impossible', 'Irrelevant'], a: 1, w: 'A lower sacrifice ratio.' },
+    { q: 'If r < g, a government can run a primary deficit and debt-to-GDP can still:', o: ['Explode', 'Stay stable or fall', 'Equal zero', 'Not be measured'], a: 1, w: 'Growth outpaces the interest cost, so the ratio can stabilize.' },
+    { q: 'Okun\'s rule of thumb links:', o: ['Inflation and money', 'Output gap and unemployment gap', 'Taxes and spending', 'Exchange rates and prices'], a: 1, w: 'Roughly 2 points of output per 1 point of unemployment gap.' }
+  ],
+  res: [
+    { t: 'FRED: core PCE price index', u: 'https://fred.stlouisfed.org/series/PCEPILFE', who: 'Data', n: '' },
+    { t: 'FRED: unemployment rate and natural-rate estimate', u: 'https://fred.stlouisfed.org/series/NROU', who: 'Data', n: '' },
+    { t: 'Federal Reserve: FOMC calendar, statements and minutes', u: 'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm', who: 'Fed', n: 'Primary source for any current decision' },
+    { t: 'IMF World Economic Outlook', u: 'https://www.imf.org/en/Publications/WEO', who: 'IMF', n: 'Global macro outlook' },
+    { t: 'Nobel Prize in Economic Sciences: all laureates', u: 'https://www.nobelprize.org/prizes/economic-sciences/', who: 'Nobel', n: 'Free "advanced information" documents on major macro advances' },
+    { t: 'Mankiw: Observations (blog)', u: 'https://gregmankiw.blogspot.com/', who: 'Harvard', n: '' },
+    { t: 'Krugman: New York Times column archive', u: 'https://www.nytimes.com/column/paul-krugman', who: 'Princeton / CUNY', n: '' },
+    { t: 'YouTube: macroeconomics lectures (search)', u: 'https://www.youtube.com/results?search_query=intermediate+macroeconomics+full+course+lecture', who: 'YouTube', n: '' }
+  ]
+});
+
+/* ===== LEARNING OBJECTIVES ===== */
+const OBJ = {
+  measure: ['Compute GDP three ways and explain the C + I + G + NX identity', 'Convert nominal to real GDP and tell the deflator from the CPI', 'Define the labor force and the unemployment rate, and say what each misses'],
+  solow: ['Derive and compute the steady state of the Solow model', 'Explain why saving changes the level but not the long-run growth rate of income', 'Use the golden rule to judge whether an economy saves too much', 'Explain conditional convergence and how fast it works'],
+  ideas: ['Decompose growth into capital, labor and productivity (TFP)', 'Explain why ideas are non-rival and why that matters for growth', 'Read the growth rate of technology from an idea-production function', 'State the case for public support of research'],
+  labor: ['Compute steady-state unemployment from separation and job-finding rates', 'Draw and shift the Beveridge curve', 'Tell frictional, structural and cyclical unemployment apart', 'Explain how efficiency wages can keep wages above the clearing level'],
+  money: ['Use the quantity theory to link money growth to inflation', 'Apply the Fisher equation to nominal and real interest rates', 'Explain seigniorage and the inflation-tax Laffer curve', 'List the costs of anticipated and unanticipated inflation'],
+  consumption: ['Solve the two-period consumption problem and read the budget line', 'Explain consumption smoothing and permanent income', 'State Ricardian equivalence and why borrowing limits break it'],
+  investment: ['Derive the user cost of capital and desired capital', 'Explain how credit spreads and interest rates move investment', "Use Tobin's q to decide whether firms should invest", 'Say why investment is so volatile'],
+  ismp: ['Set out the IS curve, the MP rule and the Phillips curve', 'Find short-run equilibrium output, inflation and the real rate', 'Trace a demand shock and a policy change through the model', 'Explain why AD slopes down when the central bank follows a rule'],
+  phillips: ['Write the expectations-augmented Phillips curve', 'Explain why there is no permanent output-inflation trade-off', 'Compute a sacrifice ratio and see how anchored expectations lower it'],
+  nk: ['Simulate demand and supply shocks in a dynamic New Keynesian model', 'Explain the Taylor principle and "divine coincidence"', 'Show what happens when the policy rate hits the zero lower bound', 'Describe forward guidance and quantitative easing'],
+  policy: ['Compute the Taylor rule prescription for a given economy', 'Explain what a central bank can do when the rule calls for negative rates', 'Explain time inconsistency and the case for central-bank independence'],
+  fiscal: ['Compute the Keynesian multiplier and how monetary policy changes it', 'Use the debt-dynamics equation with r, g and the primary balance', 'Find the debt-stabilizing primary surplus', 'Weigh the arguments on both sides of the debt debate'],
+  open: ['Set out the Mundell–Fleming model with perfect capital mobility', 'Predict the effect of fiscal and monetary policy under floating and fixed rates', 'Explain the policy trilemma'],
+  crisis: ['Explain the financial accelerator and household-leverage channels', 'Show why a housing bust can hurt demand more than a stock bust', 'Describe bank runs and the main policy responses'],
+  hank: ['Explain why hand-to-mouth households change the multiplier', 'Compute the aggregate MPC and multiplier with two household types', 'Say why targeted transfers and automatic stabilizers matter'],
+  capstone: ['Use a five-question checklist to read a macro news item', 'Build a Taylor-rule benchmark from real data', 'Argue both sides of three live policy debates']
+};
+MODS.forEach(m => { m.obj = OBJ[m.id]; });
+
+/* ===== COURSE META + TAIL ===== */
+const COURSE = {
+  pitch: 'A 16-module course on the macroeconomy: growth, the labor market, money and inflation, short-run fluctuations, monetary and fiscal policy, the open economy, financial crises and heterogeneous-agent models. Every module has live graphs you can move, worked examples, and a self-check quiz. Basic algebra is enough.',
+  short: 'Text, models and quizzes are original to this edition. Textbooks and papers are cited and linked, not copied. See <a href="#/about">About &amp; credits</a>.',
+  how: 'Work through the modules in order, or jump to a topic from the contents. When you reach a <b>Lab</b>, move the sliders and watch the graphs and numbers change; the preset buttons set up classic experiments. Open the "Work it out" boxes for a by-hand check. Finish the quiz at the end of a module to mark it complete; your progress is saved in this browser.',
+  partQ: {
+    'I. Foundations': 'How do we measure output, prices and jobs?',
+    'II. The Long Run': 'What drives growth, unemployment and inflation over decades?',
+    'III. Households and Firms': 'How do households save and firms invest?',
+    'IV. Short-Run Fluctuations': 'Why do recessions happen, and what can central banks do?',
+    'V. Fiscal Policy and the Open Economy': 'What do taxes, spending, debt and exchange rates do?',
+    'VI. Crises and the Frontier': 'What goes wrong in a crisis, and how does inequality change the picture?'
+  },
+  about: `<div class="box"><h3 style="margin-top:0">What this is</h3><p style="font-family:var(--sans);font-size:15px;margin:0">The explanations, equations, simulations and quiz questions in this course are original and were written for this edition. They follow the standard intermediate-macro sequence found in the major textbooks and in the research literature named in each module. Where a textbook or paper is useful, it is named and linked, not copied.</p></div>
+<div class="box"><h3 style="margin-top:0">Textbooks that follow similar ground</h3><ul class="attr"><li>N. Gregory Mankiw, <i>Macroeconomics</i> (Harvard)</li><li>Charles I. Jones, <i>Macroeconomics</i></li><li>David Romer, <i>Advanced Macroeconomics</i> (the IS–MP framework)</li><li>Jordi Galí, <i>Monetary Policy, Inflation, and the Business Cycle</i> (New Keynesian model)</li></ul></div>
+<div class="box"><h3 style="margin-top:0">Free, public material linked in the course</h3><ul class="attr"><li>Data: FRED, BEA, BLS, CBO, U.S. Treasury Fiscal Data, IMF, Penn World Table, Federal Reserve Survey of Consumer Finances</li><li>Central banks and history: Federal Reserve statements and minutes, Federal Reserve History essays</li><li>Research: Nobel Prize background documents, Harvard's Opportunity Insights, NBER, American Economic Association journals</li><li>Lectures: YouTube searches that lead to university lectures on each topic</li></ul></div>
+<div class="box ex"><h3 style="margin-top:0">Please note</h3><p style="font-family:var(--sans);font-size:15px;margin:0">The simulations are teaching models with stylized numbers. They illustrate mechanisms; they are not forecasts. The one dated fact (the October 28, 2026 FOMC decision in the capstone) should be checked on the Federal Reserve's website. Outside links open in a new tab.</p></div>`
+};
+</script>
+</body>
+</html>
